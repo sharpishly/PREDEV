@@ -1,18 +1,18 @@
 #!/bin/bash
+set -e
 
-# Debian/Ubuntu
-sudo apt-get update
-sudo apt-get install -y cmake build-essential
+# Go to project root (directory of this script)
+cd "$(dirname "$0")"
 
-# Fedora
-#sudo dnf install cmake make gcc-c++
+# Create build directory if it doesn’t exist
+mkdir -p build
+cd build
 
-# Arch
-#sudo pacman -S cmake base-devel
-
-
-# inside project root
-sudo mkdir build && cd build
+# Run cmake pointing explicitly to project root (one level up from build)
 cmake ..
-make
+
+# Compile
+make -j$(nproc)
+
+# Run
 ./sharpishly
