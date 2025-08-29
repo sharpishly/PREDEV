@@ -1,7 +1,7 @@
 ### READ ME ##
 
 # Structure
-
+```
 project/
 │── src/
 │   ├── main.cpp          // Entry point
@@ -19,4 +19,4 @@ project/
 │   ├── style.css
 │   └── script.js
 │── CMakeLists.txt
-
+```
