@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+#sudo rm -R build/
+
 # Go to project root (directory of this script)
 cd "$(dirname "$0")"
 
