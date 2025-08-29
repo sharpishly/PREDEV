@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sharpishly Dev Manager</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Sharpishly Dev Environment</h1>
+  <button onclick="callApi('/generate-cert')">Generate SSL</button>
+  <button onclick="callApi('/cleanup')">Clean Docker</button>
+  <button onclick="callApi('/update-repo')">Update Repo</button>
+  <button onclick="callApi('/status')">Docker Status</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function callApi(path) {
+      const res = await fetch(path, {method: 'POST'});
+      const text = await res.text();
+      document.getElementById('output').textContent = text;
+    }
+  </script>
+</body>
+</html>
+
