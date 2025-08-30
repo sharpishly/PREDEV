@@ -1,11 +1,12 @@
+```bash
 #!/bin/bash
 
 # /**
 #  * @file setup_project.sh
 #  * @brief Shell script to set up the Sharpishly project structure and generate necessary files
 #  * @details Creates directories, CMake configuration, and source files for a C++ project
-#  *          with web dashboard for environment management. Includes error handling and
-#  *          file existence checks to prevent overwriting.
+#  *          with web dashboard for environment management. Includes error handling, file
+#  *          existence checks, and support for view directory with HttpServer.
 #  * @author Grok (xAI)
 #  * @date 2025-08-30
 #  */
@@ -55,12 +56,14 @@ main() {
     local SRC_DIR="$ROOT_DIR/src"
     local MODEL_DIR="$SRC_DIR/model"
     local CONTROLLER_DIR="$SRC_DIR/controller"
+    local VIEW_DIR="$SRC_DIR/view"
     local WWW_DIR="$ROOT_DIR/www"
 
     # Create directories
     create_dir "$SRC_DIR"
     create_dir "$MODEL_DIR"
     create_dir "$CONTROLLER_DIR"
+    create_dir "$VIEW_DIR"
     create_dir "$WWW_DIR"
 
     # CMakeLists.txt
@@ -72,9 +75,9 @@ main() {
 cmake_minimum_required(VERSION 3.10)
 project(sharpishly)
 set(CMAKE_CXX_STANDARD 17)
-file(GLOB_RECURSE SOURCES src/*.cpp)
+file(GLOB_RECURSIVE SOURCES src/*.cpp)
 add_executable(sharpishly \${SOURCES})
-target_include_directories(sharpishly PRIVATE src src/controller src/model)
+target_include_directories(sharpishly PRIVATE src src/controller src/model src/view)
 "
 
     # run.sh
@@ -91,6 +94,46 @@ make -j\$(nproc) || { echo \"❌ Build failed\"; exit 1; }
 ./sharpishly || { echo \"❌ Execution failed\"; exit 1; }
 "
     chmod +x "$ROOT_DIR/run.sh" || { echo "❌ Failed to make run.sh executable"; exit 1; }
+
+    # HttpServer.h
+    write_file "$VIEW_DIR/HttpServer.h" "
+#ifndef HTTPSERVER_H
+#define HTTPSERVER_H
+// /**
+//  * @file HttpServer.h
+//  * @brief HTTP server interface for handling requests
+//  */
+#include <string>
+#include \"controller/EnvironmentController.h\"
+
+/**
+ * @class HttpServer
+ * @brief Simple HTTP server to handle environment management requests
+ */
+class HttpServer {
+public:
+    /**
+     * @brief Constructs an HTTP server
+     * @param port Port to listen on
+     */
+    HttpServer(int port);
+
+    /**
+     * @brief Starts the HTTP server
+     */
+    void start();
+
+    /**
+     * @brief Stops the HTTP server
+     */
+    void stop();
+
+private:
+    int port_; ///< Server port
+    EnvironmentController envController_; ///< Environment controller instance
+};
+#endif
+"
 
     # execCommand.h
     write_file "$MODEL_DIR/execCommand.h" "
@@ -340,10 +383,10 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
         std::string name, branch, compose;
         int web = 0, api = 0;
         size_t pos;
-        pos = route.find(\"name=\"); if (pos != std::string::npos) name = route.substr(pos + 5);
-        pos = route.find(\"branch=\"); if (pos != std::string::npos) branch = route.substr(pos + 7);
-        pos = route.find(\"compose=\"); if (pos != std::string::npos) compose = route.substr(pos + 8);
-        pos = route.find(\"webPort=\"); if (pos != std::string::npos) web = std::stoi(route.substr(pos + 8));
+        pos = route.find(\"name=\"); if (pos != std::string::npos) name = route.substr(pos + 5, route.find('&', pos) - pos - 5);
+        pos = route.find(\"branch=\"); if (pos != std::string::npos) branch = route.substr(pos + 7, route.find('&', pos) - pos - 7);
+        pos = route.find(\"compose=\"); if (pos != std::string::npos) compose = route.substr(pos + 8, route.find('&', pos) - pos - 8);
+        pos = route.find(\"webPort=\"); if (pos != std::string::npos) web = std::stoi(route.substr(pos + 8, route.find('&', pos) - pos - 8));
         pos = route.find(\"apiPort=\"); if (pos != std::string::npos) api = std::stoi(route.substr(pos + 8));
         return envManager_.addEnvironment({name, branch, compose, web, api});
     }
@@ -356,10 +399,10 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
         std::string name, branch, compose;
         int web = 0, api = 0;
         size_t pos;
-        pos = route.find(\"name=\"); if (pos != std::string::npos) name = route.substr(pos + 5);
-        pos = route.find(\"branch=\"); if (pos != std::string::npos) branch = route.substr(pos + 7);
-        pos = route.find(\"compose=\"); if (pos != std::string::npos) compose = route.substr(pos + 8);
-        pos = route.find(\"webPort=\"); if (pos != std::string::npos) web = std::stoi(route.substr(pos + 8));
+        pos = route.find(\"name=\"); if (pos != std::string::npos) name = route.substr(pos + 5, route.find('&', pos) - pos - 5);
+        pos = route.find(\"branch=\"); if (pos != std::string::npos) branch = route.substr(pos + 7, route.find('&', pos) - pos - 7);
+        pos = route.find(\"compose=\"); if (pos != std::string::npos) compose = route.substr(pos + 8, route.find('&', pos) - pos - 8);
+        pos = route.find(\"webPort=\"); if (pos != std::string::npos) web = std::stoi(route.substr(pos + 8, route.find('&', pos) - pos - 8));
         pos = route.find(\"apiPort=\"); if (pos != std::string::npos) api = std::stoi(route.substr(pos + 8));
         return envManager_.updateEnvironment({name, branch, compose, web, api});
     }
@@ -379,54 +422,54 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
 "
 
     # index.html
-    write_file "$WWW_DIR/index.html" "
+    write_file "$WWW_DIR/index.html" '
 <!DOCTYPE html>
 <html>
 <head>
     <title>Sharpishly Dev Dashboard</title>
-    <link rel=\"stylesheet\" href=\"style.css\">
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <h1>Sharpishly Dev Dashboard</h1>
-    <div class=\"buttons\">
-        <button onclick=\"callApi('/generate-cert')\">Generate Cert</button>
-        <button onclick=\"callApi('/cleanup')\">Cleanup</button>
-        <button onclick=\"callApi('/update-repo')\">Update Repo</button>
-        <button onclick=\"callApi('/status')\">Docker Status</button>
-        <button onclick=\"callApi('/update-hosts')\">Update Hosts</button>
+    <div class="buttons">
+        <button onclick="callApi(\'/generate-cert\')">Generate Cert</button>
+        <button onclick="callApi(\'/cleanup\')">Cleanup</button>
+        <button onclick="callApi(\'/update-repo\')">Update Repo</button>
+        <button onclick="callApi(\'/status\')">Docker Status</button>
+        <button onclick="callApi(\'/update-hosts\')">Update Hosts</button>
     </div>
     <h2>Environments</h2>
-    <form id=\"env-form\">
-        Name: <input type=\"text\" id=\"env-name\" required>
-        Branch: <input type=\"text\" id=\"env-branch\" required>
-        Compose: <input type=\"text\" id=\"env-compose\" required>
-        Web Port: <input type=\"number\" id=\"env-webPort\" required>
-        API Port: <input type=\"number\" id=\"env-apiPort\" required>
-        <button type=\"button\" onclick=\"addEnvironment()\">Add / Update</button>
+    <form id="env-form">
+        Name: <input type="text" id="env-name" required>
+        Branch: <input type="text" id="env-branch" required>
+        Compose: <input type="text" id="env-compose" required>
+        Web Port: <input type="number" id="env-webPort" required>
+        API Port: <input type="number" id="env-apiPort" required>
+        <button type="button" onclick="addEnvironment()">Add / Update</button>
     </form>
-    <div id=\"env-list\"></div>
-    <pre id=\"output\"></pre>
-    <script src=\"script.js\"></script>
+    <div id="env-list"></div>
+    <pre id="output"></pre>
+    <script src="script.js"></script>
     <script>
         /**
          * @brief Lists all environments in the dashboard
          */
         async function listEnvironments() {
-            const outputEl = document.getElementById('env-list');
-            outputEl.innerHTML = '';
+            const outputEl = document.getElementById("env-list");
+            outputEl.innerHTML = "";
             try {
-                const res = await fetch('/environments/list', { method: 'POST' });
+                const res = await fetch("/environments/list", { method: "POST" });
                 const text = await res.text();
-                text.split('\\n').forEach(line => {
-                    if (line.trim() !== '') {
-                        const div = document.createElement('div');
+                text.split("\n").forEach(line => {
+                    if (line.trim() !== "") {
+                        const div = document.createElement("div");
                         div.textContent = line;
-                        const envName = line.split(',')[0].split(':')[1].trim();
-                        const btnDeploy = document.createElement('button');
-                        btnDeploy.textContent = 'Deploy';
+                        const envName = line.split(",")[0].split(":")[1].trim();
+                        const btnDeploy = document.createElement("button");
+                        btnDeploy.textContent = "Deploy";
                         btnDeploy.onclick = () => deployEnvironment(envName);
-                        const btnRemove = document.createElement('button');
-                        btnRemove.textContent = 'Remove';
+                        const btnRemove = document.createElement("button");
+                        btnRemove.textContent = "Remove";
                         btnRemove.onclick = () => removeEnvironment(envName);
                         div.appendChild(btnDeploy);
                         div.appendChild(btnRemove);
@@ -434,7 +477,7 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
                     }
                 });
             } catch (error) {
-                document.getElementById('output').textContent = '❌ Error listing environments: ' + error.message;
+                document.getElementById("output").textContent = "❌ Error listing environments: " + error.message;
             }
         }
 
@@ -443,10 +486,10 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
          * @param name Environment name to deploy
          */
         async function deployEnvironment(name) {
-            const outputEl = document.getElementById('output');
-            outputEl.textContent = '';
+            const outputEl = document.getElementById("output");
+            outputEl.textContent = "";
             try {
-                const res = await fetch('/environments/deploy?name=' + encodeURIComponent(name), { method: 'POST' });
+                const res = await fetch("/environments/deploy?name=" + encodeURIComponent(name), { method: "POST" });
                 const reader = res.body.getReader();
                 const decoder = new TextDecoder();
                 while (true) {
@@ -456,7 +499,7 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
                     outputEl.scrollTop = outputEl.scrollHeight;
                 }
             } catch (error) {
-                outputEl.textContent = '❌ Error deploying environment: ' + error.message;
+                outputEl.textContent = "❌ Error deploying environment: " + error.message;
             }
         }
 
@@ -465,13 +508,13 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
          * @param name Environment name to remove
          */
         async function removeEnvironment(name) {
-            const outputEl = document.getElementById('output');
+            const outputEl = document.getElementById("output");
             try {
-                const res = await fetch('/environments/remove?name=' + encodeURIComponent(name), { method: 'POST' });
+                const res = await fetch("/environments/remove?name=" + encodeURIComponent(name), { method: "POST" });
                 outputEl.textContent = await res.text();
                 listEnvironments();
             } catch (error) {
-                outputEl.textContent = '❌ Error removing environment: ' + error.message;
+                outputEl.textContent = "❌ Error removing environment: " + error.message;
             }
         }
 
@@ -479,19 +522,23 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
          * @brief Adds or updates an environment
          */
         async function addEnvironment() {
-            const name = document.getElementById('env-name').value;
-            const branch = document.getElementById('env-branch').value;
-            const compose = document.getElementById('env-compose').value;
-            const web = document.getElementById('env-webPort').value;
-            const api = document.getElementById('env-apiPort').value;
-            const path = `/environments/add?name=${encodeURIComponent(name)}&branch=${encodeURIComponent(branch)}&compose=${encodeURIComponent(compose)}&webPort=${web}&apiPort=${api}`;
-            const outputEl = document.getElementById('output');
+            const name = document.getElementById("env-name").value;
+            const branch = document.getElementById("env-branch").value;
+            const compose = document.getElementById("env-compose").value;
+            const web = document.getElementById("env-webPort").value;
+            const api = document.getElementById("env-apiPort").value;
+            const path = "/environments/add?name=" + encodeURIComponent(name) +
+                        "&branch=" + encodeURIComponent(branch) +
+                        "&compose=" + encodeURIComponent(compose) +
+                        "&webPort=" + web +
+                        "&apiPort=" + api;
+            const outputEl = document.getElementById("output");
             try {
-                const res = await fetch(path, { method: 'POST' });
+                const res = await fetch(path, { method: "POST" });
                 outputEl.textContent = await res.text();
                 listEnvironments();
             } catch (error) {
-                outputEl.textContent = '❌ Error adding environment: ' + error.message;
+                outputEl.textContent = "❌ Error adding environment: " + error.message;
             }
         }
 
@@ -500,7 +547,7 @@ std::string EnvironmentController::handleRequest(const std::string &route) {
     </script>
 </body>
 </html>
-"
+'
 
     # style.css
     write_file "$WWW_DIR/style.css" "
@@ -564,8 +611,10 @@ async function callApi(path) {
 "
 
     echo "✅ Full project generated with integrated Environment Management (add/update/remove/deploy) in dashboard."
+    echo "ℹ️ Existing files (main.cpp, AppController.cpp, CertManager.cpp) preserved."
     echo "ℹ️ To build and run, execute './run.sh'"
 }
 
 # Execute main function
 main
+```
