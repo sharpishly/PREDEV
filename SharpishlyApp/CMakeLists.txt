@@ -6,6 +6,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include_directories(include src/Model src/View src/Controller)
 
-file(GLOB SOURCES "src/*.cpp")
-
-add_executable(SharpishlyApp ${SOURCES})
+# Include main.cpp and HttpServer.cpp
+add_executable(SharpishlyApp
+    src/main.cpp
+    src/View/HttpServer.cpp
+)
