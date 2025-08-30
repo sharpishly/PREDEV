@@ -1,87 +1,11 @@
-# Sharpishly Dev Dashboard
-
-A **C++ MVC application** for managing Docker-based development environments, SSL certificates, and DevOps tasks across multiple environments (local, development, staging, production). Includes a **web dashboard** for real-time control and deployment.
-
----
-
-## Features
-
-### Dashboard
-- Web-based interface at `http://localhost:8080`
-- One-click **deploy** for each environment with real-time logs
-- **Add, update, remove environments** from the dashboard
-- Execute common DevOps tasks:
-  - Generate self-signed SSL certificates
-  - Cleanup Docker containers, images, volumes, networks
-  - Update Git repository
-  - Update `/etc/hosts` entries
-  - Check Docker status
-
-### Environment Management
-- Multiple environments with individual Docker Compose files
-- Port checks to prevent conflicts
-- Branch management for each environment
-- Automatic Git pull before deployment
-- Logs streamed to dashboard
-
-### MVC Structure
-- **Model**: Manages environment data and system operations  
-- **Controller**: Handles HTTP requests and invokes model functions  
-- **View**: Web dashboard (`HTML`, `CSS`, `JavaScript`)  
-
----
-
-## Project Structure
-
-
-```
-PREDEV/
-├── generate_all.sh # Script to generate full project files
-├── run.sh # Build and run the C++ server
-├── CMakeLists.txt
-├── src/
-│ ├── main.cpp
-│ ├── controller/
-│ └── model/
-└── www/
-├── index.html
-├── style.css
-└── script.js
-```
-
-
----
-
-## Prerequisites
-
-- **C++17 compiler** (tested with GCC 13+)
-- **CMake** (>= 3.10)
-- **Docker & Docker Compose**
-- **Git**
-- **Linux/macOS** (for system commands and port checks)
-- Optional: `lsof` for port checking
-
----
-
-## Setup
-
-1. **Clone or create the project folder**:
-
-```bash
-mkdir PREDEV && cd PREDEV
-chmod +x generate_all.sh
-./generate_all.sh
-./run.sh
-````
-
-Perfect! Here’s an enhanced **`README.md`** with **embedded screenshots placeholders** and step-by-step visuals to make it very beginner-friendly. You can later replace the placeholders with actual images from your running dashboard.
+Absolutely! Here’s a **detailed `README.md`** for your fully integrated C++ Docker/DevOps dashboard project, covering setup, usage, features, and development notes.
 
 ---
 
 ```markdown
 # Sharpishly Dev Dashboard
 
-A **C++ MVC application** for managing Docker-based development environments, SSL certificates, and DevOps tasks across multiple environments (local, development, staging, production). Includes a **web dashboard** for real-time control and deployment.
+A **C++ MVC application** for managing Docker-based development environments, certificates, and DevOps tasks across multiple environments (local, development, staging, production). Includes a **web dashboard** for real-time control and deployment.
 
 ---
 
@@ -89,17 +13,18 @@ A **C++ MVC application** for managing Docker-based development environments, SS
 
 ### Dashboard
 - Web-based interface at `http://localhost:8080`
+- Monitors and manages multiple environments
 - One-click **deploy** for each environment with real-time logs
 - **Add, update, remove environments** from the dashboard
 - Execute common DevOps tasks:
   - Generate self-signed SSL certificates
   - Cleanup Docker containers, images, volumes, networks
-  - Update Git repository
+  - Update git repository
   - Update `/etc/hosts` entries
   - Check Docker status
 
 ### Environment Management
-- Multiple environments with individual Docker Compose files
+- Supports multiple environments with individual Docker Compose files
 - Port checks to prevent conflicts
 - Branch management for each environment
 - Automatic Git pull before deployment
@@ -119,15 +44,25 @@ A **C++ MVC application** for managing Docker-based development environments, SS
 PREDEV/
 ├── generate\_all.sh      # Script to generate full project files
 ├── run.sh               # Build and run the C++ server
-├── CMakeLists.txt
+├── CMakeLists.txt       # CMake build configuration
 ├── src/
-│   ├── main.cpp
+│   ├── main.cpp         # HTTP server entry point
 │   ├── controller/
+│   │   ├── AppController.cpp
+│   │   ├── AppController.h
+│   │   ├── EnvironmentController.cpp
+│   │   └── EnvironmentController.h
 │   └── model/
+│       ├── CertManager.cpp/.h
+│       ├── DockerManager.cpp/.h
+│       ├── GitManager.cpp/.h
+│       ├── HostManager.cpp/.h
+│       ├── EnvironmentManager.cpp/.h
+│       └── execCommand.h
 └── www/
-├── index.html
-├── style.css
-└── script.js
+├── index.html       # Dashboard web page
+├── style.css        # Dashboard styling
+└── script.js        # Client-side JS
 
 ````
 
@@ -159,6 +94,12 @@ chmod +x generate_all.sh
 ./generate_all.sh
 ```
 
+This will generate:
+
+* Full MVC structure
+* Dashboard (`index.html`, `style.css`, `script.js`)
+* EnvironmentManager with add/update/remove/deploy
+
 3. **Build and run the server**:
 
 ```bash
@@ -169,37 +110,28 @@ Server will start at: `http://localhost:8080`
 
 ---
 
-## Dashboard Usage
+## Usage
 
-### Main DevOps Panel
+### Dashboard
 
-![Dashboard Main Panel](screenshots/dashboard-main.png)
-*Buttons for generating SSL, cleaning Docker, updating Git repo, checking Docker status, updating hosts.*
+* Open `http://localhost:8080`
+* **DevOps buttons**:
 
----
+  * Generate SSL certificate
+  * Cleanup Docker
+  * Update Git repo
+  * Check Docker status
+  * Update `/etc/hosts`
+* **Environment section**:
 
-### Environment Management
-
-![Environment Management](screenshots/environment-list.png)
-*List of environments with branch, Docker Compose file, ports. Includes `Deploy` and `Remove` buttons.*
-
----
-
-### Add / Update Environment
-
-![Add Environment](screenshots/add-environment.png)
-*Form to add a new environment or update an existing one.*
+  * **List environments** with current branch, Docker Compose file, ports
+  * **Deploy environment**: streams logs in real-time
+  * **Add/Update environment**: enter details in the form
+  * **Remove environment**: click `Remove` next to the environment
 
 ---
 
-### Real-Time Deployment Logs
-
-![Deployment Logs](screenshots/deploy-logs.png)
-*Clicking `Deploy` streams logs in real-time to the dashboard.*
-
----
-
-## Environment Deployment Workflow
+### Environment Deployment Workflow
 
 1. Click **Deploy** → server checks:
 
@@ -214,24 +146,24 @@ Server will start at: `http://localhost:8080`
 
 ## Development Notes
 
-* Add new features by creating Models/Controllers and integrating into `AppController.cpp`
-* View updates: modify `www/index.html`, `style.css`, `script.js`
-* Docker Compose: each environment can have its own compose file
-* Real-time logs: uses HTTP streaming to `<pre>` element in dashboard
+* **Add new features** by creating new Models/Controllers and integrating into `AppController.cpp`
+* **View updates**: modify `www/index.html`, `style.css`, `script.js`
+* **Docker Compose**: each environment can have its own compose file
+* **Real-time logs**: uses HTTP streaming to `<pre>` element in dashboard
 
 ---
 
 ## Security Notes
 
-* Runs as the user who started the server
-* Commands like `sudo systemctl stop nginx` require proper permissions
-* Use caution when deploying in production
+* Currently runs as the user who started the server.
+* Commands like `sudo systemctl stop nginx` require user permissions.
+* Use caution when deploying in production.
 
 ---
 
 ## License
 
-MIT License
+This project is **MIT licensed**.
 
 ---
 
@@ -241,27 +173,12 @@ MIT License
 * Role-based access control for dashboard
 * Notifications when ports are in use or deployment fails
 * Integration with CI/CD pipelines
-* Screenshots auto-updated after deployment for live preview
-
----
-
-### Screenshot Folder
-
-* Place screenshots in `PREDEV/screenshots/`
-* Example files:
-
-  * `dashboard-main.png`
-  * `environment-list.png`
-  * `add-environment.png`
-  * `deploy-logs.png`
 
 ```
 
 ---
 
-This version makes your project **visually descriptive** for new developers, and gives a **step-by-step guide** to using the dashboard.  
+I can also create a **`README.md` with embedded screenshots and sample dashboard view** if you want it to be **even more visually descriptive for new developers**.  
 
-I can also create a **`screenshots` folder with placeholder images** automatically via a script so you can directly run the project and replace them with actual snapshots.  
-
-Do you want me to do that?
+Do you want me to do that next?
 ```

@@ -1,50 +1,122 @@
+
 <!DOCTYPE html>
 <html>
 <head>
-<title>Sharpishly Dev Dashboard</title>
-<link rel="stylesheet" href="style.css">
+    <title>Sharpishly Dev Dashboard</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<h1>Sharpishly Dev Dashboard</h1>
-<div class="buttons">
-<button onclick="callApi('/generate-cert')">Generate Cert</button>
-<button onclick="callApi('/cleanup')">Cleanup</button>
-<button onclick="callApi('/update-repo')">Update Repo</button>
-<button onclick="callApi('/status')">Docker Status</button>
-<button onclick="callApi('/update-hosts')">Update Hosts</button>
-</div>
-
-<h2>Environments</h2>
-<form id="env-form">
-Name: <input type="text" id="env-name"> Branch: <input type="text" id="env-branch">
-Compose: <input type="text" id="env-compose"> Web Port: <input type="number" id="env-webPort"> API Port: <input type="number" id="env-apiPort">
-<button type="button" onclick="addEnvironment()">Add / Update</button>
-</form>
-<div id="env-list"></div>
-<pre id="output"></pre>
-
-<script src="script.js"></script>
-<script>
-async function listEnvironments(){
-    const outputEl=document.getElementById('env-list'); outputEl.innerHTML='';
-    const res=await fetch('/environments/list',{method:'POST'}); const text=await res.text();
-    text.split('\n').forEach(line=>{
-        if(line.trim()!==''){
-            const div=document.createElement('div'); div.textContent=line;
-            const envName=line.split(',')[0].split(':')[1].trim();
-            const btnDeploy=document.createElement('button'); btnDeploy.textContent='Deploy'; btnDeploy.onclick=()=>deployEnvironment(envName);
-            const btnRemove=document.createElement('button'); btnRemove.textContent='Remove'; btnRemove.onclick=()=>removeEnvironment(envName);
-            div.appendChild(btnDeploy); div.appendChild(btnRemove);
-            outputEl.appendChild(div);
+    <h1>Sharpishly Dev Dashboard</h1>
+    <div class="buttons">
+        <button onclick="callApi('/generate-cert')">Generate Cert</button>
+        <button onclick="callApi('/cleanup')">Cleanup</button>
+        <button onclick="callApi('/update-repo')">Update Repo</button>
+        <button onclick="callApi('/status')">Docker Status</button>
+        <button onclick="callApi('/update-hosts')">Update Hosts</button>
+    </div>
+    <h2>Environments</h2>
+    <form id="env-form">
+        Name: <input type="text" id="env-name" required>
+        Branch: <input type="text" id="env-branch" required>
+        Compose: <input type="text" id="env-compose" required>
+        Web Port: <input type="number" id="env-webPort" required>
+        API Port: <input type="number" id="env-apiPort" required>
+        <button type="button" onclick="addEnvironment()">Add / Update</button>
+    </form>
+    <div id="env-list"></div>
+    <pre id="output"></pre>
+    <script src="script.js"></script>
+    <script>
+        /**
+         * @brief Lists all environments in the dashboard
+         */
+        async function listEnvironments() {
+            const outputEl = document.getElementById('env-list');
+            outputEl.innerHTML = '';
+            try {
+                const res = await fetch('/environments/list', { method: 'POST' });
+                const text = await res.text();
+                text.split('\n').forEach(line => {
+                    if (line.trim() !== '') {
+                        const div = document.createElement('div');
+                        div.textContent = line;
+                        const envName = line.split(',')[0].split(':')[1].trim();
+                        const btnDeploy = document.createElement('button');
+                        btnDeploy.textContent = 'Deploy';
+                        btnDeploy.onclick = () => deployEnvironment(envName);
+                        const btnRemove = document.createElement('button');
+                        btnRemove.textContent = 'Remove';
+                        btnRemove.onclick = () => removeEnvironment(envName);
+                        div.appendChild(btnDeploy);
+                        div.appendChild(btnRemove);
+                        outputEl.appendChild(div);
+                    }
+                });
+            } catch (error) {
+                document.getElementById('output').textContent = '❌ Error listing environments: ' + error.message;
+            }
         }
-    });
-}
-async function deployEnvironment(name){const outputEl=document.getElementById('output'); outputEl.textContent=''; const res=await fetch('/environments/deploy?name='+name,{method:'POST'}); const reader=res.body.getReader(); const decoder=new TextDecoder();
-while(true){const {done,value}=await reader.read(); if(done) break; outputEl.textContent+=decoder.decode(value); outputEl.scrollTop=outputEl.scrollHeight;}}
-async function removeEnvironment(name){const outputEl=document.getElementById('output'); const res=await fetch('/environments/remove?name='+name,{method:'POST'}); outputEl.textContent=await res.text(); listEnvironments();}
-async function addEnvironment(){const name=document.getElementById('env-name').value; const branch=document.getElementById('env-branch').value; const compose=document.getElementById('env-compose').value; const web=document.getElementById('env-webPort').value; const api=document.getElementById('env-apiPort').value;
-const path=`/environments/add?name=${name}&branch=${branch}&compose=${compose}&webPort=${web}&apiPort=${api}`; const outputEl=document.getElementById('output'); const res=await fetch(path,{method:'POST'}); outputEl.textContent=await res.text(); listEnvironments();}
-listEnvironments();
-</script>
+
+        /**
+         * @brief Deploys an environment and streams output
+         * @param name Environment name to deploy
+         */
+        async function deployEnvironment(name) {
+            const outputEl = document.getElementById('output');
+            outputEl.textContent = '';
+            try {
+                const res = await fetch('/environments/deploy?name=' + encodeURIComponent(name), { method: 'POST' });
+                const reader = res.body.getReader();
+                const decoder = new TextDecoder();
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+                    outputEl.textContent += decoder.decode(value);
+                    outputEl.scrollTop = outputEl.scrollHeight;
+                }
+            } catch (error) {
+                outputEl.textContent = '❌ Error deploying environment: ' + error.message;
+            }
+        }
+
+        /**
+         * @brief Removes an environment and refreshes the list
+         * @param name Environment name to remove
+         */
+        async function removeEnvironment(name) {
+            const outputEl = document.getElementById('output');
+            try {
+                const res = await fetch('/environments/remove?name=' + encodeURIComponent(name), { method: 'POST' });
+                outputEl.textContent = await res.text();
+                listEnvironments();
+            } catch (error) {
+                outputEl.textContent = '❌ Error removing environment: ' + error.message;
+            }
+        }
+
+        /**
+         * @brief Adds or updates an environment
+         */
+        async function addEnvironment() {
+            const name = document.getElementById('env-name').value;
+            const branch = document.getElementById('env-branch').value;
+            const compose = document.getElementById('env-compose').value;
+            const web = document.getElementById('env-webPort').value;
+            const api = document.getElementById('env-apiPort').value;
+            const path = ;
+            const outputEl = document.getElementById('output');
+            try {
+                const res = await fetch(path, { method: 'POST' });
+                outputEl.textContent = await res.text();
+                listEnvironments();
+            } catch (error) {
+                outputEl.textContent = '❌ Error adding environment: ' + error.message;
+            }
+        }
+
+        // Initialize environment list
+        listEnvironments();
+    </script>
 </body>
 </html>
+
