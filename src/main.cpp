@@ -5,14 +5,14 @@
 
 int main() {
     try {
-        // Create controllers
+        // Controllers
         AppController appController;
         EnvironmentController envController;
 
-        // Create HTTP server
+        // Server
         HttpServer server(8080);
 
-        // Register routes
+        // Routes
         server.addRoute("/", [&](const std::string& req) {
             return appController.handleRequest(req);
         });
@@ -21,15 +21,14 @@ int main() {
             return envController.handleRequest(req);
         });
 
-        std::cout << "🚀 Server running on http://localhost:8080" << std::endl;
+        std::cout << "🚀 Server running at http://localhost:8080" << std::endl;
 
-        // Start server loop
+        // Start loop
         server.start();
 
     } catch (const std::exception& e) {
         std::cerr << "❌ Fatal error: " << e.what() << std::endl;
         return 1;
     }
-
     return 0;
 }
