@@ -1,7 +1,9 @@
-#pragma once
-#include <string>
+#ifndef APPCONTROLLER_H
+#define APPCONTROLLER_H
 
 class AppController {
 public:
-    std::string handleRequest(const std::string& request);
+    void start();
 };
+
+#endif // APPCONTROLLER_H

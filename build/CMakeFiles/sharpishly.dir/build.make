@@ -83,10 +83,24 @@ CMakeFiles/sharpishly.dir/src/controller/AppController.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/sharpishly.dir/src/controller/AppController.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/joe90/Documents/PREDEV/src/controller/AppController.cpp -o CMakeFiles/sharpishly.dir/src/controller/AppController.cpp.s
 
+CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o: CMakeFiles/sharpishly.dir/flags.make
+CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o: /home/joe90/Documents/PREDEV/src/controller/EnvironmentController.cpp
+CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o: CMakeFiles/sharpishly.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o -MF CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o.d -o CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o -c /home/joe90/Documents/PREDEV/src/controller/EnvironmentController.cpp
+
+CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/joe90/Documents/PREDEV/src/controller/EnvironmentController.cpp > CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.i
+
+CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/joe90/Documents/PREDEV/src/controller/EnvironmentController.cpp -o CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.s
+
 CMakeFiles/sharpishly.dir/src/main.cpp.o: CMakeFiles/sharpishly.dir/flags.make
 CMakeFiles/sharpishly.dir/src/main.cpp.o: /home/joe90/Documents/PREDEV/src/main.cpp
 CMakeFiles/sharpishly.dir/src/main.cpp.o: CMakeFiles/sharpishly.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sharpishly.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/sharpishly.dir/src/main.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharpishly.dir/src/main.cpp.o -MF CMakeFiles/sharpishly.dir/src/main.cpp.o.d -o CMakeFiles/sharpishly.dir/src/main.cpp.o -c /home/joe90/Documents/PREDEV/src/main.cpp
 
 CMakeFiles/sharpishly.dir/src/main.cpp.i: cmake_force
@@ -100,7 +114,7 @@ CMakeFiles/sharpishly.dir/src/main.cpp.s: cmake_force
 CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o: CMakeFiles/sharpishly.dir/flags.make
 CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o: /home/joe90/Documents/PREDEV/src/model/CertManager.cpp
 CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o: CMakeFiles/sharpishly.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o -MF CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o.d -o CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o -c /home/joe90/Documents/PREDEV/src/model/CertManager.cpp
 
 CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.i: cmake_force
@@ -114,7 +128,7 @@ CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.s: cmake_force
 CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o: CMakeFiles/sharpishly.dir/flags.make
 CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o: /home/joe90/Documents/PREDEV/src/model/DockerManager.cpp
 CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o: CMakeFiles/sharpishly.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o -MF CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o.d -o CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o -c /home/joe90/Documents/PREDEV/src/model/DockerManager.cpp
 
 CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.i: cmake_force
@@ -125,10 +139,24 @@ CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/joe90/Documents/PREDEV/src/model/DockerManager.cpp -o CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.s
 
+CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o: CMakeFiles/sharpishly.dir/flags.make
+CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o: /home/joe90/Documents/PREDEV/src/model/EnvironmentManager.cpp
+CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o: CMakeFiles/sharpishly.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o -MF CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o.d -o CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o -c /home/joe90/Documents/PREDEV/src/model/EnvironmentManager.cpp
+
+CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/joe90/Documents/PREDEV/src/model/EnvironmentManager.cpp > CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.i
+
+CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/joe90/Documents/PREDEV/src/model/EnvironmentManager.cpp -o CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.s
+
 CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o: CMakeFiles/sharpishly.dir/flags.make
 CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o: /home/joe90/Documents/PREDEV/src/model/GitManager.cpp
 CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o: CMakeFiles/sharpishly.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o -MF CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o.d -o CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o -c /home/joe90/Documents/PREDEV/src/model/GitManager.cpp
 
 CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.i: cmake_force
@@ -142,7 +170,7 @@ CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.s: cmake_force
 CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o: CMakeFiles/sharpishly.dir/flags.make
 CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o: /home/joe90/Documents/PREDEV/src/model/HostsManager.cpp
 CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o: CMakeFiles/sharpishly.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o -MF CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o.d -o CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o -c /home/joe90/Documents/PREDEV/src/model/HostsManager.cpp
 
 CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.i: cmake_force
@@ -156,7 +184,7 @@ CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.s: cmake_force
 CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o: CMakeFiles/sharpishly.dir/flags.make
 CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o: /home/joe90/Documents/PREDEV/src/view/HttpServer.cpp
 CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o: CMakeFiles/sharpishly.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o -MF CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o.d -o CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o -c /home/joe90/Documents/PREDEV/src/view/HttpServer.cpp
 
 CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.i: cmake_force
@@ -170,9 +198,11 @@ CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.s: cmake_force
 # Object files for target sharpishly
 sharpishly_OBJECTS = \
 "CMakeFiles/sharpishly.dir/src/controller/AppController.cpp.o" \
+"CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o" \
 "CMakeFiles/sharpishly.dir/src/main.cpp.o" \
 "CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o" \
 "CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o" \
+"CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o" \
 "CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o" \
 "CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o" \
 "CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o"
@@ -181,15 +211,17 @@ sharpishly_OBJECTS = \
 sharpishly_EXTERNAL_OBJECTS =
 
 sharpishly: CMakeFiles/sharpishly.dir/src/controller/AppController.cpp.o
+sharpishly: CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o
 sharpishly: CMakeFiles/sharpishly.dir/src/main.cpp.o
 sharpishly: CMakeFiles/sharpishly.dir/src/model/CertManager.cpp.o
 sharpishly: CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.o
+sharpishly: CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o
 sharpishly: CMakeFiles/sharpishly.dir/src/model/GitManager.cpp.o
 sharpishly: CMakeFiles/sharpishly.dir/src/model/HostsManager.cpp.o
 sharpishly: CMakeFiles/sharpishly.dir/src/view/HttpServer.cpp.o
 sharpishly: CMakeFiles/sharpishly.dir/build.make
 sharpishly: CMakeFiles/sharpishly.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Linking CXX executable sharpishly"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable sharpishly"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/sharpishly.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

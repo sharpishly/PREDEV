@@ -153,6 +153,30 @@ src/controller/AppController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/src/controller/AppController.cpp.s
 .PHONY : src/controller/AppController.cpp.s
 
+src/controller/EnvironmentController.o: src/controller/EnvironmentController.cpp.o
+.PHONY : src/controller/EnvironmentController.o
+
+# target to build an object file
+src/controller/EnvironmentController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.o
+.PHONY : src/controller/EnvironmentController.cpp.o
+
+src/controller/EnvironmentController.i: src/controller/EnvironmentController.cpp.i
+.PHONY : src/controller/EnvironmentController.i
+
+# target to preprocess a source file
+src/controller/EnvironmentController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.i
+.PHONY : src/controller/EnvironmentController.cpp.i
+
+src/controller/EnvironmentController.s: src/controller/EnvironmentController.cpp.s
+.PHONY : src/controller/EnvironmentController.s
+
+# target to generate assembly for a file
+src/controller/EnvironmentController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/src/controller/EnvironmentController.cpp.s
+.PHONY : src/controller/EnvironmentController.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -224,6 +248,30 @@ src/model/DockerManager.s: src/model/DockerManager.cpp.s
 src/model/DockerManager.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/src/model/DockerManager.cpp.s
 .PHONY : src/model/DockerManager.cpp.s
+
+src/model/EnvironmentManager.o: src/model/EnvironmentManager.cpp.o
+.PHONY : src/model/EnvironmentManager.o
+
+# target to build an object file
+src/model/EnvironmentManager.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.o
+.PHONY : src/model/EnvironmentManager.cpp.o
+
+src/model/EnvironmentManager.i: src/model/EnvironmentManager.cpp.i
+.PHONY : src/model/EnvironmentManager.i
+
+# target to preprocess a source file
+src/model/EnvironmentManager.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.i
+.PHONY : src/model/EnvironmentManager.cpp.i
+
+src/model/EnvironmentManager.s: src/model/EnvironmentManager.cpp.s
+.PHONY : src/model/EnvironmentManager.s
+
+# target to generate assembly for a file
+src/model/EnvironmentManager.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/src/model/EnvironmentManager.cpp.s
+.PHONY : src/model/EnvironmentManager.cpp.s
 
 src/model/GitManager.o: src/model/GitManager.cpp.o
 .PHONY : src/model/GitManager.o
@@ -309,6 +357,9 @@ help:
 	@echo "... src/controller/AppController.o"
 	@echo "... src/controller/AppController.i"
 	@echo "... src/controller/AppController.s"
+	@echo "... src/controller/EnvironmentController.o"
+	@echo "... src/controller/EnvironmentController.i"
+	@echo "... src/controller/EnvironmentController.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
@@ -318,6 +369,9 @@ help:
 	@echo "... src/model/DockerManager.o"
 	@echo "... src/model/DockerManager.i"
 	@echo "... src/model/DockerManager.s"
+	@echo "... src/model/EnvironmentManager.o"
+	@echo "... src/model/EnvironmentManager.i"
+	@echo "... src/model/EnvironmentManager.s"
 	@echo "... src/model/GitManager.o"
 	@echo "... src/model/GitManager.i"
 	@echo "... src/model/GitManager.s"

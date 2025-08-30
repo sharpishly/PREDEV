@@ -1,6 +1,10 @@
 #include "AppController.h"
+#include "../view/HttpServer.h"
+#include <iostream>
 
-std::string AppController::handleRequest(const std::string& request) {
-    return "<h1>Welcome to Sharpishly Dashboard</h1>"
-           "<a href='/environments'>Manage Environments</a>";
+void AppController::start() {
+    std::cout << "[AppController] Starting application..." << std::endl;
+
+    HttpServer server;
+    server.start(8080); // bind to localhost:8080
 }

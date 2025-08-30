@@ -81,12 +81,12 @@ clean: CMakeFiles/sharpishly.dir/clean
 CMakeFiles/sharpishly.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sharpishly.dir/build.make CMakeFiles/sharpishly.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8 "Built target sharpishly"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/joe90/Documents/PREDEV/build/CMakeFiles --progress-num=1,2,3,4,5,6,7,8,9,10 "Built target sharpishly"
 .PHONY : CMakeFiles/sharpishly.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/sharpishly.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/joe90/Documents/PREDEV/build/CMakeFiles 8
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/joe90/Documents/PREDEV/build/CMakeFiles 10
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/sharpishly.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/joe90/Documents/PREDEV/build/CMakeFiles 0
 .PHONY : CMakeFiles/sharpishly.dir/rule

@@ -1,21 +1,17 @@
 #include "HttpServer.h"
+#include <httplib.h>   // single header HTTP library (cpp-httplib)
 #include <iostream>
-#include <thread>
-#include <chrono>
 
-HttpServer::HttpServer(int port) : port(port) {}
+void HttpServer::start(int port) {
+    httplib::Server svr;
 
-void HttpServer::addRoute(const std::string& path, Handler handler) {
-    routes[path] = handler;
-}
+    // Simple route
+    svr.Get("/", [](const httplib::Request&, httplib::Response& res) {
+        res.set_content("Hello from sharpishly!", "text/plain");
+    });
 
-void HttpServer::start() {
-    std::cout << "📡 Simulated HTTP Server running on port " << port << std::endl;
-    std::cout << "Try hitting '/' or '/environments'" << std::endl;
+    std::cout << "[HttpServer] Listening on port " << port << std::endl;
 
-    // Fake loop (replace with real sockets later)
-    while (true) {
-        std::this_thread::sleep_for(std::chrono::seconds(5));
-        std::cout << "Server heartbeat..." << std::endl;
-    }
+    // Block here until process is stopped
+    svr.listen("0.0.0.0", port);
 }
