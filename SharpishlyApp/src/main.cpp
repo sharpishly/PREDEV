@@ -1,3 +1,4 @@
+#include <iostream>           // <-- Add this
 #include "View/HttpServer.h"
 
 int main() {
