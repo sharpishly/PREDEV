@@ -1,3 +1,0 @@
-/home/joe90/Documents/PREDEV/build/CMakeFiles/sharpishly.dir
-/home/joe90/Documents/PREDEV/build/CMakeFiles/edit_cache.dir
-/home/joe90/Documents/PREDEV/build/CMakeFiles/rebuild_cache.dir
