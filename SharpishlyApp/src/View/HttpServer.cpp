@@ -83,7 +83,7 @@ void HttpServer::run() {
         }
 
         // Always serve index.html (later we’ll parse GET paths)
-        std::string body = loadFile("src/View/www/index.html");
+        std::string body = loadFile("../src/View/www/index.html");
 
         std::string response =
             "HTTP/1.1 200 OK\r\n"
