@@ -1,9 +1,10 @@
 #!/bin/bash
 
-#sudo ufw allow 1966
-#sudo ufw status
+sudo ufw allow 1966
 
-chmod -R u+rwX SharpishlyApp/src/View/www
+sudo ufw status
+
+sudo chmod -R u+rwX SharpishlyApp/src/View/www
 
 ls -l SharpishlyApp/src/View/www
 
