@@ -1,5 +1,7 @@
 #include "HttpServer.h"
 #include <iostream>
+#include <fstream>
+#include <sstream>
 #include <cstring>
 #include <unistd.h>
 #include <netinet/in.h>
@@ -22,6 +24,17 @@ void HttpServer::stop() {
     if (serverThread.joinable()) {
         serverThread.join();
     }
+}
+
+std::string HttpServer::loadFile(const std::string& filepath) {
+    std::ifstream file(filepath);
+    if (!file.is_open()) {
+        return "<html><body><h1>404 Not Found</h1></body></html>";
+    }
+
+    std::ostringstream buffer;
+    buffer << file.rdbuf();
+    return buffer.str();
 }
 
 void HttpServer::run() {
@@ -69,15 +82,16 @@ void HttpServer::run() {
             continue;
         }
 
-        // Proper HTTP response
-        const char* body = "Hello from C++ MVC!";
+        // Always serve index.html (later we’ll parse GET paths)
+        std::string body = loadFile("src/View/www/index.html");
+
         std::string response =
             "HTTP/1.1 200 OK\r\n"
-            "Content-Type: text/plain\r\n"
-            "Content-Length: " + std::to_string(strlen(body)) + "\r\n"
+            "Content-Type: text/html\r\n"
+            "Content-Length: " + std::to_string(body.size()) + "\r\n"
             "Connection: close\r\n"
             "\r\n" +
-            std::string(body);
+            body;
 
         send(new_socket, response.c_str(), response.size(), 0);
         close(new_socket);

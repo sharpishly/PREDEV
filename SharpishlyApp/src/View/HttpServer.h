@@ -1,24 +1,26 @@
-#pragma once
+#ifndef HTTPSERVER_H
+#define HTTPSERVER_H
+
 #include <string>
 #include <thread>
 #include <atomic>
 
 class HttpServer {
 public:
-    HttpServer(const std::string& address = "127.0.0.1", int port = 1966);
+    HttpServer(const std::string& addr, int port);
     ~HttpServer();
 
-    // Start the server in a separate thread
     void start();
-
-    // Stop the server
     void stop();
 
 private:
-    void run(); // server loop
+    void run();
+    std::string loadFile(const std::string& filepath);
 
     std::string address;
     int port;
     std::atomic<bool> running;
     std::thread serverThread;
 };
+
+#endif
