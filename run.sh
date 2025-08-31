@@ -10,7 +10,7 @@ sudo chmod -R u+rwX SharpishlyApp/src/View/www
 # Stop Nginx
 sudo systemctl stop nginx
 sudo service nginx stop
-sudo systemctl status nginx
+# sudo systemctl status nginx
 # or
 # sudo service nginx status
 
