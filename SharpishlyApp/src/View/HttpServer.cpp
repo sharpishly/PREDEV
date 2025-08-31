@@ -69,15 +69,17 @@ void HttpServer::run() {
             continue;
         }
 
-        // Minimal HTTP response
-        const char* response =
+        // Proper HTTP response
+        const char* body = "Hello from C++ MVC!";
+        std::string response =
             "HTTP/1.1 200 OK\r\n"
             "Content-Type: text/plain\r\n"
-            "Content-Length: 21\r\n"
-            "\r\n"
-            "Hello from C++ MVC!\n";
+            "Content-Length: " + std::to_string(strlen(body)) + "\r\n"
+            "Connection: close\r\n"
+            "\r\n" +
+            std::string(body);
 
-        send(new_socket, response, strlen(response), 0);
+        send(new_socket, response.c_str(), response.size(), 0);
         close(new_socket);
     }
 
