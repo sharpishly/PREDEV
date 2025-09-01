@@ -10,4 +10,6 @@ include_directories(include src/Model src/View src/Controller)
 add_executable(SharpishlyApp
     src/main.cpp
     src/View/HttpServer.cpp
+    src/Router.cpp
+    src/Controller/HomeController.cpp
 )
