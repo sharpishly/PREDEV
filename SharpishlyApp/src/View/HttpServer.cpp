@@ -7,10 +7,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
-#include "../Router.h"   // <-- Add Router include
-
-HttpServer::HttpServer(const std::string& addr, int p)
-    : address(addr), port(p), running(false) {}
+HttpServer::HttpServer(const std::string& addr, int p, Router& r)
+    : address(addr), port(p), router(r), running(false) {}
 
 HttpServer::~HttpServer() {
     stop();
@@ -84,7 +82,6 @@ void HttpServer::run() {
             continue;
         }
 
-        // Read request into buffer
         char buffer[4096] = {0};
         int valread = read(new_socket, buffer, sizeof(buffer));
         if (valread <= 0) {
@@ -92,7 +89,7 @@ void HttpServer::run() {
             continue;
         }
 
-        // Extract URI from request line: "GET /path HTTP/1.1"
+        // Parse GET path
         std::string request(buffer);
         std::string uri = "/";
         size_t methodEnd = request.find(' ');
@@ -103,8 +100,7 @@ void HttpServer::run() {
             }
         }
 
-        // Use Router instead of always index.html
-        Router router;
+        // Use router passed to constructor
         std::string body = router.route(uri);
 
         std::string response =
