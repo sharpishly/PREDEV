@@ -1,13 +1,23 @@
-#include <iostream>           // <-- Add this
-#include "View/HttpServer.h"
+#include "Router.h"
+#include "Controller/HomeController.h"
 
 int main() {
-    HttpServer server("0.0.0.0", 1966);
-    server.start();
+    Router router;
 
-    std::cout << "Press Enter to stop server..." << std::endl;
-    std::cin.get();
+    // Static route
+    router.addRoute("home/index", [](const std::vector<std::string>& params) {
+        HomeController hc;
+        return hc.index(params);
+    });
 
-    server.stop();
-    return 0;
+    // Dynamic route
+    router.addRoute("user/{id}", [](const std::vector<std::string>& params) {
+        return "<html><body><h1>User Profile</h1><p>User ID: " + params[0] + "</p></body></html>";
+    });
+
+    router.addRoute("post/{category}/{slug}", [](const std::vector<std::string>& params) {
+        return "<html><body><h1>Post</h1><p>Category: " + params[0] + "<br>Slug: " + params[1] + "</p></body></html>";
+    });
+
+    // TODO: Pass router to HttpServer
 }

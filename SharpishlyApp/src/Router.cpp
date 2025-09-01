@@ -1,7 +1,7 @@
 #include "Router.h"
-#include "Controller/HomeController.h"
 #include <sstream>
-#include <algorithm>
+#include <regex>
+#include <iostream>
 
 std::vector<std::string> Router::split(const std::string& str, char delimiter) {
     std::vector<std::string> tokens;
@@ -13,22 +13,34 @@ std::vector<std::string> Router::split(const std::string& str, char delimiter) {
     return tokens;
 }
 
+void Router::addRoute(const std::string& pattern, Handler handler) {
+    routes.push_back({pattern, handler});
+}
+
+bool Router::match(const std::string& pattern, const std::string& uri, std::vector<std::string>& params) {
+    auto pParts = split(pattern, '/');
+    auto uParts = split(uri, '/');
+
+    if (pParts.size() != uParts.size()) return false;
+
+    params.clear();
+    for (size_t i = 0; i < pParts.size(); i++) {
+        if (!pParts[i].empty() && pParts[i][0] == '{' && pParts[i].back() == '}') {
+            // Dynamic param
+            params.push_back(uParts[i]);
+        } else if (pParts[i] != uParts[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 std::string Router::route(const std::string& uri) {
-    // Example: /home/index/123
-    auto parts = split(uri, '/');
-
-    if (parts.empty()) {
-        return "<html><body><h1>Welcome</h1><p>Default route</p></body></html>";
+    for (auto& [pattern, handler] : routes) {
+        std::vector<std::string> params;
+        if (match(pattern, uri, params)) {
+            return handler(params);
+        }
     }
-
-    std::string controller = parts.size() > 0 ? parts[0] : "home";
-    std::string action     = parts.size() > 1 ? parts[1] : "index";
-    std::vector<std::string> params(parts.begin() + 2, parts.end());
-
-    if (controller == "home") {
-        HomeController hc;
-        return hc.dispatch(action, params);
-    }
-
-    return "<html><body><h1>404 Not Found</h1><p>No controller found for: " + controller + "</p></body></html>";
+    return "<html><body><h1>404 Not Found</h1><p>No route for: " + uri + "</p></body></html>";
 }
