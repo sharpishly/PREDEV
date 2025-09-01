@@ -12,12 +12,12 @@ public:
     void stop();
 
 private:
+    void run();
+    std::string loadFile(const std::string& filepath);
+
     std::string address;
     int port;
     bool running;
     std::thread serverThread;
     Router& router;
-
-    void run();
-    std::string loadFile(const std::string& filepath);
 };
