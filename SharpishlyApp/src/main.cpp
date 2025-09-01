@@ -1,6 +1,7 @@
 #include "HttpServer.h"
 #include "../Router.h"
 #include "Controller/HomeController.h"
+#include <iostream>  // <-- Add this line
 
 int main() {
     Router router;
