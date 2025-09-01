@@ -1,6 +1,11 @@
 #!/bin/bash
 
 # ------------------------------
+# Doxygen requires Nginx
+# -----------------------------
+echo ">>> Doxygen requires Nginx..."
+
+# ------------------------------
 # This deployment file will be replace by GitHub Actions
 # -----------------------------
 echo ">>> This deployment file will be replace by GitHub Actions..."
