@@ -7,6 +7,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 
+#include "../Router.h"   // <-- Add Router include
+
 HttpServer::HttpServer(const std::string& addr, int p)
     : address(addr), port(p), running(false) {}
 
@@ -82,8 +84,28 @@ void HttpServer::run() {
             continue;
         }
 
-        // Always serve index.html (later we’ll parse GET paths)
-        std::string body = loadFile("../src/View/www/index.html");
+        // Read request into buffer
+        char buffer[4096] = {0};
+        int valread = read(new_socket, buffer, sizeof(buffer));
+        if (valread <= 0) {
+            close(new_socket);
+            continue;
+        }
+
+        // Extract URI from request line: "GET /path HTTP/1.1"
+        std::string request(buffer);
+        std::string uri = "/";
+        size_t methodEnd = request.find(' ');
+        if (methodEnd != std::string::npos) {
+            size_t uriEnd = request.find(' ', methodEnd + 1);
+            if (uriEnd != std::string::npos) {
+                uri = request.substr(methodEnd + 1, uriEnd - methodEnd - 1);
+            }
+        }
+
+        // Use Router instead of always index.html
+        Router router;
+        std::string body = router.route(uri);
 
         std::string response =
             "HTTP/1.1 200 OK\r\n"
