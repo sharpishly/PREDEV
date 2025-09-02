@@ -100,20 +100,30 @@ void HttpServer::run() {
             }
         }
 
-        // Determine content type and load file (not working)
+        // Determine content type and load file
         std::string body;
         std::string contentType = "text/html";
+        std::string filePath;
 
         if (uri.find(".css") != std::string::npos) {
-            body = loadFile("../src/View/www" + uri);
+            filePath = "../src/View/www" + uri; // Build file path
+            std::cout << "[HTTP Server] CSS requested: " << uri << " -> " << filePath << std::endl;
+            body = loadFile(filePath);
             contentType = "text/css";
         } else if (uri.find(".js") != std::string::npos) {
-            body = loadFile("../src/View/www" + uri);
+            filePath = "../src/View/www" + uri;
+            std::cout << "[HTTP Server] JS requested: " << uri << " -> " << filePath << std::endl;
+            body = loadFile(filePath);
             contentType = "application/javascript";
         } else {
+            std::cout << "[HTTP Server] Route requested: " << uri << std::endl;
             // Route HTML dynamically
             body = router.route(uri);
         }
+
+        // Print final response size
+        std::cout << "[HTTP Server] Response size: " << body.size() << " bytes" << std::endl;
+
 
         std::string response =
             "HTTP/1.1 200 OK\r\n"
