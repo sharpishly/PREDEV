@@ -104,14 +104,15 @@ void HttpServer::run() {
         std::string body;
         std::string contentType = "text/html";
         std::string filePath;
+        std::string basePath = "/src/View/www";
 
         if (uri.find(".css") != std::string::npos) {
-            filePath = "../src/View/www" + uri; // Build file path
+            filePath = basePath + uri; // Build file path
             std::cout << "[HTTP Server] CSS requested: " << uri << " -> " << filePath << std::endl;
             body = loadFile(filePath);
             contentType = "text/css";
         } else if (uri.find(".js") != std::string::npos) {
-            filePath = "../src/View/www" + uri;
+            filePath = basePath + uri;
             std::cout << "[HTTP Server] JS requested: " << uri << " -> " << filePath << std::endl;
             body = loadFile(filePath);
             contentType = "application/javascript";
