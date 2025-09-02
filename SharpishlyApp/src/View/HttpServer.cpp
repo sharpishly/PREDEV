@@ -100,16 +100,27 @@ void HttpServer::run() {
             }
         }
 
-        // Use router passed to constructor
-        std::string body = router.route(uri);
+        // Determine content type and load file
+        std::string body;
+        std::string contentType = "text/html";
+
+        if (uri.find(".css") != std::string::npos) {
+            body = loadFile("../src/View" + uri);
+            contentType = "text/css";
+        } else if (uri.find(".js") != std::string::npos) {
+            body = loadFile("../src/View" + uri);
+            contentType = "application/javascript";
+        } else {
+            // Route HTML dynamically
+            body = router.route(uri);
+        }
 
         std::string response =
             "HTTP/1.1 200 OK\r\n"
-            "Content-Type: text/html\r\n"
+            "Content-Type: " + contentType + "\r\n"
             "Content-Length: " + std::to_string(body.size()) + "\r\n"
             "Connection: close\r\n"
-            "\r\n" +
-            body;
+            "\r\n" + body;
 
         send(new_socket, response.c_str(), response.size(), 0);
         close(new_socket);
