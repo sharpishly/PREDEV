@@ -29,9 +29,9 @@ void HttpServer::stop() {
 std::string HttpServer::loadFile(const std::string& filepath) {
     std::ifstream file(filepath);
     if (!file.is_open()) {
-        std::cerr << "[HTTP Server] File not found: " << filepath << std::endl;
         return "<html><body><h1>404 Not Found</h1></body></html>";
     }
+
     std::ostringstream buffer;
     buffer << file.rdbuf();
     return buffer.str();
@@ -100,103 +100,23 @@ void HttpServer::run() {
             }
         }
 
-        // Handle static files and dynamic routes
+        // Determine content type and load file (not working)
         std::string body;
         std::string contentType = "text/html";
-        std::string responseStatus = "HTTP/1.1 200 OK";
 
-        // Base paths for static files (relative to project root, since executable runs from build/)
-        const std::string wwwBasePath = "../src/View/www";
-        const std::string appBasePath = "../src/View/home";
-
-        if (uri == "/" || uri == "/index.html") {
-            // Serve index.html from www/ for root path
-            body = loadFile(wwwBasePath + "/index.html");
-            if (body.find("<html><body><h1>404 Not Found</h1></body></html>") != std::string::npos) {
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
-        } else if (uri.find("/app/") == 0) {
-            // Serve static files from src/View/home/ (e.g., /app/css/style.css, /app/index.html)
-            std::string filepath = appBasePath + uri.substr(4); // Remove "/app" prefix
-            if (uri.find(".css") != std::string::npos) {
-                contentType = "text/css";
-                body = loadFile(filepath);
-            } else if (uri.find(".js") != std::string::npos) {
-                contentType = "application/javascript";
-                body = loadFile(filepath);
-            } else if (uri == "/app" || uri == "/app/index.html") {
-                body = loadFile(appBasePath + "/index.html");
-            } else {
-                body = "<html><body><h1>404 Not Found</h1></body></html>";
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
-            if (body.find("<html><body><h1>404 Not Found</h1></body></html>") != std::string::npos) {
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
-        } else if (uri.find("/home/") == 0) {
-            // Serve static files from src/View/www/home/ (e.g., /home/css/style.css, /home/index.html)
-            std::string filepath = wwwBasePath + uri; // Keep "/home" in path
-            if (uri.find(".css") != std::string::npos) {
-                contentType = "text/css";
-                body = loadFile(filepath);
-            } else if (uri.find(".js") != std::string::npos) {
-                contentType = "application/javascript";
-                body = loadFile(filepath);
-            } else if (uri == "/home" || uri == "/home/index.html") {
-                body = loadFile(wwwBasePath + "/home/index.html");
-            } else {
-                body = "<html><body><h1>404 Not Found</h1></body></html>";
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
-            if (body.find("<html><body><h1>404 Not Found</h1></body></html>") != std::string::npos) {
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
-        } else if (uri.find("/test/") == 0) {
-            // Serve static files from src/View/www/test/ (e.g., /test/css/style.css, /test/index.html)
-            std::string filepath = wwwBasePath + uri; // Keep "/test" in path
-            if (uri.find(".css") != std::string::npos) {
-                contentType = "text/css";
-                body = loadFile(filepath);
-            } else if (uri.find(".js") != std::string::npos) {
-                contentType = "application/javascript";
-                body = loadFile(filepath);
-            } else if (uri == "/test" || uri == "/test/index.html") {
-                body = loadFile(wwwBasePath + "/test/index.html");
-            } else {
-                body = "<html><body><h1>404 Not Found</h1></body></html>";
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
-            if (body.find("<html><body><h1>404 Not Found</h1></body></html>") != std::string::npos) {
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
-        } else if (uri.find(".css") != std::string::npos) {
-            // Serve CSS files from www/
-            std::string filepath = wwwBasePath + uri;
-            body = loadFile(filepath);
+        if (uri.find(".css") != std::string::npos) {
+            body = loadFile("../src/View/www" + uri);
             contentType = "text/css";
-            if (body.find("<html><body><h1>404 Not Found</h1></body></html>") != std::string::npos) {
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
         } else if (uri.find(".js") != std::string::npos) {
-            // Serve JS files from www/
-            std::string filepath = wwwBasePath + uri;
-            body = loadFile(filepath);
+            body = loadFile("../src/View/www" + uri);
             contentType = "application/javascript";
-            if (body.find("<html><body><h1>404 Not Found</h1></body></html>") != std::string::npos) {
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
         } else {
-            // Handle dynamic routes
+            // Route HTML dynamically
             body = router.route(uri);
-            if (body.empty()) {
-                body = "<html><body><h1>404 Not Found</h1></body></html>";
-                responseStatus = "HTTP/1.1 404 Not Found";
-            }
         }
 
-        // Construct HTTP response
         std::string response =
-            responseStatus + "\r\n"
+            "HTTP/1.1 200 OK\r\n"
             "Content-Type: " + contentType + "\r\n"
             "Content-Length: " + std::to_string(body.size()) + "\r\n"
             "Connection: close\r\n"
