@@ -100,37 +100,31 @@ void HttpServer::run() {
             }
         }
 
-        // Determine content type and load file (corrected logic)
+        // Determine content type and load file
         std::string body;
         std::string contentType = "text/html";
+        std::string filePath;
+        const std::string basePath = "../src/View/www";
 
         if (uri.find(".css") != std::string::npos) {
-            // The URI is already the correct path relative to the 'www' folder.
-            body = loadFile("../src/View/www" + uri); 
+            filePath = basePath + uri; // Build file path
+            std::cout << "[HTTP Server] CSS requested: " << uri << " -> " << filePath << std::endl;
+            body = loadFile(filePath);
             contentType = "text/css";
         } else if (uri.find(".js") != std::string::npos) {
-            // The URI is already the correct path relative to the 'www' folder.
-            body = loadFile("../src/View/www" + uri);
+            filePath = basePath + uri;
+            std::cout << "[HTTP Server] JS requested: " << uri << " -> " << filePath << std::endl;
+            body = loadFile(filePath);
             contentType = "application/javascript";
         } else {
-            // Correctly handle the root URI
-            if (uri == "/") {
-                body = router.route("/");
-            } else {
-                // Fallback or 404
-                body = "<html><body><h1>404 Not Found</h1></body></html>";
-            }
+            std::cout << "[HTTP Server] Route requested: " << uri << std::endl;
+            // Route HTML dynamically
+            body = router.route(uri);
         }
 
-        std::string response =
-            "HTTP/1.1 200 OK\r\n"
-            "Content-Type: " + contentType + "\r\n"
-            "Content-Length: " + std::to_string(body.size()) + "\r\n"
-            "Connection: close\r\n"
-            "\r\n" + body;
+        // Print final response size
+        std::cout << "[HTTP Server] Response size: " << body.size() << " bytes" << std::endl;
 
-        send(new_socket, response.c_str(), response.size(), 0);
-        close(new_socket);
 
         std::string response =
             "HTTP/1.1 200 OK\r\n"
