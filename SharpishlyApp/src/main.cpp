@@ -1,13 +1,15 @@
 #include "Router.h"
 #include "HttpServer.h"
-#include "Controller/HomeController.h"
 #include "Controller/AboutController.h"
+#include "Controller/HomeController.h"
 #include <iostream>
 #include <vector>
 #include <string>
 
 int main() {
     Router router;
+
+    router.addRoute("/", [&]() { return HomeController.index(); });
 
     // Register route -> controller
     router.addRoute("/home/index", [](const std::vector<std::string>& params) {
