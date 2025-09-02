@@ -1,16 +1,11 @@
-#ifndef HOME_CONTROLLER_H
-#define HOME_CONTROLLER_H
+#ifndef HOMECONTROLLER_H
+#define HOMECONTROLLER_H
 
 #include <string>
-#include <vector>
 
 class HomeController {
 public:
-    std::string dispatch(const std::string& action, const std::vector<std::string>& params);
-
-    // Example methods
-    std::string index(const std::vector<std::string>& params);
-    std::string about(const std::vector<std::string>& params);
+    static std::string index();
 };
 
-#endif // HOME_CONTROLLER_H
+#endif
