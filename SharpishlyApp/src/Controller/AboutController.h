@@ -1,9 +1,9 @@
-#ifndef HOMECONTROLLER_H
-#define HOMECONTROLLER_H
+#ifndef ABOUTCONTROLLER_H
+#define ABOUTCONTROLLER_H
 
 #include <string>
 
-class HomeController {
+class AboutController {
 public:
     static std::string index();
 };
