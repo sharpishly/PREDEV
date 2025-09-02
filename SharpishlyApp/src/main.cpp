@@ -2,6 +2,7 @@
 #include "HttpServer.h"
 #include "Controller/AboutController.h"
 #include "Controller/HomeController.h"
+#include "Controller/DocsController.h"
 #include <iostream>
 #include <vector>
 #include <string>

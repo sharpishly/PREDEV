@@ -1,9 +1,9 @@
-#ifndef HOMECONTROLLER_H
-#define HOMECONTROLLER_H
+#ifndef DOCSCONTROLLER_H
+#define DOCSCONTROLLER_H
 
 #include <string>
 
-class HomeController {
+class DocsController {
 public:
     static std::string index();
 };
