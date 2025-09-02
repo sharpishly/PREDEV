@@ -1,11 +1,29 @@
-# SharpishlyApp
+# PREDEV
+
+PREDEV is a developer-first platform designed to **remove the need for custom shell scripts** when deploying projects between different environments, even on the same machine.  
+
+The goal is to make environment setup and synchronization seamless by automating common developer pain points:
+- Removing the need to write scripts that change **file & folder permissions/ownership**.
+- Handling **git submodule** checkouts for specific branches automatically.
+- Managing **SSH public & private keys** setup across environments.
+- Enabling **true synchronization between environments** (local, staging, production).
+- Helping **new developers** set up a project without fuss.
+- Treating shell scripts as **AI prompts** that can be executed as tasks inside PREDEV (future goal).
+
+This project is intended to simplify developer onboarding, ensure consistent environments, and eliminate the drift that occurs when scripts are manually written and modified by each contributor.
+
+---
+
+## Reference Implementation: SharpishlyApp
 
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 ![License](https://img.shields.io/badge/license-MIT-blue)
 ![Docker](https://img.shields.io/badge/docker-ready-blue)
 ![C++](https://img.shields.io/badge/C++-17-orange)
 
-SharpishlyApp is a **C++ MVC application framework** scaffolded with the assistance of **ChatGPT (OpenAI)**.  
+**SharpishlyApp** is the first reference implementation of PREDEV —  
+a **C++ MVC application framework** scaffolded with the assistance of **ChatGPT (OpenAI)**.  
+
 It is designed as a learning and experimentation platform for modern software development practices, combining **C++**, **Docker**, and **DevOps** workflows into one integrated environment.
 
 ---
@@ -31,7 +49,7 @@ It is designed as a learning and experimentation platform for modern software de
   - Automatic provisioning and pre-flight checks.
 
 - **Roadmap**
-  - See [ROADMAP.md](ROADMAP.md) for detailed project goals and milestones.
+  - See [ROADMAP.md](docs/ROADMAP.md) for detailed project goals and milestones.
 
 ---
 
@@ -48,7 +66,7 @@ It is designed as a learning and experimentation platform for modern software de
 ```bash
 # Clone the repository
 git clone <your-repo-url>
-cd SharpishlyApp
+cd PREDEV
 
 # Create build directory
 mkdir -p build && cd build
@@ -78,9 +96,9 @@ Hello from C++ MVC!
 ## 📂 Project Structure
 
 ```
-SharpishlyApp/
+PREDEV/
 ├── CMakeLists.txt         # Build configuration
-├── build.sh               # Build & environment setup
+├── run.sh                 # Build & run helper
 ├── src/
 │   ├── main.cpp           # Entry point
 │   ├── Controller/        # Controllers
