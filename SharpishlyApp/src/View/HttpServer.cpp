@@ -100,7 +100,7 @@ void HttpServer::run() {
             }
         }
 
-        // Determine content type and load file
+        // Determine content type and load file (not working)
         std::string body;
         std::string contentType = "text/html";
 
