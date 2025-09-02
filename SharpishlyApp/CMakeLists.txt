@@ -12,4 +12,6 @@ add_executable(SharpishlyApp
     src/View/HttpServer.cpp
     src/Router.cpp
     src/Controller/HomeController.cpp
+    src/Controller/AboutController.cpp
+
 )
