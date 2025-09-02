@@ -3,13 +3,20 @@
 #include <sstream>
 #include <iostream>
 
-std::string HomeController::index() {
-    std::ifstream file("src/View/home/index.html");
+static std::string loadFile(const std::string& path) {
+    std::ifstream file(path);
     if (!file.is_open()) {
-        return "<html><body><h1>500 Internal Server Error</h1><p>Could not open view: home/index.html</p></body></html>";
+        return "<!-- Missing: " + path + " -->";
     }
-
     std::stringstream buffer;
     buffer << file.rdbuf();
     return buffer.str();
+}
+
+std::string HomeController::index() {
+    std::string header = loadFile("src/View/home/partials/header.html");
+    std::string content = loadFile("src/View/home/index.html");
+    std::string footer = loadFile("src/View/home/partials/footer.html");
+
+    return header + content + footer;
 }
