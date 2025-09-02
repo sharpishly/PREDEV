@@ -104,8 +104,7 @@ void HttpServer::run() {
         std::string body;
         std::string contentType = "text/html";
         std::string filePath;
-        // Temp fix /home/joe90/Documents/PREDEV/SharpishlyApp/src/View/www/home/css
-        std::string basePath = "/home/joe90/Documents/PREDEV/SharpishlyApp/src/View/www";
+        const std::string basePath = "../src/View/www";
 
         if (uri.find(".css") != std::string::npos) {
             filePath = basePath + uri; // Build file path
