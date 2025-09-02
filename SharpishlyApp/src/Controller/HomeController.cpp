@@ -3,7 +3,7 @@
 #include <sstream>
 #include <iostream>
 
-static std::string loadFile(const std::string& path) {
+static std::string readFile(const std::string& path) {
     std::ifstream file(path);
     if (!file.is_open()) {
         return "<!-- Missing: " + path + " -->";
@@ -14,9 +14,12 @@ static std::string loadFile(const std::string& path) {
 }
 
 std::string HomeController::index() {
-    std::string header = loadFile("src/View/home/partials/header.html");
-    std::string content = loadFile("src/View/home/index.html");
-    std::string footer = loadFile("src/View/home/partials/footer.html");
+    // Base path relative to project root
+    const std::string basePath = "../src/View/home/";
 
-    return header + content + footer;
+    std::string header = readFile(basePath + "partials/header.html");
+    std::string body   = readFile(basePath + "index.html");
+    std::string footer = readFile(basePath + "partials/footer.html");
+
+    return header + body + footer;
 }
