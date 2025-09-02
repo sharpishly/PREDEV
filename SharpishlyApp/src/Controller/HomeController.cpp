@@ -15,7 +15,7 @@ static std::string readFile(const std::string& path) {
 
 std::string HomeController::index() {
     // Base path relative to project root
-    const std::string basePath = "../src/View/home/";
+    const std::string basePath = "../src/View/www/home/";
 
     std::string header = readFile(basePath + "partials/header.html");
     std::string body   = readFile(basePath + "index.html");
