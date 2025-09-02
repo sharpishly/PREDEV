@@ -16,7 +16,7 @@ sudo ufw status
 # Set permissions
 # -----------------------------
 echo ">>> Set permissions..."
-sudo chmod -R u+rwX SharpishlyApp/src/View/www
+sudo chmod -R u+rwX SharpishlyApp/src/View
 
 # ------------------------------
 # Stop Nginx
