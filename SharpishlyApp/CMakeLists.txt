@@ -13,5 +13,5 @@ add_executable(SharpishlyApp
     src/Router.cpp
     src/Controller/HomeController.cpp
     src/Controller/AboutController.cpp
-
+    src/Controller/DocsController.cpp
 )

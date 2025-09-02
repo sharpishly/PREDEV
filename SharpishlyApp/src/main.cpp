@@ -12,13 +12,18 @@ int main() {
     router.addRoute("/", [&]() { return HomeController.index(); });
 
     // Register route -> controller
-    router.addRoute("/home/index", [](const std::vector<std::string>& params) {
-        return HomeController::index();
+    router.addRoute("/about/index", [](const std::vector<std::string>& params) {
+        return AboutController::index();
     });
 
     // Register route -> controller
-    router.addRoute("/about/index", [](const std::vector<std::string>& params) {
-        return AboutController::index();
+    router.addRoute("/docs/index", [](const std::vector<std::string>& params) {
+        return DocsController::index();
+    });
+
+    // Register route -> controller
+    router.addRoute("/home/index", [](const std::vector<std::string>& params) {
+        return HomeController::index();
     });
 
     HttpServer server("0.0.0.0", 1966, router);
