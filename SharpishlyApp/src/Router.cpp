@@ -18,10 +18,18 @@ void Router::addRoute(const std::string& pattern, Handler handler) {
 }
 
 bool Router::match(const std::string& pattern, const std::string& uri, std::vector<std::string>& params) {
+    // Special case for root
+    if (pattern == "/" && (uri == "/" || uri.empty())) {
+        params.clear();
+        return true;
+    }
+
     auto pParts = split(pattern, '/');
     auto uParts = split(uri, '/');
 
-    if (pParts.size() != uParts.size()) return false;
+    if (pParts.size() != uParts.size()) {
+        return false;
+    }
 
     params.clear();
     for (size_t i = 0; i < pParts.size(); i++) {

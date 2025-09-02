@@ -9,31 +9,15 @@
 
 int main() {
     Router router;
-
-    router.addRoute("/", [&]() { return HomeController.index(); });
-
-    // Register route -> controller
-    router.addRoute("/about/index", [](const std::vector<std::string>& params) {
-        return AboutController::index();
-    });
-
-    // Register route -> controller
-    router.addRoute("/docs/index", [](const std::vector<std::string>& params) {
-        return DocsController::index();
-    });
-
-    // Register route -> controller
-    router.addRoute("/home/index", [](const std::vector<std::string>& params) {
-        return HomeController::index();
-    });
+    router.addRoute("/", []() { return HomeController::index(); });
+    router.addRoute("/home/index", []() { return HomeController::index(); });
+    router.addRoute("/about/index", []() { return AboutController::index(); });
+    router.addRoute("/docs/index", []() { return DocsController::index(); });
 
     HttpServer server("0.0.0.0", 1966, router);
     server.start();
-
     std::cout << "Press Enter to stop server..." << std::endl;
     std::cin.get();
-
     server.stop();
     return 0;
 }
-
