@@ -1,4 +1,4 @@
-#include "AboutController.h"
+#include "HomeController.h"
 #include <fstream>
 #include <sstream>
 #include <iostream>
@@ -13,9 +13,9 @@ static std::string readFile(const std::string& path) {
     return buffer.str();
 }
 
-std::string AboutController::index() {
+std::string HomeController::index() {
     // Base path relative to project root
-    const std::string basePath = "../src/View/www/about/";
+    const std::string basePath = "../src/View/www/home/";
 
     std::string header = readFile(basePath + "partials/header.html");
     std::string body   = readFile(basePath + "index.html");

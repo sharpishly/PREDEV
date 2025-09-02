@@ -9,10 +9,10 @@
 
 int main() {
     Router router;
-    router.addRoute("/", []() { return HomeController::index(); });
-    router.addRoute("/home/index", []() { return HomeController::index(); });
-    router.addRoute("/about/index", []() { return AboutController::index(); });
-    router.addRoute("/docs/index", []() { return DocsController::index(); });
+    router.addRoute("/", [](const std::vector<std::string>& params) { return HomeController::index(); });
+    router.addRoute("/home/index", [](const std::vector<std::string>& params) { return HomeController::index(); });
+    router.addRoute("/about/index", [](const std::vector<std::string>& params) { return AboutController::index(); });
+    router.addRoute("/docs/index", [](const std::vector<std::string>& params) { return DocsController::index(); });
 
     HttpServer server("0.0.0.0", 1966, router);
     server.start();
