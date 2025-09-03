@@ -5,15 +5,8 @@
 
 class ProvisionController {
 public:
-    ProvisionController();
-
-    // Utility functions
-    bool copyFile(const std::string& src, const std::string& dest);
-    std::string runCommand(const std::string& cmd);
-
-    // Provisioning methods
-    std::string provisionLocal();
-    std::string provisionProduction();
+    static std::string local();        // /provision/local
+    static std::string production();   // /provision/production
 };
 
-#endif // PROVISIONCONTROLLER_H
+#endif

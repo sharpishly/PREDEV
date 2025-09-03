@@ -6,8 +6,8 @@
 #include <cstdio>
 #include <array>
 
-// Copy file utility
-bool ProvisionController::copyFile(const std::string& src, const std::string& dest) {
+// Utility to copy files
+static bool copyFile(const std::string& src, const std::string& dest) {
     std::ifstream in(src, std::ios::binary);
     if (!in.is_open()) {
         return false;
@@ -22,8 +22,8 @@ bool ProvisionController::copyFile(const std::string& src, const std::string& de
     return true;
 }
 
-// Run shell command and capture output
-std::string ProvisionController::runCommand(const std::string& cmd) {
+// Utility to run shell commands
+static std::string runCommand(const std::string& cmd) {
     std::array<char, 128> buffer{};
     std::string result;
 
@@ -38,8 +38,8 @@ std::string ProvisionController::runCommand(const std::string& cmd) {
     return result;
 }
 
-// Provision local Docker environment
-std::string ProvisionController::provisionLocal() {
+// Route: /provision/local
+std::string ProvisionController::local() {
     std::stringstream response;
 
     if (!copyFile("docker/local-docker-compose.yml", "docker-compose.yml")) {
@@ -60,20 +60,20 @@ std::string ProvisionController::provisionLocal() {
     return response.str();
 }
 
-// Provision production Docker environment
-std::string ProvisionController::provisionProduction() {
+// Route: /provision/production
+std::string ProvisionController::production() {
     std::stringstream response;
 
-    if (!copyFile("docker/prod-docker-compose.yml", "docker-compose.yml")) {
-        return "<h1>Error:</h1><p>Failed to copy prod-docker-compose.yml</p>";
+    if (!copyFile("docker/production-docker-compose.yml", "docker-compose.yml")) {
+        return "<h1>Error:</h1><p>Failed to copy production-docker-compose.yml</p>";
     }
 
-    if (!copyFile("docker/prod-Dockerfile", "Dockerfile")) {
-        return "<h1>Error:</h1><p>Failed to copy prod-Dockerfile</p>";
+    if (!copyFile("docker/production-Dockerfile", "Dockerfile")) {
+        return "<h1>Error:</h1><p>Failed to copy production-Dockerfile</p>";
     }
 
-    if (!copyFile("docker/prod-index.html", "index.html")) {
-        return "<h1>Error:</h1><p>Failed to copy prod-index.html</p>";
+    if (!copyFile("docker/production-index.html", "index.html")) {
+        return "<h1>Error:</h1><p>Failed to copy production-index.html</p>";
     }
 
     std::string output = runCommand("docker-compose up -d");
