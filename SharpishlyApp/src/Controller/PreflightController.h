@@ -1,17 +1,19 @@
-#ifndef PREFLIGHT_CONTROLLER_H
-#define PREFLIGHT_CONTROLLER_H
+#ifndef PROVISIONCONTROLLER_H
+#define PROVISIONCONTROLLER_H
 
 #include <string>
 
-class PreflightController {
+class ProvisionController {
 public:
-    PreflightController();
-    bool setupDocker();
+    ProvisionController();
 
-private:
-    bool checkDockerInstalled();
-    bool checkDockerComposeInstalled();
-    bool checkFileExists(const std::string& filePath);
+    // Utility functions
+    bool copyFile(const std::string& src, const std::string& dest);
+    std::string runCommand(const std::string& cmd);
+
+    // Provisioning methods
+    std::string provisionLocal();
+    std::string provisionProduction();
 };
 
-#endif // PREFLIGHT_CONTROLLER_H
+#endif // PROVISIONCONTROLLER_H
