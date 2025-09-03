@@ -4,6 +4,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdio>
+#include <array>
 
 // Copy file utility
 bool ProvisionController::copyFile(const std::string& src, const std::string& dest) {
