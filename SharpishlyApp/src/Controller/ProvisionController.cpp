@@ -55,7 +55,7 @@ std::string ProvisionController::local() {
         return "<h1>Error:</h1><p>Failed to copy local-index.html</p>";
     }
 
-    std::string output = runCommand("cd ../docker && pwd && ls -l && docker-compose -f ../docker/docker-compose.yml up -d");
+    std::string output = runCommand("cd ../docker && docker-compose up -d");
     response << "<h1>Local Provisioning</h1><pre>" << output << "</pre>";
 
     return response.str();
