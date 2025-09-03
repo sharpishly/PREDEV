@@ -43,15 +43,15 @@ std::string ProvisionController::local() {
     std::stringstream response;
     const std::string basePath = "../docker/";
 
-    if (!copyFile(basePath + "local-docker-compose.yml", "docker-compose.yml")) {
+    if (!copyFile(basePath + "local-docker-compose.yml",basePath +  "docker-compose.yml")) {
         return "<h1>Error:</h1><p>Failed to copy local-docker-compose.yml</p>";
     }
 
-    if (!copyFile(basePath + "local-Dockerfile", "Dockerfile")) {
+    if (!copyFile(basePath + "local-Dockerfile",basePath +  "Dockerfile")) {
         return "<h1>Error:</h1><p>Failed to copy local-Dockerfile</p>";
     }
 
-    if (!copyFile(basePath + "local-index.html", "index.html")) {
+    if (!copyFile(basePath + "local-index.html",basePath +  "index.html")) {
         return "<h1>Error:</h1><p>Failed to copy local-index.html</p>";
     }
 
