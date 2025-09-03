@@ -7,14 +7,13 @@ class ProvisionController {
 public:
     ProvisionController();
 
-    // Preflight checks
-    bool checkDockerInstalled();
-    bool checkDockerComposeInstalled();
-    bool checkFileExists(const std::string& filePath);
+    // Utility functions
+    bool copyFile(const std::string& src, const std::string& dest);
+    std::string runCommand(const std::string& cmd);
 
-    // Setup methods
-    bool setupDocker();
-    bool switchToProduction();
+    // Provisioning methods
+    std::string provisionLocal();
+    std::string provisionProduction();
 };
 
 #endif // PROVISIONCONTROLLER_H

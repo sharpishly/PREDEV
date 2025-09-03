@@ -1,71 +1,82 @@
 #include "ProvisionController.h"
 #include <fstream>
-#include <iostream>
 #include <sstream>
+#include <iostream>
 #include <cstdlib>
-#include <filesystem>
+#include <cstdio>
 
-namespace fs = std::filesystem;
-
+// Copy file utility
 bool ProvisionController::copyFile(const std::string& src, const std::string& dest) {
-    try {
-        fs::copy_file(src, dest, fs::copy_options::overwrite_existing);
-        return true;
-    } catch (const fs::filesystem_error& e) {
-        std::cerr << "Error copying file from " << src << " to " << dest
-                  << ": " << e.what() << std::endl;
+    std::ifstream in(src, std::ios::binary);
+    if (!in.is_open()) {
         return false;
     }
+
+    std::ofstream out(dest, std::ios::binary);
+    if (!out.is_open()) {
+        return false;
+    }
+
+    out << in.rdbuf();
+    return true;
 }
 
+// Run shell command and capture output
 std::string ProvisionController::runCommand(const std::string& cmd) {
-    std::array<char, 128> buffer;
+    std::array<char, 128> buffer{};
     std::string result;
+
     FILE* pipe = popen(cmd.c_str(), "r");
-    if (!pipe) return "Failed to run command: " + cmd;
+    if (!pipe) return "Error: Failed to run command.";
 
     while (fgets(buffer.data(), buffer.size(), pipe) != nullptr) {
         result += buffer.data();
     }
+
     pclose(pipe);
     return result;
 }
 
+// Provision local Docker environment
 std::string ProvisionController::provisionLocal() {
-    std::ostringstream log;
+    std::stringstream response;
 
-    log << "<html><body><h1>Provisioning Local Environment</h1><pre>";
+    if (!copyFile("docker/local-docker-compose.yml", "docker-compose.yml")) {
+        return "<h1>Error:</h1><p>Failed to copy local-docker-compose.yml</p>";
+    }
 
-    if (!copyFile("docker/local-docker-compose.yml", "docker-compose.yml"))
-        return "<html><body><h1>Error</h1><p>Failed to copy local-docker-compose.yml</p></body></html>";
+    if (!copyFile("docker/local-Dockerfile", "Dockerfile")) {
+        return "<h1>Error:</h1><p>Failed to copy local-Dockerfile</p>";
+    }
 
-    if (!copyFile("docker/local-Dockerfile", "Dockerfile"))
-        return "<html><body><h1>Error</h1><p>Failed to copy local-Dockerfile</p></body></html>";
+    if (!copyFile("docker/local-index.html", "index.html")) {
+        return "<h1>Error:</h1><p>Failed to copy local-index.html</p>";
+    }
 
-    if (!copyFile("docker/index.html", "index.html"))
-        return "<html><body><h1>Error</h1><p>Failed to copy local index.html</p></body></html>";
+    std::string output = runCommand("docker-compose up -d");
+    response << "<h1>Local Provisioning</h1><pre>" << output << "</pre>";
 
-    log << "Running docker-compose up -d...\n";
-    log << runCommand("docker-compose up -d");
-
-    log << "</pre><p>✅ Local environment provisioned successfully.</p></body></html>";
-    return log.str();
+    return response.str();
 }
 
+// Provision production Docker environment
 std::string ProvisionController::provisionProduction() {
-    std::ostringstream log;
+    std::stringstream response;
 
-    log << "<html><body><h1>Provisioning Production Environment</h1><pre>";
+    if (!copyFile("docker/prod-docker-compose.yml", "docker-compose.yml")) {
+        return "<h1>Error:</h1><p>Failed to copy prod-docker-compose.yml</p>";
+    }
 
-    if (!copyFile("docker/production-docker-compose.yml", "docker-compose.yml"))
-        return "<html><body><h1>Error</h1><p>Failed to copy production-docker-compose.yml</p></body></html>";
+    if (!copyFile("docker/prod-Dockerfile", "Dockerfile")) {
+        return "<h1>Error:</h1><p>Failed to copy prod-Dockerfile</p>";
+    }
 
-    if (!copyFile("docker/production-Dockerfile", "Dockerfile"))
-        return "<html><body><h1>Error</h1><p>Failed to copy production-Dockerfile</p></body></html>";
+    if (!copyFile("docker/prod-index.html", "index.html")) {
+        return "<h1>Error:</h1><p>Failed to copy prod-index.html</p>";
+    }
 
-    log << "Running docker-compose up -d...\n";
-    log << runCommand("docker-compose up -d");
+    std::string output = runCommand("docker-compose up -d");
+    response << "<h1>Production Provisioning</h1><pre>" << output << "</pre>";
 
-    log << "</pre><p>✅ Production environment provisioned successfully.</p></body></html>";
-    return log.str();
+    return response.str();
 }
