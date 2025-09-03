@@ -4,7 +4,7 @@ project(SharpishlyApp)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-include_directories(include src/Model src/View src/Controller)
+include_directories(include src/Model src/View src/Controller src/Core)
 
 # Include main.cpp and HttpServer.cpp
 add_executable(SharpishlyApp
