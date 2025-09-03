@@ -5,8 +5,8 @@
 
 class ProvisionController {
 public:
-    static std::string local();        // /provision/local
-    static std::string production();   // /provision/production
+    static std::string local();
+    static std::string production();
 };
 
 #endif

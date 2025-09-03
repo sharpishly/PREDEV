@@ -41,16 +41,17 @@ static std::string runCommand(const std::string& cmd) {
 // Route: /provision/local
 std::string ProvisionController::local() {
     std::stringstream response;
+    const std::string basePath = "../docker/";
 
-    if (!copyFile("docker/local-docker-compose.yml", "docker-compose.yml")) {
+    if (!copyFile(basePath + "local-docker-compose.yml", "docker-compose.yml")) {
         return "<h1>Error:</h1><p>Failed to copy local-docker-compose.yml</p>";
     }
 
-    if (!copyFile("docker/local-Dockerfile", "Dockerfile")) {
+    if (!copyFile(basePath + "local-Dockerfile", "Dockerfile")) {
         return "<h1>Error:</h1><p>Failed to copy local-Dockerfile</p>";
     }
 
-    if (!copyFile("docker/local-index.html", "index.html")) {
+    if (!copyFile(basePath + "local-index.html", "index.html")) {
         return "<h1>Error:</h1><p>Failed to copy local-index.html</p>";
     }
 
@@ -63,16 +64,17 @@ std::string ProvisionController::local() {
 // Route: /provision/production
 std::string ProvisionController::production() {
     std::stringstream response;
+    const std::string basePath = "../docker/";
 
-    if (!copyFile("docker/production-docker-compose.yml", "docker-compose.yml")) {
+    if (!copyFile(basePath + "production-docker-compose.yml", "docker-compose.yml")) {
         return "<h1>Error:</h1><p>Failed to copy production-docker-compose.yml</p>";
     }
 
-    if (!copyFile("docker/production-Dockerfile", "Dockerfile")) {
+    if (!copyFile(basePath + "production-Dockerfile", "Dockerfile")) {
         return "<h1>Error:</h1><p>Failed to copy production-Dockerfile</p>";
     }
 
-    if (!copyFile("docker/production-index.html", "index.html")) {
+    if (!copyFile(basePath + "production-index.html", "index.html")) {
         return "<h1>Error:</h1><p>Failed to copy production-index.html</p>";
     }
 
