@@ -21,17 +21,22 @@ services:
       - DB_USER=sharpishly_user
       - DB_PASSWORD=Addy@789xx$
       - DB_NAME=sharpishly_db
+      - PG_HOST=postgres
+      - PG_USER=sharpishly_user
+      - PG_PASSWORD=Addy@789xx$
+      - PG_DATABASE=sharpishly_db
     networks:
       - app-network
     depends_on:
       db:
+        condition: service_healthy
+      postgres:
         condition: service_healthy
     healthcheck:
       test: ["CMD", "php-fpm", "-t"]
       interval: 30s
       timeout: 10s
       retries: 3
-
   # ------------------------------
   # Nginx reverse proxy
   # ------------------------------
@@ -63,7 +68,6 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-
   # ------------------------------
   # MySQL database
   # ------------------------------
@@ -91,13 +95,37 @@ services:
       --default-authentication-plugin=mysql_native_password
       --port=3306
       --bind-address=0.0.0.0
-
   # ------------------------------
-  # Shared Docker network
+  # PostgreSQL database
   # ------------------------------
+  postgres:
+    image: postgres:16
+    container_name: app-postgres-1
+    ports:
+      - "5432:5432" # Default PostgreSQL port
+    environment:
+      - POSTGRES_DB=sharpishly_db
+      - POSTGRES_USER=sharpishly_user
+      - POSTGRES_PASSWORD=Addy@789xx$
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./postgres/logs:/var/log/postgresql
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sharpishly_user"]
+      interval: 5s
+      timeout: 5s
+      retries: 3
+    networks:
+      - app-network
+# ------------------------------
+# Shared Docker network
+# ------------------------------
 networks:
   app-network:
     driver: bridge
-
+# ------------------------------
+# Volumes
+# ------------------------------
 volumes:
   mysql_data:
+  postgres_data:
