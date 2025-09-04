@@ -120,16 +120,16 @@ echo ">>> Cleanup complete."
 # Checkout local branch
 # -----------------------------
 echo ">>> Updating repo..."
-git stash
-git checkout local
-git pull
+# git stash
+# git checkout local
+# git pull
 
 
 # ------------------------------
 # Stop any running containers
 # -----------------------------
 echo ">>> Updating submodules..."
-git submodule update --init --recursive
+# git submodule update --init --recursive
 
 
 # ------------------------------
