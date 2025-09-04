@@ -1,0 +1,97 @@
+name: Deploy to DigitalOcean Droplet
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2 # ensure previous commit exists for git diff
+
+      - name: Detect changed services
+        id: detect
+        run: |
+          # Safe git diff even on first commit
+          if git rev-parse HEAD^ >/dev/null 2>&1; then
+            CHANGED=$(git diff --name-only HEAD^ HEAD)
+          else
+            CHANGED=$(git diff --name-only HEAD)
+          fi
+
+          echo "Changed files:"
+          echo "$CHANGED"
+
+          SERVICES=""
+
+          if echo "$CHANGED" | grep -E '(^Dockerfile|^requirements\.txt|^core/|^controllers/|^models/|^views/|^runserver\.py|^wsgi\.py)'; then
+            SERVICES="$SERVICES python-mvc"
+          fi
+
+          if echo "$CHANGED" | grep -E '^php/'; then
+            SERVICES="$SERVICES php_fpm"
+          fi
+
+          if echo "$CHANGED" | grep -E '^nginx/'; then
+            SERVICES="$SERVICES nginx"
+          fi
+
+          if echo "$CHANGED" | grep -E '^db/'; then
+            SERVICES="$SERVICES db"
+          fi
+
+          echo "services=$SERVICES" >> $GITHUB_OUTPUT
+
+      - name: Deploy with SSH and pull latest code
+        if: contains(steps.detect.outputs.services, 'python-mvc')
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            sudo service nginx stop
+
+            cd /var/www/python_mvc
+
+            git stash
+            git pull origin master
+
+            sudo ufw allow 3000
+            sudo ufw status
+
+            docker-compose down
+
+            # Ensure Dockerfile runs python-mvc with Gunicorn
+            cat > Dockerfile <<'EOF'
+            FROM python:3.11-slim
+            WORKDIR /app
+            COPY requirements.txt .
+            RUN pip install --no-cache-dir -r requirements.txt
+            COPY . .
+            EXPOSE 3000
+            CMD ["gunicorn", "--bind", "0.0.0.0:3000", "runserver:app"]
+            EOF
+
+            # Ensure docker-compose.yml is updated with correct service
+            cat > docker-compose.yml <<'EOF'
+            version: "3.8"
+
+            services:
+              python-mvc:
+                build: .
+                container_name: python-mvc
+                ports:
+                  - "3000:3000"
+                restart: unless-stopped
+                command: gunicorn --bind 0.0.0.0:3000 runserver:app
+                volumes:
+                  - .:/app
+            EOF
+
+            docker-compose up -d --build

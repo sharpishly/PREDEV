@@ -1,0 +1,46 @@
+name: Deploy to DigitalOcean Droplet
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Deploy with SSH and pull latest code
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            set -e
+
+            echo "🔹 Pulling latest code..."
+            cd /var/www/python_mvc
+            git reset --hard
+            git pull origin main
+
+            echo "🔹 Updating Dockerfile..."
+            cat > Dockerfile <<'EOF'
+            FROM python:3.11-slim
+            WORKDIR /app
+            COPY requirements.txt .
+            RUN pip install --no-cache-dir -r requirements.txt
+            COPY . .
+            EXPOSE 8000
+            CMD ["gunicorn", "--bind", "0.0.0.0:8000", "wsgi:application"]
+            EOF
+
+            echo "🔹 Building only the python-mvc service..."
+            docker-compose build python-mvc
+
+            echo "🔹 Restarting only the python-mvc container..."
+            docker-compose up -d --no-deps python-mvc
+
+            echo "✅ Deployment complete!"
