@@ -9,6 +9,7 @@
 #include <string>
 
 int main() {
+    //@TODO: Add loop within function
     Router router;
     router.addRoute("/", [](const std::vector<std::string>& params) { return HomeController::index(); });
     router.addRoute("/home/index", [](const std::vector<std::string>& params) { return HomeController::index(); });
