@@ -39,3 +39,11 @@
 -   Initial project scaffolding (CMake, build.sh)
 -   MVC structure (Controller, Model, View)
 -   Minimal HttpServer (C++ standard library, listens on 127.0.0.1:1966)
+
+## [0.2.1] - 2025-09-05
+
+### Changed
+- Refactored `main.cpp` to use a centralized `registerRoutes()` helper for route definitions.
+  - Reduced repetition by storing routes in a vector of path/handler pairs.
+  - Keeps main function clean while maintaining identical behavior.
+
