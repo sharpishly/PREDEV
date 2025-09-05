@@ -41,21 +41,8 @@ static std::string runCommand(const std::string& cmd) {
 // Route: /provision/local
 std::string ProvisionController::local() {
     std::stringstream response;
-    const std::string basePath = "../docker/";
 
-    if (!copyFile(basePath + "local-docker-compose.yml",basePath +  "docker-compose.yml")) {
-        return "<h1>Error:</h1><p>Failed to copy local-docker-compose.yml</p>";
-    }
-
-    if (!copyFile(basePath + "local-Dockerfile",basePath +  "Dockerfile")) {
-        return "<h1>Error:</h1><p>Failed to copy local-Dockerfile</p>";
-    }
-
-    if (!copyFile(basePath + "local-index.html",basePath +  "index.html")) {
-        return "<h1>Error:</h1><p>Failed to copy local-index.html</p>";
-    }
-
-    std::string output = runCommand("cd ../docker && docker-compose up -d");
+    std::string output = runCommand("cd ../app && sudo chmod +x build.sh && ./build.sh");
     response << "<h1>Local Provisioning</h1><pre>" << output << "</pre>";
 
     return response.str();
@@ -64,22 +51,10 @@ std::string ProvisionController::local() {
 // Route: /provision/production
 std::string ProvisionController::production() {
     std::stringstream response;
-    const std::string basePath = "../docker/";
 
-    if (!copyFile(basePath + "production-docker-compose.yml", "docker-compose.yml")) {
-        return "<h1>Error:</h1><p>Failed to copy production-docker-compose.yml</p>";
-    }
-
-    if (!copyFile(basePath + "production-Dockerfile", "Dockerfile")) {
-        return "<h1>Error:</h1><p>Failed to copy production-Dockerfile</p>";
-    }
-
-    if (!copyFile(basePath + "production-index.html", "index.html")) {
-        return "<h1>Error:</h1><p>Failed to copy production-index.html</p>";
-    }
-
-    std::string output = runCommand("docker-compose up -d");
-    response << "<h1>Production Provisioning</h1><pre>" << output << "</pre>";
+    std::string output = runCommand("cd ../app && sudo chmod +x build.sh && ./build.sh");
+    response << "<h1>Local Provisioning</h1><pre>" << output << "</pre>";
 
     return response.str();
 }
+

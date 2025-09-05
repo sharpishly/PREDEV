@@ -25,6 +25,7 @@ void registerRoutes(Router& router) {
 }
 
 int main() {
+    //@TODO: Add loop within function
     Router router;
     registerRoutes(router);
 
