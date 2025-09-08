@@ -1,0 +1,23 @@
+---
+- name: Setup Docker
+  hosts: localhost
+  become: true
+  tasks:
+    - name: Install Docker packages
+      package:
+        name:
+          - docker.io
+          - docker-compose-plugin
+        state: present
+
+    - name: Stop any existing containers
+      community.docker.docker_compose:
+        project_src: .
+        state: absent
+
+    - name: Build and start containers
+      community.docker.docker_compose:
+        project_src: .
+        build: true
+        state: present
+        restarted: true
