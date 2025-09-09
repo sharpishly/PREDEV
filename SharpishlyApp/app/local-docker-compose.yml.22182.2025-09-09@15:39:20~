@@ -19,11 +19,11 @@ services:
     environment:
       - DB_HOST=db
       - DB_USER=sharpishly_user
-      - DB_PASSWORD="admin12345"
+      - DB_PASSWORD=Addy@789xx$
       - DB_NAME=sharpishly_db
       - PG_HOST=postgres
       - PG_USER=sharpishly_user
-      - PG_PASSWORD=admin12345
+      - PG_PASSWORD=Addy@789xx$
       - PG_DATABASE=sharpishly_db
     networks:
       - app-network
@@ -79,13 +79,13 @@ services:
     environment:
       - MYSQL_DATABASE=sharpishly_db
       - MYSQL_USER=sharpishly_user
-      - MYSQL_PASSWORD=admin12345
-      - MYSQL_ROOT_PASSWORD=admin12345
+      - MYSQL_PASSWORD=Addy@789xx$
+      - MYSQL_ROOT_PASSWORD=Addy@789xx$
     volumes:
       - mysql_data:/var/lib/mysql
       - ./mysql/logs:/var/log/mysql
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin12345"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pAddy@789xx$"]
       interval: 5s
       timeout: 5s
       retries: 3
@@ -106,7 +106,7 @@ services:
     environment:
       - POSTGRES_DB=sharpishly_db
       - POSTGRES_USER=sharpishly_user
-      - POSTGRES_PASSWORD=admin12345
+      - POSTGRES_PASSWORD=Addy@789xx$
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/logs:/var/log/postgresql
