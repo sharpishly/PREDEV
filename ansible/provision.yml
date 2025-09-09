@@ -1,0 +1,20 @@
+---
+- name: Provision SharpishlyApp environment
+  hosts: localhost
+  become: true
+
+  tasks:
+    - name: Docker setup
+      import_tasks: docker.yml
+
+    - name: SSL setup
+      import_tasks: ssl.yml
+
+    - name: Nginx setup
+      import_tasks: nginx.yml
+
+    - name: Firewall setup
+      import_tasks: firewall.yml
+
+    - name: Host entries setup
+      import_tasks: hosts.yml

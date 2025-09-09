@@ -1,0 +1,11 @@
+---
+- name: Allow HTTP and HTTPS through firewall
+  ufw:
+    rule: allow
+    port: "{{ item }}"
+  loop:
+    - "80"
+    - "443"
+
+- name: Reload firewall
+  command: ufw reload

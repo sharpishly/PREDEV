@@ -1,0 +1,36 @@
+---
+- name: Install Python pip
+  package:
+    name: python3-pip
+    state: present
+
+- name: Install Docker Python module
+  pip:
+    name: docker
+    state: present
+    executable: pip3
+
+- name: Remove conflicting containerd package
+  package:
+    name: containerd
+    state: absent
+  ignore_errors: true  # Continue even if containerd is not installed
+
+- name: Install Docker packages
+  package:
+    name:
+      - docker.io
+      - docker-compose-plugin
+    state: present
+
+- name: Stop any existing containers
+  community.docker.docker_compose:
+    project_src: .
+    state: absent
+
+- name: Build and start containers
+  community.docker.docker_compose:
+    project_src: .
+    build: true
+    state: present
+    restarted: true

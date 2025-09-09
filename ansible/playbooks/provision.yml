@@ -1,8 +1,0 @@
----
-- name: Provision SharpishlyApp
-  hosts: localhost
-  become: true
-
-  tasks:
-    - name: Include Sharpishly full setup
-      import_playbook: sharpishly.yml

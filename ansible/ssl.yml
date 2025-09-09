@@ -1,0 +1,25 @@
+---
+- name: Ensure certs directory exists
+  file:
+    path: certs
+    state: directory
+    owner: "{{ ansible_user }}"
+    mode: "0755"
+
+- name: Generate SSL private key
+  community.crypto.openssl_privatekey:
+    path: certs/sharpishly.dev.key
+    size: 4096
+
+- name: Generate self-signed certificate
+  community.crypto.x509_certificate:
+    path: certs/sharpishly.dev.crt
+    privatekey_path: certs/sharpishly.dev.key
+    provider: selfsigned
+    subject:
+      common_name: sharpishly.dev
+      organization_name: Self-Signed
+      country_name: US
+      state_or_province_name: California
+      locality_name: Mountain View
+    days: 365

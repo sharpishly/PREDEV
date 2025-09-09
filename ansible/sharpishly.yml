@@ -12,13 +12,13 @@
         state: present
 
     - name: Include Docker setup
-      import_playbook: docker.yml
+      import_tasks: docker.yml
 
     - name: Include SSL setup
-      import_playbook: ssl.yml
+      import_tasks: ssl.yml
 
     - name: Include Nginx setup
-      import_playbook: nginx.yml
+      import_tasks: nginx.yml
 
     - name: Configure firewall
       ufw:
@@ -33,12 +33,4 @@
 
     - name: Add hostname entries
       lineinfile:
-        path: /etc/hosts
-        line: "127.0.0.1 {{ item }}"
-        state: present
-      loop:
-        - sharpishly.dev
-        - dev.sharpishly.dev
-        - docs.sharpishly.dev
-        - live.sharpishly.dev
-        - py.sharpishly.dev
+        path: /etc/
