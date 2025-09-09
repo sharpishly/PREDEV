@@ -8,6 +8,59 @@
     key_file: "{{ certs_dir }}/sharpishly.dev.key"
     domain: "sharpishly.dev"
   tasks:
+    - name: Stop and remove Docker containers, volumes, and networks
+      command: docker-compose down -v --remove-orphans
+      args:
+        chdir: "{{ app_dir }}"
+      register: docker_compose_down
+      changed_when: docker_compose_down.rc == 0
+      failed_when: false  # Allow to fail if no containers exist
+
+    - name: Stop all running Docker containers
+      shell: docker ps -q | xargs -r docker stop
+      changed_when: true
+      failed_when: false  # Allow to fail if no containers are running
+
+    - name: Remove all Docker containers
+      shell: docker ps -aq | xargs -r docker rm -f
+      changed_when: true
+      failed_when: false  # Allow to fail if no containers exist
+
+    - name: Remove dangling Docker images
+      shell: docker images -f "dangling=true" -q | xargs -r docker rmi -f
+      changed_when: true
+      failed_when: false  # Allow to fail if no dangling images
+
+    - name: Remove unused Docker volumes
+      shell: docker volume ls -q | xargs -r docker volume rm -f
+      changed_when: true
+      failed_when: false  # Allow to fail if no unused volumes
+
+    - name: Remove unused Docker networks
+      command: docker network prune -f
+      changed_when: true
+      failed_when: false  # Allow to fail if no unused networks
+
+    - name: Check port 80 usage
+      shell: |
+        if command -v ss >/dev/null 2>&1; then
+          ss -tulnp | grep ':80' || echo "Port 80 is free"
+        else
+          lsof -i :80 || echo "Port 80 is free"
+        fi
+      register: port_check
+      changed_when: false
+      failed_when: false
+      args:
+        executable: /bin/bash
+
+    - name: Stop and disable Nginx service
+      systemd:
+        name: nginx
+        state: stopped
+        enabled: no
+      ignore_errors: true  # Allow to fail if Nginx is not installed
+
     - name: Install Docker and OpenSSL packages
       package:
         name:
