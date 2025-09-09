@@ -3,12 +3,17 @@
   become: yes
   vars:
     app_dir: "/home/joe90/Documents/PREDEV/SharpishlyApp/app"
+    certs_dir: "{{ app_dir }}/certs"
+    crt_file: "{{ certs_dir }}/sharpishly.dev.crt"
+    key_file: "{{ certs_dir }}/sharpishly.dev.key"
+    domain: "sharpishly.dev"
   tasks:
-    - name: Install Docker packages
+    - name: Install Docker and OpenSSL packages
       package:
         name:
           - docker.io
           - docker-compose
+          - openssl
         state: present
 
     - name: Ensure Docker service is running
@@ -16,6 +21,31 @@
         name: docker
         state: started
         enabled: yes
+
+    - name: Create certs directory
+      file:
+        path: "{{ certs_dir }}"
+        state: directory
+        owner: joe90
+        group: joe90
+        mode: "0755"
+
+    - name: Generate SSL private key
+      command: openssl genrsa -out "{{ key_file }}" 4096
+      args:
+        creates: "{{ key_file }}"
+      when: not (key_file is exists)
+
+    - name: Generate self-signed SSL certificate
+      command: >
+        openssl req -x509 -new -nodes
+        -key "{{ key_file }}"
+        -out "{{ crt_file }}"
+        -days 365
+        -subj "/C=US/ST=California/L=Mountain View/O=Self-Signed/CN={{ domain }}"
+      args:
+        creates: "{{ crt_file }}"
+      when: not (crt_file is exists)
 
     - name: Remove existing docker-compose.yml
       file:
