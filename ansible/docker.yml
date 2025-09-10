@@ -7,6 +7,12 @@
     crt_file: "{{ certs_dir }}/sharpishly.dev.crt"
     key_file: "{{ certs_dir }}/sharpishly.dev.key"
     domain: "sharpishly.dev"
+    hostnames:
+      - "sharpishly.dev"
+      - "dev.sharpishly.dev"
+      - "docs.sharpishly.dev"
+      - "live.sharpishly.dev"
+      - "py.sharpishly.dev"
   tasks:
     - name: Stop and remove Docker containers, volumes, and networks
       command: docker-compose down -v --remove-orphans
@@ -14,32 +20,32 @@
         chdir: "{{ app_dir }}"
       register: docker_compose_down
       changed_when: docker_compose_down.rc == 0
-      failed_when: false  # Allow to fail if no containers exist
+      failed_when: false
 
     - name: Stop all running Docker containers
       shell: docker ps -q | xargs -r docker stop
       changed_when: true
-      failed_when: false  # Allow to fail if no containers are running
+      failed_when: false
 
     - name: Remove all Docker containers
       shell: docker ps -aq | xargs -r docker rm -f
       changed_when: true
-      failed_when: false  # Allow to fail if no containers exist
+      failed_when: false
 
     - name: Remove dangling Docker images
       shell: docker images -f "dangling=true" -q | xargs -r docker rmi -f
       changed_when: true
-      failed_when: false  # Allow to fail if no dangling images
+      failed_when: false
 
     - name: Remove unused Docker volumes
       shell: docker volume ls -q | xargs -r docker volume rm -f
       changed_when: true
-      failed_when: false  # Allow to fail if no unused volumes
+      failed_when: false
 
     - name: Remove unused Docker networks
       command: docker network prune -f
       changed_when: true
-      failed_when: false  # Allow to fail if no unused networks
+      failed_when: false
 
     - name: Check port 80 usage
       shell: |
@@ -59,7 +65,15 @@
         name: nginx
         state: stopped
         enabled: no
-      ignore_errors: true  # Allow to fail if Nginx is not installed
+      ignore_errors: true
+
+    - name: Add hostnames to /etc/hosts
+      lineinfile:
+        path: /etc/hosts
+        regexp: '^\s*127\.0\.0\.1\s+{{ item }}(\s|$)'
+        line: "127.0.0.1 {{ item }}"
+        state: present
+      loop: "{{ hostnames }}"
 
     - name: Install Docker and OpenSSL packages
       package:
@@ -156,3 +170,25 @@
       register: docker_compose_up
       changed_when: docker_compose_up.rc == 0
       failed_when: docker_compose_up.rc != 0
+
+    - name: Verify hostnames in /etc/hosts
+      shell: grep "{{ item }}" /etc/hosts
+      loop: "{{ hostnames }}"
+      register: hosts_check
+      changed_when: false
+      failed_when: hosts_check.rc != 0
+      ignore_errors: true
+
+    - name: Test http://sharpishly.dev
+      command: curl -k http://sharpishly.dev
+      register: http_test
+      changed_when: false
+      failed_when: http_test.rc != 0
+      ignore_errors: true
+
+    - name: Test https://sharpishly.dev
+      command: curl -k https://sharpishly.dev
+      register: https_test
+      changed_when: false
+      failed_when: https_test.rc != 0
+      ignore_errors: true
