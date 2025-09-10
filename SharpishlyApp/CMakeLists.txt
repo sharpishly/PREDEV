@@ -15,4 +15,5 @@ add_executable(SharpishlyApp
     src/Controller/AboutController.cpp
     src/Controller/DocsController.cpp
     src/Controller/ProvisionController.cpp
+    src/Controller/PenetrationController.cpp
 )
