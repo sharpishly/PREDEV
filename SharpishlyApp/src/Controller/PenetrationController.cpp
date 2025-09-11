@@ -1,8 +1,5 @@
 #include "PenetrationController.h"
-#include "Model/PenetrationModel.h"
-#include "View/PenetrationView.h"
 
 std::string PenetrationController::index() {
-    auto results = PenetrationModel::getAvailableTools();
-    return PenetrationView::renderIndex(results);
+    return "<html><body><h1>Penetration Controller active!</h1></body></html>";
 }

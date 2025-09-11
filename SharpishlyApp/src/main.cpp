@@ -1,12 +1,21 @@
 #include "Core/Router.h"
+#include "PenetrationController.h"
 #include "Core/HttpServer.h"
+#include "PenetrationController.h"
 #include "Controller/AboutController.h"
+#include "PenetrationController.h"
 #include "Controller/HomeController.h"
+#include "PenetrationController.h"
 #include "Controller/DocsController.h"
+#include "PenetrationController.h"
 #include "Controller/ProvisionController.h"
+#include "PenetrationController.h"
 #include <iostream>
+#include "PenetrationController.h"
 #include <vector>
+#include "PenetrationController.h"
 #include <string>
+#include "PenetrationController.h"
 
 // New helper function to register all routes in one place
 void registerRoutes(Router& router) {
@@ -21,6 +30,7 @@ void registerRoutes(Router& router) {
 
     for (auto& [path, handler] : routes) {
         router.addRoute(path, handler);
+    router.addRoute("/penetration/index", [](const std::vector<std::string>& params) { return PenetrationController::index(); });
     }
 }
 

@@ -5,6 +5,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/SharpishlyApp.dir/src/Controller/DocsController.cpp.o.d"
   "CMakeFiles/SharpishlyApp.dir/src/Controller/HomeController.cpp.o"
   "CMakeFiles/SharpishlyApp.dir/src/Controller/HomeController.cpp.o.d"
+  "CMakeFiles/SharpishlyApp.dir/src/Controller/PenetrationController.cpp.o"
+  "CMakeFiles/SharpishlyApp.dir/src/Controller/PenetrationController.cpp.o.d"
   "CMakeFiles/SharpishlyApp.dir/src/Controller/ProvisionController.cpp.o"
   "CMakeFiles/SharpishlyApp.dir/src/Controller/ProvisionController.cpp.o.d"
   "CMakeFiles/SharpishlyApp.dir/src/Core/HttpServer.cpp.o"

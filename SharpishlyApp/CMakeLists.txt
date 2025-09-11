@@ -8,6 +8,7 @@ include_directories(include src/Model src/View src/Controller src/Core)
 
 # Include main.cpp and HttpServer.cpp
 add_executable(SharpishlyApp
+    src/Controller/PenetrationController.cpp
     src/main.cpp
     src/Core/HttpServer.cpp
     src/Core/Router.cpp
@@ -15,5 +16,4 @@ add_executable(SharpishlyApp
     src/Controller/AboutController.cpp
     src/Controller/DocsController.cpp
     src/Controller/ProvisionController.cpp
-    src/Controller/PenetrationController.cpp
 )

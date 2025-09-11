@@ -201,6 +201,30 @@ src/Controller/HomeController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/HomeController.cpp.s
 .PHONY : src/Controller/HomeController.cpp.s
 
+src/Controller/PenetrationController.o: src/Controller/PenetrationController.cpp.o
+.PHONY : src/Controller/PenetrationController.o
+
+# target to build an object file
+src/Controller/PenetrationController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/PenetrationController.cpp.o
+.PHONY : src/Controller/PenetrationController.cpp.o
+
+src/Controller/PenetrationController.i: src/Controller/PenetrationController.cpp.i
+.PHONY : src/Controller/PenetrationController.i
+
+# target to preprocess a source file
+src/Controller/PenetrationController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/PenetrationController.cpp.i
+.PHONY : src/Controller/PenetrationController.cpp.i
+
+src/Controller/PenetrationController.s: src/Controller/PenetrationController.cpp.s
+.PHONY : src/Controller/PenetrationController.s
+
+# target to generate assembly for a file
+src/Controller/PenetrationController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/PenetrationController.cpp.s
+.PHONY : src/Controller/PenetrationController.cpp.s
+
 src/Controller/ProvisionController.o: src/Controller/ProvisionController.cpp.o
 .PHONY : src/Controller/ProvisionController.o
 
@@ -315,6 +339,9 @@ help:
 	@echo "... src/Controller/HomeController.o"
 	@echo "... src/Controller/HomeController.i"
 	@echo "... src/Controller/HomeController.s"
+	@echo "... src/Controller/PenetrationController.o"
+	@echo "... src/Controller/PenetrationController.i"
+	@echo "... src/Controller/PenetrationController.s"
 	@echo "... src/Controller/ProvisionController.o"
 	@echo "... src/Controller/ProvisionController.i"
 	@echo "... src/Controller/ProvisionController.s"
