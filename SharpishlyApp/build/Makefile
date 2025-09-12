@@ -297,6 +297,30 @@ src/Core/Router.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Core/Router.cpp.s
 .PHONY : src/Core/Router.cpp.s
 
+src/Model/PenetrationModel.o: src/Model/PenetrationModel.cpp.o
+.PHONY : src/Model/PenetrationModel.o
+
+# target to build an object file
+src/Model/PenetrationModel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/PenetrationModel.cpp.o
+.PHONY : src/Model/PenetrationModel.cpp.o
+
+src/Model/PenetrationModel.i: src/Model/PenetrationModel.cpp.i
+.PHONY : src/Model/PenetrationModel.i
+
+# target to preprocess a source file
+src/Model/PenetrationModel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/PenetrationModel.cpp.i
+.PHONY : src/Model/PenetrationModel.cpp.i
+
+src/Model/PenetrationModel.s: src/Model/PenetrationModel.cpp.s
+.PHONY : src/Model/PenetrationModel.s
+
+# target to generate assembly for a file
+src/Model/PenetrationModel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/PenetrationModel.cpp.s
+.PHONY : src/Model/PenetrationModel.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -351,6 +375,9 @@ help:
 	@echo "... src/Core/Router.o"
 	@echo "... src/Core/Router.i"
 	@echo "... src/Core/Router.s"
+	@echo "... src/Model/PenetrationModel.o"
+	@echo "... src/Model/PenetrationModel.i"
+	@echo "... src/Model/PenetrationModel.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
