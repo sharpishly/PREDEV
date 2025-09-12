@@ -177,6 +177,30 @@ src/Controller/DocsController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/DocsController.cpp.s
 .PHONY : src/Controller/DocsController.cpp.s
 
+src/Controller/GameController.o: src/Controller/GameController.cpp.o
+.PHONY : src/Controller/GameController.o
+
+# target to build an object file
+src/Controller/GameController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/GameController.cpp.o
+.PHONY : src/Controller/GameController.cpp.o
+
+src/Controller/GameController.i: src/Controller/GameController.cpp.i
+.PHONY : src/Controller/GameController.i
+
+# target to preprocess a source file
+src/Controller/GameController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/GameController.cpp.i
+.PHONY : src/Controller/GameController.cpp.i
+
+src/Controller/GameController.s: src/Controller/GameController.cpp.s
+.PHONY : src/Controller/GameController.s
+
+# target to generate assembly for a file
+src/Controller/GameController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/GameController.cpp.s
+.PHONY : src/Controller/GameController.cpp.s
+
 src/Controller/HomeController.o: src/Controller/HomeController.cpp.o
 .PHONY : src/Controller/HomeController.o
 
@@ -297,6 +321,30 @@ src/Core/Router.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Core/Router.cpp.s
 .PHONY : src/Core/Router.cpp.s
 
+src/Model/GameModel.o: src/Model/GameModel.cpp.o
+.PHONY : src/Model/GameModel.o
+
+# target to build an object file
+src/Model/GameModel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/GameModel.cpp.o
+.PHONY : src/Model/GameModel.cpp.o
+
+src/Model/GameModel.i: src/Model/GameModel.cpp.i
+.PHONY : src/Model/GameModel.i
+
+# target to preprocess a source file
+src/Model/GameModel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/GameModel.cpp.i
+.PHONY : src/Model/GameModel.cpp.i
+
+src/Model/GameModel.s: src/Model/GameModel.cpp.s
+.PHONY : src/Model/GameModel.s
+
+# target to generate assembly for a file
+src/Model/GameModel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/GameModel.cpp.s
+.PHONY : src/Model/GameModel.cpp.s
+
 src/Model/PenetrationModel.o: src/Model/PenetrationModel.cpp.o
 .PHONY : src/Model/PenetrationModel.o
 
@@ -360,6 +408,9 @@ help:
 	@echo "... src/Controller/DocsController.o"
 	@echo "... src/Controller/DocsController.i"
 	@echo "... src/Controller/DocsController.s"
+	@echo "... src/Controller/GameController.o"
+	@echo "... src/Controller/GameController.i"
+	@echo "... src/Controller/GameController.s"
 	@echo "... src/Controller/HomeController.o"
 	@echo "... src/Controller/HomeController.i"
 	@echo "... src/Controller/HomeController.s"
@@ -375,6 +426,9 @@ help:
 	@echo "... src/Core/Router.o"
 	@echo "... src/Core/Router.i"
 	@echo "... src/Core/Router.s"
+	@echo "... src/Model/GameModel.o"
+	@echo "... src/Model/GameModel.i"
+	@echo "... src/Model/GameModel.s"
 	@echo "... src/Model/PenetrationModel.o"
 	@echo "... src/Model/PenetrationModel.i"
 	@echo "... src/Model/PenetrationModel.s"

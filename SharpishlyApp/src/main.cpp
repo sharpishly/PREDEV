@@ -1,21 +1,39 @@
 #include "Core/Router.h"
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 #include "Core/HttpServer.h"
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 #include "Controller/AboutController.h"
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 #include "Controller/HomeController.h"
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 #include "Controller/DocsController.h"
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 #include "Controller/ProvisionController.h"
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 #include <iostream>
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 #include <vector>
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 #include <string>
+#include "GameController.h"
 #include "PenetrationController.h"
+#include "GameController.h"
 
 // New helper function to register all routes in one place
 void registerRoutes(Router& router) {
@@ -30,7 +48,9 @@ void registerRoutes(Router& router) {
 
     for (auto& [path, handler] : routes) {
         router.addRoute(path, handler);
+    router.addRoute("/game/index", [](const std::vector<std::string>& params) { return GameController::index(); });
     router.addRoute("/penetration/index", [](const std::vector<std::string>& params) { return PenetrationController::index(); });
+    router.addRoute("/game/index", [](const std::vector<std::string>& params) { return GameController::index(); });
     }
 }
 
