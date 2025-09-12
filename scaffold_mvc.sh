@@ -96,8 +96,17 @@ echo "✅ Wrote $MODEL_CPP"
 mkdir -p "$VIEW_DIR/css" "$VIEW_DIR/js" "$VIEW_DIR/partials"
 
 cat > "$VIEW_DIR/index.html" <<EOF
-<h1>${NAME} Page</h1>
-<p>Welcome to the ${NAME}Controller view.</p>
+<nav>
+    <a href="/home/index">Home</a>
+    <a href="/about/index">About</a>
+    <a href="/docs/index">Docs</a>
+    <a href="#">Contact</a>
+</nav>
+
+<main>
+    <p>This is a minimal C++ MVC application serving HTML pages directly from the server.</p>
+    <p>Resize your browser to see the responsive design in action!</p>
+</main>
 EOF
 
 cat > "$VIEW_DIR/css/style.css" <<EOF
@@ -111,14 +120,102 @@ EOF
 
 cat > "$VIEW_DIR/partials/header.html" <<EOF
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>${NAME} - SharpishlyApp</title>
-    <link rel="stylesheet" href="css/style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Grants Page with HTML, CSS, and JavaScript">
+    <title>SharpishlyApp</title>
+    <link rel="stylesheet" href="/home/css/styles.css">
+    <style>
+        /* Reset some default styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f9fc;
+            color: #333;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #2e7d32;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            display: block;
+            transition: background 0.3s;
+        }
+
+        nav a:hover {
+            background-color: #1b5e20;
+        }
+
+        main {
+            flex: 1;
+            padding: 2rem;
+            max-width: 960px;
+            margin: auto;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: #4CAF50;
+            color: white;
+            margin-top: auto;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 600px) {
+            nav {
+                flex-direction: column;
+            }
+
+            nav a {
+                padding: 0.5rem 1rem;
+            }
+
+            main {
+                padding: 1rem;
+            }
+        }
+    </style>
 </head>
 <body>
+
 <header>
-    <h2>${NAME} Module</h2>
+<h1>${NAME} Page</h1>
+<p>Welcome to the ${NAME}Controller view.</p>
 </header>
 EOF
 
