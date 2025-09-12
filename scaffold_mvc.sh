@@ -104,14 +104,92 @@ cat > "$VIEW_DIR/index.html" <<EOF
 </nav>
 
 <main>
-    <p>This is a minimal C++ MVC application serving HTML pages directly from the server.</p>
-    <p>Resize your browser to see the responsive design in action!</p>
+<p>${NAME} Page</p>
+<p>Welcome to the ${NAME}Controller view.</p>
 </main>
 EOF
 
 cat > "$VIEW_DIR/css/style.css" <<EOF
-body { font-family: Arial, sans-serif; margin: 20px; }
-h1 { color: darkred; }
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f7f9fc;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 1rem;
+    text-align: center;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+    background-color: #2e7d32;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    padding: 0.75rem 1.5rem;
+    display: block;
+    transition: background 0.3s;
+}
+
+nav a:hover {
+    background-color: #1b5e20;
+}
+
+main {
+    flex: 1;
+    padding: 2rem;
+    max-width: 960px;
+    margin: auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+p {
+    text-align: center;
+    font-size: 1.1rem;
+}
+
+footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #4CAF50;
+    color: white;
+    margin-top: auto;
+}
+
+/* Responsive layout */
+@media (max-width: 600px) {
+    nav {
+        flex-direction: column;
+    }
+
+    nav a {
+        padding: 0.5rem 1rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+}
 EOF
 
 cat > "$VIEW_DIR/js/app.js" <<EOF
@@ -125,98 +203,96 @@ cat > "$VIEW_DIR/partials/header.html" <<EOF
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Grants Page with HTML, CSS, and JavaScript">
-    <title>SharpishlyApp</title>
-    <link rel="stylesheet" href="/home/css/styles.css">
+    <title>SharpishlyApp::${NAME}</title>
+    <link rel="stylesheet" href="css/styles.css">
     <style>
-        /* Reset some default styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
 
-        body {
-            font-family: Arial, sans-serif;
-            background: #f7f9fc;
-            color: #333;
-            line-height: 1.6;
-            display: flex;
-            flex-direction: column;
-            min-height: 100vh;
-        }
+    body {
+        font-family: Arial, sans-serif;
+        background: #f7f9fc;
+        color: #333;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+    }
 
-        header {
-            background-color: #4CAF50;
-            color: white;
-            padding: 1rem;
-            text-align: center;
-        }
+    header {
+        background-color: #4CAF50;
+        color: white;
+        padding: 1rem;
+        text-align: center;
+    }
 
+    nav {
+        display: flex;
+        justify-content: center;
+        background-color: #2e7d32;
+    }
+
+    nav a {
+        color: white;
+        text-decoration: none;
+        padding: 0.75rem 1.5rem;
+        display: block;
+        transition: background 0.3s;
+    }
+
+    nav a:hover {
+        background-color: #1b5e20;
+    }
+
+    main {
+        flex: 1;
+        padding: 2rem;
+        max-width: 960px;
+        margin: auto;
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        text-align: center;
+        font-size: 1.1rem;
+    }
+
+    footer {
+        text-align: center;
+        padding: 1rem;
+        background-color: #4CAF50;
+        color: white;
+        margin-top: auto;
+    }
+
+    /* Responsive layout */
+    @media (max-width: 600px) {
         nav {
-            display: flex;
-            justify-content: center;
-            background-color: #2e7d32;
+            flex-direction: column;
         }
 
         nav a {
-            color: white;
-            text-decoration: none;
-            padding: 0.75rem 1.5rem;
-            display: block;
-            transition: background 0.3s;
-        }
-
-        nav a:hover {
-            background-color: #1b5e20;
+            padding: 0.5rem 1rem;
         }
 
         main {
-            flex: 1;
-            padding: 2rem;
-            max-width: 960px;
-            margin: auto;
-        }
-
-        h1 {
-            text-align: center;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            text-align: center;
-            font-size: 1.1rem;
-        }
-
-        footer {
-            text-align: center;
             padding: 1rem;
-            background-color: #4CAF50;
-            color: white;
-            margin-top: auto;
         }
-
-        /* Responsive layout */
-        @media (max-width: 600px) {
-            nav {
-                flex-direction: column;
-            }
-
-            nav a {
-                padding: 0.5rem 1rem;
-            }
-
-            main {
-                padding: 1rem;
-            }
-        }
+    }
     </style>
 </head>
 <body>
-
-<header>
-<h1>${NAME} Page</h1>
-<p>Welcome to the ${NAME}Controller view.</p>
-</header>
+    <header>
+    <h1>${NAME} Page</h1>
+    <p>Welcome to the ${NAME}Controller view.</p>
+    </header>
 EOF
 
 cat > "$VIEW_DIR/partials/footer.html" <<EOF
