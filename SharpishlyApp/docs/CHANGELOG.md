@@ -1,74 +1,44 @@
-# Changelog
+Changelog
+All notable changes to PREDEV and SharpishlyApp are documented here.
+[Unreleased]
+In Progress
 
-## \[Unreleased\]
+Extending DatabaseIDE MVC to auto-detect MySQL containers from docker-compose.
+Adding PreFlight drift detection for /etc/hosts synchronization.
+Preparing Git MVC for push, pull, commit, and checkout operations.
+Preparing DockerSync MVC for safe duplication of docker-compose, Dockerfiles, and nginx configs.
 
--   Planned: Permissions MVC (file/folder ownership, www-data, etc.)
--   Planned: DevOps Tools MVC (debugging, monitoring, security)
--   Planned: Git MVC (push, pull, commit, checkout)
--   Planned: DockerSync MVC (safe duplication and prefixing of Docker
-    configs)
--   Planned: DatabaseIDE MVC (auto-configure IDEs: MySQL Workbench,
-    SQLyog, phpMyAdmin)
--   Planned: PreFlight MVC (provision checks and drift detection)
--   Planned: HTML/CSS/JS MVC (templates, partials, smarty-style
-    rendering)
--   Planned: Deployment MVC (.github/workflows syncing across
-    environments)
--   Planned: Advanced monitoring, debugging & SSL
+[0.2.1] - 2025-09-05
+Changed
 
-## \[0.2.0\] - 2025-08-31
+Refactored main.cpp to use a centralized registerRoutes() helper for route definitions, reducing repetition and keeping the main function clean.
 
-### Added
+[0.2.0] - 2025-09-12
+Added
 
--   HostsSync MVC to synchronize /etc/hosts between Docker host and
-    development machine
--   Drift detection for host differences (local vs remote)
--   Backup & restore system for local and remote /etc/hosts
--   Dry-run mode for HostsSync operations
--   Integrated Roadmap tracking via ROADMAP.md
+Nmap penetration testing integration for host discovery, port scanning, and service detection.
+Threats database scaffold (planned task).
+Game Engine scaffold for future extensibility.
+Scaffold and delete scripts for MVC components.
+Extended ROADMAP.md with integrations (Docling, WiFi, Recruitment, Project Management, ML).
+HostsSync MVC to synchronize /etc/hosts between Docker host and development machine.
+Drift detection for host differences (local vs remote).
+Backup and restore system for local and remote /etc/hosts.
+Dry-run mode for HostsSync operations.
+Roadmap tracking via ROADMAP.md.
 
-### Changed
+Changed
 
--   Expanded build.sh safety measures (duplication of
-    docker-compose.yml, Dockerfile, nginx with environment prefixes)
+Improved run.sh with safety measures for duplicating docker-compose.yml, Dockerfile, and nginx configs with environment prefixes.
 
-## \[0.1.0\] - 2025-08-30
+Fixed
 
-### Added
+Corrected Controller include path errors to resolve compilation issues when accessing Model/View headers.
 
--   Initial project scaffolding (CMake, build.sh)
--   MVC structure (Controller, Model, View)
--   Minimal HttpServer (C++ standard library, listens on 127.0.0.1:1966)
+[0.1.0] - 2025-08-30
+Added
 
-## [0.2.1] - 2025-09-05
-
-### Changed
-- Refactored `main.cpp` to use a centralized `registerRoutes()` helper for route definitions.
-  - Reduced repetition by storing routes in a vector of path/handler pairs.
-  - Keeps main function clean while maintaining identical behavior.
-
-
-  # 📜 Changelog
-
-## [Unreleased]
-- Planned: USB, WiFi, Recruitment software, ML integrations.
-
-## [0.2.0] - 2025-09-12
-### Added
-- Nmap penetration testing integration.
-- Threats database (planned task).
-- Game Engine scaffold.
-- Scaffold & delete scripts for MVC.
-- Extended ROADMAP.md with new integrations (Docling, WiFi, Recruitment, Project Management, ML).
-
-### Fixed
-- Controller include path errors for models/views.
-- Build system CMake updates for new scaffolds.
-
-## [0.1.0] - 2025-09-05
-### Added
-- Initial MVC scaffolding.
-- Base HTTP server + router.
-- Home, Docs, Provision controllers + views.
-
-
+Initial project scaffolding with CMake and run.sh.
+MVC structure (Controller, Model, View).
+Minimal HTTP server using C++ standard library, listening on 127.0.0.1:1966.
+Home, Docs, and Provision controllers with corresponding views.

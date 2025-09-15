@@ -1,73 +1,56 @@
-# SharpishlyApp Roadmap
+PREDEV and SharpishlyApp Roadmap
+This roadmap outlines planned features for PREDEV (the platform for environment synchronization) and SharpishlyApp (its C++ MVC reference implementation).
+✅ Completed
 
-## ✅ Completed
+Basic CMake and run.sh setup.
+MVC scaffolding (Controllers, Models, Views).
+Minimal HTTP server (C++ standard library, port 1966).
+Nmap penetration testing integration (host discovery, port scanning, service detection).
+Scaffold and delete scripts for MVC components.
+HostsSync MVC: Synchronizes /etc/hosts between Docker host and development machine.
+PreFlight MVC skeleton: Initial provisioning and safety checks.
+DatabaseIDE MVC: Auto-configures MySQL Workbench, SQLyog, and phpMyAdmin with Docker-detected MySQL credentials.
+Route registration refactor: Moved routes to registerRoutes() helper in main.cpp.
+Basic Game Engine scaffold for future extensibility.
 
-- **Basic CMake + build.sh setup**
-- **Basic MVC structure created** (Controller, Model, View)
-- **Minimal HttpServer** (C++ standard library, port 1966)
-- **Roadmap tracking system (MVC)**
-- **HostsSync MVC** (sync /etc/hosts between Docker host and dev machine)
-- **PreFlight MVC skeleton** (provisioning/safety checks before changes)
-- **DatabaseIDE MVC** (setup MySQL Workbench, SQLyog, phpMyAdmin)
-- **Auto-detect MySQL credentials from Docker container**
-- **Route Registration Refactor** (moved all routes into `registerRoutes()` helper for cleaner main.cpp)
+🛠 In Progress
 
----
+DatabaseIDE MVC: Extend to auto-detect MySQL containers from docker-compose.yml.
+PreFlight MVC: Add drift detection for /etc/hosts synchronization (warn if local and remote differ).
+Git MVC: Support for push, pull, commit, and checkout operations.
+DockerSync MVC: Safe duplication and prefixing of docker-compose.yml, Dockerfiles, and nginx configs.
 
-## 🛠 In Progress
+📌 Planned
+High Priority
 
-- Extend **DatabaseIDE MVC** to auto-detect MySQL containers from docker-compose
-- Add **PreFlight drift detection** for /etc/hosts sync (warn if local and remote differ)
-- Prepare **Git MVC** (push, pull, commit, checkout)
-- Prepare **DockerSync MVC** (sync local vs production docker-compose, dockerfiles, nginx configs)
+Controllers & Models for MySQL: Integrate MySQL database support within Docker.
+DockerSync MVC: Automate synchronization of local and production Docker configurations.
+Permissions MVC: Manage file/folder ownership (e.g., www-data) for src/View/www.
+HTML/CSS/JS MVC: Support Smarty-style templates, partials, and web rendering in src/View/www.
+PreFlight MVC: Full implementation to detect provisioning issues before changes.
+Deployment MVC: Sync environments via .github/workflows/deploy.yml.
 
----
+Medium Priority
 
-## 📌 Todo / Planned
+DevOps Tools MVC: Add debugging, monitoring, security, and logging tools to docker-compose.yml.
+Advanced Git MVC: Support branching strategies and feature/production workflows.
+Monitoring/Debugging MVC: Centralized logging, error detection, and security scans.
+Production-ready SSL: Certificate generation and rotation for the HTTP server.
+Roadmap Auto-Update: Automate updates to ROADMAP.md based on repository changes.
 
-- **Controllers & Models for MySQL** (inside Docker)
-- **DockerSync MVC** (safe duplication + prefixing of docker-compose.yml, Dockerfile, nginx configs)
-- **Permissions MVC** (manage file/folder ownership: www-data, etc.)
-- **DevOps Tools MVC** (debugging, monitoring, security tools in docker-compose local)
-- **HTML/CSS/JS MVC** (views, templates, partials, {{{smarty}}})
-- **PreFlight MVC full implementation** (detect potential issues before provisioning changes)
-- **DatabaseIDE MVC** -- automatically configure IDEs with connection profiles
-- **Advanced Git MVC** (branching strategies, feature vs production flows)
-- **Monitoring/Debugging MVC** (centralized logging, error detection, security scans)
-- **Deployment MVC** (sync across environments via .github/workflows)
-- **Production-ready SSL handling** (cert generation & rotation)
-- **Roadmap auto-export/update system** (ROADMAP.md maintained in repo)
+Future Exploration
+
+USB Functionality: Expose USB device features for SharpishlyApp.
+Game Engine: Extend with advanced rendering and interaction features.
+Node.js, Python, React.js Integrations: Support additional languages/frameworks.
+Threats Database: Integrate with Nmap for penetration testing reports.
+Docling Integration: Add document processing capabilities.
+WiFi Functionality: Expose WiFi adapter features.
+Recruitment Software Suite: Build website, mobile, desktop, CRM, and CMS to demonstrate PREDEV’s multi-environment synchronization.
+Project Management Integrations: Support Jira, Trello, and Asana.
+Machine Learning: Implement hiring algorithms, deployment pipelines, and feedback loops.
+Subtask: Add webcam access and facial recognition for recruitment features.
 
 
----
-
-# 📌 ROADMAP.md  
-
-```markdown
-# 🚀 SharpishlyApp Roadmap
-
-## ✅ Completed
-- MVC scaffolding system (Controllers, Models, Views).
-- Nmap penetration integration (host discovery, port scanning, service detection).
-- Delete scaffold functionality.
-- Basic Game Engine scaffold.
-
-## 📌 Remaining Scaffold Tasks
-- USB functionality.
-- Game Engine (extended features).
-- Node.js integration.
-- Python integration.
-- React.js integration.
-- Threats database integration.
-- Docling integration.
-- WiFi functionality (adapter feature exposure).
-- Recruitment software suite (website, mobile, desktop, CRM, CMS, etc).
-- Project management integrations (Jira, Trello, Asana).
-- Machine Learning (hiring algorithms, deployment, feedback).
-  - **Subtask:** Webcam Access & Facial Recognition.
-
-## 🔮 Planned Features
-- Extend penetration functionality (advanced Nmap flags, reporting).
-- AI-assisted scaffolding.
-- Real-time monitoring dashboards.
-
+AI-Assisted Scaffolding: Use AI to generate boilerplate code for new MVC components.
+Real-Time Monitoring Dashboards: Visualize system status and performance.
