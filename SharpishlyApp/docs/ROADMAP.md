@@ -37,3 +37,37 @@
 - **Deployment MVC** (sync across environments via .github/workflows)
 - **Production-ready SSL handling** (cert generation & rotation)
 - **Roadmap auto-export/update system** (ROADMAP.md maintained in repo)
+
+
+---
+
+# 📌 ROADMAP.md  
+
+```markdown
+# 🚀 SharpishlyApp Roadmap
+
+## ✅ Completed
+- MVC scaffolding system (Controllers, Models, Views).
+- Nmap penetration integration (host discovery, port scanning, service detection).
+- Delete scaffold functionality.
+- Basic Game Engine scaffold.
+
+## 📌 Remaining Scaffold Tasks
+- USB functionality.
+- Game Engine (extended features).
+- Node.js integration.
+- Python integration.
+- React.js integration.
+- Threats database integration.
+- Docling integration.
+- WiFi functionality (adapter feature exposure).
+- Recruitment software suite (website, mobile, desktop, CRM, CMS, etc).
+- Project management integrations (Jira, Trello, Asana).
+- Machine Learning (hiring algorithms, deployment, feedback).
+  - **Subtask:** Webcam Access & Facial Recognition.
+
+## 🔮 Planned Features
+- Extend penetration functionality (advanced Nmap flags, reporting).
+- AI-assisted scaffolding.
+- Real-time monitoring dashboards.
+

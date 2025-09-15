@@ -137,6 +137,32 @@ PREDEV/
 See full [ROADMAP.md](docs/ROADMAP.md).
 
 ---
+# SharpishlyApp
+
+SharpishlyApp is a cross-platform MVC application designed for extensibility, scaffolding, and integration with advanced features such as penetration testing, AI/ML, and recruitment solutions.  
+
+## 🚀 Features
+- MVC Scaffolding (Controllers, Models, Views).
+- Integrated Penetration Testing (Nmap, Threat DB).
+- Roadmap-driven: WiFi, USB, Game Engine, Node.js, Python, React.js.
+- Upcoming integrations: Recruitment software, project management tools, machine learning.
+- Cross-platform: Web, Desktop, Mobile support.
+
+## 📂 Project Structure
+
+SharpishlyApp/
+├── app/ # Supporting apps (docker, configs, Python MVC, etc.)
+├── build/ # Build artifacts (compiled binaries, cache)
+├── docs/ # Documentation
+├── include/ # Shared headers
+├── src/ # Application source code
+│ ├── Controller/ # Controllers
+│ ├── Model/ # Models
+│ ├── View/ # Views + www templates
+│ └── Core/ # Router, HTTP server
+├── CMakeLists.txt # Build configuration
+└── ROADMAP.md # Development roadmap
+---
 
 ## ⚠️ Disclaimer
 
@@ -151,3 +177,5 @@ This repository is intended as an **educational, experimental, and prototyping f
 
 MIT License — feel free to use, modify, and distribute.  
 Attribution to this repository and **ChatGPT scaffolding** is appreciated.
+
+

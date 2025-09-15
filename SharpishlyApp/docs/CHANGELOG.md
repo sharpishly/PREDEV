@@ -47,3 +47,28 @@
   - Reduced repetition by storing routes in a vector of path/handler pairs.
   - Keeps main function clean while maintaining identical behavior.
 
+
+  # 📜 Changelog
+
+## [Unreleased]
+- Planned: USB, WiFi, Recruitment software, ML integrations.
+
+## [0.2.0] - 2025-09-12
+### Added
+- Nmap penetration testing integration.
+- Threats database (planned task).
+- Game Engine scaffold.
+- Scaffold & delete scripts for MVC.
+- Extended ROADMAP.md with new integrations (Docling, WiFi, Recruitment, Project Management, ML).
+
+### Fixed
+- Controller include path errors for models/views.
+- Build system CMake updates for new scaffolds.
+
+## [0.1.0] - 2025-09-05
+### Added
+- Initial MVC scaffolding.
+- Base HTTP server + router.
+- Home, Docs, Provision controllers + views.
+
+
