@@ -1,36 +1,62 @@
 ---
-- name: Provision SharpishlyApp environment
+- name: Deploy SharpishlyApp C++ MVC Framework
   hosts: localhost
-  become: true
-
+  become: yes
   tasks:
-    - name: Ensure base packages
-      package:
-        name:
-          - openssl
-          - ufw
-        state: present
 
-    - name: Include Docker setup
-      import_tasks: docker.yml
-
-    - name: Include SSL setup
-      import_tasks: ssl.yml
-
-    - name: Include Nginx setup
-      import_tasks: nginx.yml
-
-    - name: Configure firewall
+    - name: Allow port 1966
       ufw:
         rule: allow
-        port: "{{ item }}"
-      loop:
-        - "80"
-        - "443"
+        port: 1966
+        proto: tcp
 
-    - name: Reload firewall
-      command: ufw reload
+    - name: Ensure UFW is enabled
+      ufw:
+        state: enabled
 
-    - name: Add hostname entries
-      lineinfile:
-        path: /etc/
+    - name: Set permissions for View directory
+      file:
+        path: "{{ playbook_dir }}/../SharpishlyApp/src/View"
+        recurse: yes
+        owner: "{{ ansible_user_id }}"
+        group: "{{ ansible_user_gid | default(ansible_user_id) }}"
+        mode: u+rwX
+
+    - name: Stop Nginx service
+      service:
+        name: nginx
+        state: stopped
+      ignore_errors: yes
+
+    - name: Debug www directory contents
+      command: ls -l "{{ playbook_dir }}/../SharpishlyApp/src/View/www"
+      register: www_list
+
+    - debug:
+        var: www_list.stdout_lines
+
+    - name: Create build directory if missing
+      file:
+        path: "{{ playbook_dir }}/../SharpishlyApp/build"
+        state: directory
+
+    - name: Compile SharpishlyApp with CMake
+      command: cmake ..
+      args:
+        chdir: "{{ playbook_dir }}/../SharpishlyApp/build"
+
+    - name: Build SharpishlyApp
+      command: make
+      args:
+        chdir: "{{ playbook_dir }}/../SharpishlyApp/build"
+
+    - name: Run SharpishlyApp
+      command: ./SharpishlyApp
+      args:
+        chdir: "{{ playbook_dir }}/../SharpishlyApp/build"
+      async: 30
+      poll: 0
+      register: app_job
+
+    - debug:
+        msg: "SharpishlyApp started in background (Job ID: {{ app_job.ansible_job_id }})"
