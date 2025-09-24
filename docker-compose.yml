@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  # Build and run SharpishlyApp in a single service
+  sharpishlyapp:
+    build:
+      context: .
+      dockerfile: Dockerfile.build
+    ports:
+      - "1966:1966"
+    volumes:
+      - .:/app
+      - /dev/shm:/dev/shm
+    environment:
+      - PORT=1966
+      - BUILD_DIR=/app/SharpishlyApp/build
+    working_dir: /app
+    command: >
+      /bin/bash -c "
+        set -e
+        
+        echo '>>> Checking dependencies...'
+        if ! command -v cmake >/dev/null 2>&1 || 
+           ! command -v make >/dev/null 2>&1 || 
+           ! command -v g++ >/dev/null 2>&1; then
+          echo '❌ Missing dependencies. Installing...'
+          apt-get update && 
+          apt-get install -y build-essential cmake g++ make
+        else
+          echo '✅ Dependencies found'
+        fi
+        
+        echo '>>> Setting permissions...'
+        chmod -R u+rwX SharpishlyApp/src/View
+        
+        echo '>>> Listing www directory...'
+        ls -l SharpishlyApp/src/View/www || echo 'www directory not found'
+        
+        echo '>>> Building SharpishlyApp...'
+        cd SharpishlyApp
+        mkdir -p build && cd build
+        cmake .. && make
+        
+        echo '>>> Running SharpishlyApp...'
+        if [ -f './SharpishlyApp' ]; then
+          ./SharpishlyApp
+        else
+          echo '❌ Build failed - SharpishlyApp binary not found'
+          exit 1
+        fi
+      "
+    # Run in interactive mode so we can see output
+    stdin_open: true
+    tty: true
+
+# Define a build stage for the Dockerfile
+x-dockerfile: &dockerfile |
+  FROM ubuntu:22.04
+  RUN apt-get update && \
+      apt-get install -y \
+      build-essential \
+      cmake \
+      g++ \
+      make \
+      curl \
+      git \
+      && rm -rf /var/lib/apt/lists/*
+  WORKDIR /app
+  COPY . .

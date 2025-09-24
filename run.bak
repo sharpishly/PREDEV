@@ -1,28 +1,31 @@
 #!/bin/bash
 
 # ==========================================================
-# Run SharpishlyApp with auto-install of dependencies
+# Run SharpishlyApp with dependency checks
 # ==========================================================
 
-# --- Check & install dependencies ---
+# --- Check dependencies ---
 echo ">>> Checking dependencies..."
-DEPS=(cmake make g++ ufw)
+MISSING=0
 
-MISSING=()
-
-for dep in "${DEPS[@]}"; do
-  if ! command -v "$dep" &>/dev/null; then
-    echo "❌ Missing: $dep"
-    MISSING+=("$dep")
+check_dep() {
+  if ! command -v "$1" &>/dev/null; then
+    echo "❌ Missing dependency: $1"
+    MISSING=1
   else
-    echo "✅ Found: $dep"
+    echo "✅ Found: $1"
   fi
-done
+}
 
-if [ "${#MISSING[@]}" -gt 0 ]; then
-  echo ">>> Installing missing dependencies: ${MISSING[*]}"
-  sudo apt update
-  sudo apt install -y "${MISSING[@]}"
+check_dep cmake
+check_dep make
+check_dep g++
+check_dep ufw
+
+if [ "$MISSING" -eq 1 ]; then
+  echo "⚠️ Some dependencies are missing. Please install them with:"
+  echo "    sudo apt update && sudo apt install -y build-essential cmake ufw"
+  exit 1
 fi
 
 # ------------------------------
@@ -60,34 +63,17 @@ ls -l SharpishlyApp/src/View/www
 # Change to build directory
 # -----------------------------
 echo ">>> Change to build directory..."
-mkdir -p SharpishlyApp/build
 cd SharpishlyApp/build
 
 # ------------------------------
 # Compile and build
 # -----------------------------
-echo ">>> Cleaning old build cache..."
-rm -rf ./*
-
 echo ">>> Compile and build..."
 cmake ..
-make -j$(nproc)
+make
 
 # ------------------------------
 # Run application
 # -----------------------------
 echo ">>> Run application..."
-if ./SharpishlyApp 2>&1 | grep -q "GLIBCXX"; then
-  echo "⚠️ Detected GLIBCXX version issue. Installing newer GCC/libstdc++..."
-  sudo apt update
-  sudo apt install -y gcc-12 g++-12
-  sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-12 60 --slave /usr/bin/g++ g++ /usr/bin/g++-12
-  echo ">>> Rebuilding with updated GCC..."
-  rm -rf ./*
-  cmake ..
-  make -j$(nproc)
-  echo ">>> Run application again..."
-  ./SharpishlyApp
-else
-  ./SharpishlyApp
-fi
+./SharpishlyApp
