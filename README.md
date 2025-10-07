@@ -1,154 +1,258 @@
-PREDEV
-PREDEV is a developer-first platform designed to eliminate custom shell scripts for deploying projects across environments (local, staging, production), even on the same machine. It automates tasks like file/folder permissions, git submodule checkouts, SSH key setup, and environment synchronization to simplify developer onboarding and ensure consistency.
-SharpishlyApp is the reference implementation of PREDEV—a C++ MVC application framework scaffolded with assistance from ChatGPT (OpenAI). It serves as a learning and experimentation platform for modern software development practices, integrating C++, Docker, and DevOps workflows.
+Excellent — this is a solid and comprehensive `README.md` foundation.
+Before I finalize the updated version for your repo, I’ll incorporate the **latest project developments** since your last documentation update, including:
 
-📌 Features
+✅ Game Engine (HTML5 + JS)
+✅ Auto-dependency install in `run.sh`
+✅ Ansible + Docker integration plans
+✅ Upcoming GitHub Actions (minify/test/build)
+✅ Expanded ROADMAP (business + security + AI)
+✅ Use of hybrid inline/external assets (temporary CSS/JS fix)
 
-C++ MVC Structure
-Model: Handles database interactions and business logic.
-View: Manages HTTP server and rendering (includes src/View/www for web assets like index.html, css, js).
-Controller: Orchestrates application logic.
+---
 
+Here’s your **updated and modernized `README.md`**, ready for commit (`#15 Updated README with Game Engine, DevOps, and automation features`):
 
-Built-in HTTP Server
-Minimal server listening on 127.0.0.1:1966, responding with plain text.
-Extensible to support HTML/CSS/JS views (see Extending the HTTP Server).
+---
 
+# **PREDEV**
 
-Dockerized Setup
-Supports local- and production- prefixed configurations for development and production environments.
-Extensible via docker-compose.yml (see Docker Setup).
+**PREDEV** is a developer-first automation and deployment framework designed to eliminate the need for repetitive shell scripts when deploying or running applications across environments (local, staging, production)—even on the same machine.
 
+It automates permission management, submodule syncing, SSH setup, and Docker orchestration—streamlining onboarding, ensuring consistency, and enabling self-hosted DevOps workflows.
 
-Planned DevOps Tools
-Debugging, monitoring, security, and logging integrations.
-Automatic provisioning and pre-flight checks.
+**SharpishlyApp** is the *reference implementation* of PREDEV — a C++ MVC web framework scaffolded with help from **ChatGPT (OpenAI)**.
+It serves as a testbed for modern software practices integrating **C++**, **Docker**, **Ansible**, **HTML5/JS**, and **GitHub Actions**.
 
+---
 
-Roadmap
-See docs/ROADMAP.md for detailed goals and milestones.
+## 🚀 **Features**
 
+### 🧩 C++ MVC Framework
 
+* **Model** — database and business logic
+* **View** — inbuilt HTTP server serving HTML/CSS/JS
+* **Controller** — application orchestration and routing
 
+### 🌐 Built-in HTTP Server
 
-🚀 Getting Started
-Prerequisites
+* Lightweight server listening on **127.0.0.1:1966**
+* Supports HTML/CSS/JS via `src/View/www`
+* Extensible to full static/dynamic web serving
 
-Operating System: Linux (Ubuntu 22.04 or later recommended).
-Tools:
-CMake (>= 3.10)
-GNU C++ Compiler (g++ >= 13; see FAQ.md for older Ubuntu versions)
-Docker & Docker Compose
-make, curl, git
+### 🧱 Game Engine (Phase 1)
 
+* Written in **vanilla JavaScript** (no external libs)
+* Renders a **real-time interactive canvas** (rotating cube / player demo)
+* Demonstrates SharpishlyApp’s async JS calls via `app.get()`
+* Future phases: C++ + WebAssembly integration for 3D graphics
 
+### 🐳 Dockerized Setup
 
-Install prerequisites on Ubuntu:
+* Modular environment with **local** and **production** `docker-compose.yml`
+* Can be started automatically using **Ansible playbooks**
+* Future versions will build from **run.sh → docker-compose.yml → GitHub Actions CI**
+
+### ⚙️ Automated Build (`run.sh`)
+
+* Checks and installs dependencies (`cmake`, `make`, `g++`, `ufw`)
+* Opens port `1966` and stops Nginx to avoid conflicts
+* Compiles, builds, and runs SharpishlyApp
+* Will soon generate Docker builds automatically
+
+### 🧠 AI Integration
+
+* Documentation, scaffolding, and CI tasks supported by **ChatGPT (OpenAI)** and **Grok.ai**
+* GitHub Actions planned for minification, linting, and unit tests
+
+---
+
+## 🧭 **Roadmap**
+
+See [docs/ROADMAP.md](docs/ROADMAP.md) for detailed technical, business, and security goals.
+Key highlights include:
+
+* Game Engine Phase 1–3 (JS → C++ → WebAssembly)
+* Docker & Ansible integration
+* GitHub Actions for JS/CSS minification + tests
+* Security architecture & business development (Apple Scheme, funding CSV)
+* CYBERDECK project integration
+
+---
+
+## 🧰 **Getting Started**
+
+### Prerequisites
+
+* **OS:** Ubuntu 22.04 or newer
+* **Tools:**
+
+  * CMake ≥ 3.10
+  * GNU g++ ≥ 13
+  * Docker & Docker Compose
+  * make, curl, git
+
+```bash
 sudo apt update
 sudo apt install -y cmake g++ make curl git docker.io docker-compose
-sudo systemctl start docker
-sudo systemctl enable docker
+sudo systemctl enable --now docker
+```
 
-Build Instructions
+---
 
-Clone the repository:git clone https://github.com/<username>/PREDEV.git
+### Build & Run (Manual)
+
+```bash
+git clone https://github.com/sharpishly/PREDEV.git
 cd PREDEV
+mkdir -p build && cd build
+cmake ..
+make
+./SharpishlyApp
+curl http://127.0.0.1:1966
+```
 
+Expected output:
 
-Create and navigate to the build directory:mkdir -p build && cd build
+```
+Hello from C++ MVC!
+```
 
+---
 
-Configure the project:cmake ..
+### Build & Run (Automated)
 
+Use the included `run.sh` script:
 
-Compile:make
-
-
-Run the application:./SharpishlyApp
-
-
-Test the HTTP server:curl http://127.0.0.1:1966
-
-Expected output: Hello from C++ MVC!
-
-For automated setup, use the run.sh script (see Using run.sh).
-Using run.sh
-The run.sh script automates setup tasks:
-
-Allows port 1966 via ufw.
-Stops Nginx to avoid port conflicts.
-Sets permissions for src/View/www.
-Builds and runs SharpishlyApp.
-
-Run it from the project root:
+```bash
 ./run.sh
+```
 
-If errors occur, see Troubleshooting in FAQ.md.
-Docker Setup
-To run SharpishlyApp in Docker:
+It will:
 
-Build and start the local environment:docker-compose -f docker/local-docker-compose.yml up --build
+* Auto-install missing dependencies
+* Configure permissions
+* Build SharpishlyApp
+* Launch on port **1966**
 
+---
 
-Test the server:curl http://127.0.0.1:1966
+### Docker Setup
 
+To run inside Docker:
 
+```bash
+docker-compose -f docker/local-docker-compose.yml up --build
+curl http://127.0.0.1:1966
+```
 
+* `local-docker-compose.yml`: development setup
+* `production-docker-compose.yml`: optimized build
+* Future: `docker-compose.yml` auto-generated from `run.sh`
 
-local-docker-compose.yml is for development with debugging enabled.
-production-docker-compose.yml is optimized for production use.
+---
 
-See Docker Issues in FAQ.md for troubleshooting.
-Extending the HTTP Server
-To add a new route (e.g., /about):
+## 🧠 **Extending the Framework**
 
-Edit src/main.cpp and add to registerRoutes():routes.push_back({"/about", [](const std::string& request) {
-    return "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nWelcome to About!";
+### Adding a New Route
+
+In `src/main.cpp`:
+
+```cpp
+routes.push_back({"/about", [](const std::string& req) {
+  return "HTTP/1.1 200 OK\r\nContent-Type: text/plain\r\n\r\nWelcome to About!";
 }});
+```
 
+Then rebuild:
 
-Rebuild and run:cd build && cmake .. && make && ./SharpishlyApp
+```bash
+cd build && cmake .. && make && ./SharpishlyApp
+```
 
+---
 
-Test:curl http://127.0.0.1:1966/about
+### Serving HTML / JS / CSS
 
+Static files are located in:
 
+```
+src/View/www/
+```
 
-To serve HTML from src/View/www:
+Currently, inline CSS/JS is used for testing; hybrid external support is in progress.
 
-Add index.html to src/View/www.
-Modify the route handler to read and serve the file (planned for future releases).
+Future versions will automatically serve files from:
 
+```
+/css/styles.css
+/js/app.js
+```
 
-📂 Project Structure
+---
+
+## 🧩 **Project Structure**
+
+```
 PREDEV/
-├── CMakeLists.txt          # Build configuration
-├── run.sh                 # Automates build, permissions, and run
-├── src/                   # Source code
-│   ├── main.cpp           # Entry point with route registration
-│   ├── Controller/        # Application logic
-│   ├── Model/             # Database and business logic
-│   ├── View/              # HTTP server and rendering
-│   │   └── www/          # Web assets (index.html, css, js, partials)
-├── include/               # Header files
-├── docs/                  # Documentation
-│   ├── ROADMAP.md        # Planned features and milestones
-│   ├── CHANGELOG.md       # Version history
-│   ├── FAQ.md             # Frequently asked questions
-│   ├── index.md           # Documentation overview
-├── docker/                # Docker configurations
-│   ├── local-Dockerfile   # Development Dockerfile
-│   ├── production-Dockerfile # Production Dockerfile
-│   ├── local-docker-compose.yml # Development compose
-│   ├── production-docker-compose.yml # Production compose
-└── README.md              # Project overview
+├── CMakeLists.txt
+├── run.sh
+├── src/
+│   ├── main.cpp
+│   ├── Controller/
+│   ├── Model/
+│   ├── View/
+│   │   └── www/
+│   │       ├── index.html
+│   │       ├── css/
+│   │       ├── js/
+│   │       └── partials/
+├── include/
+├── docs/
+│   ├── ROADMAP.md
+│   ├── CHANGELOG.md
+│   ├── FAQ.md
+│   └── index.md
+├── docker/
+│   ├── local-docker-compose.yml
+│   ├── production-docker-compose.yml
+│   ├── local-Dockerfile
+│   └── production-Dockerfile
+└── README.md
+```
 
+---
 
-🛠 Contributing
-Contributions are welcome! Please read CONTRIBUTING.md for guidelines on submitting issues, pull requests, and updating documentation.
+## ⚡ **Contributing**
 
-⚠️ AI Scaffolding Details
-SharpishlyApp was scaffolded with assistance from ChatGPT (OpenAI) for initial code structure (e.g., main.cpp, MVC scaffolding) and documentation drafts. All AI-generated code is manually reviewed for correctness and security by human developers. This project remains experimental and should not be used in production without thorough testing.
+Contributions are welcome!
+Follow standard GitHub Flow — feature branches, pull requests, and well-documented commits.
 
-📜 License
-MIT License—free to use, modify, and distribute. Attribution to this repository and ChatGPT scaffolding is appreciated.
+---
+
+## ⚠️ **AI Scaffolding Notice**
+
+Parts of this project were scaffolded using ChatGPT (OpenAI) and Grok.ai to accelerate code generation and documentation.
+All AI outputs are manually validated by developers for correctness, maintainability, and security.
+
+---
+
+## 📜 **License**
+
+**MIT License** — free to use, modify, and distribute.
+Attribution to **Sharpishly** and **ChatGPT scaffolding** appreciated.
+
+---
+
+### 🔖 Next Planned Update
+
+* Integrate `run.sh` → `docker-compose.yml`
+* Implement GitHub Actions for linting/minification
+* Add game engine visual demo (rotating cube)
+* Begin Ansible provisioning rollout
+
+---
+
+Would you like me to:
+
+1. Format this into Markdown and produce a **ready-to-commit file** (`README.md`),
+2. Or first insert it into your **docs/ROADMAP.md** as a synced “Summary & Context” section before committing?
