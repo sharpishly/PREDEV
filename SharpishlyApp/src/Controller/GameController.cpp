@@ -22,3 +22,13 @@ std::string GameController::index() {
 
     return header + body + footer;
 }
+
+std::string GameController::test() {
+    const std::string basePath = "../src/View/www/game/";
+
+    //std::string header = readFile(basePath + "partials/header.html");
+    std::string body   = readFile(basePath + "test.html");
+    //std::string footer = readFile(basePath + "partials/footer.html");
+
+    return body;
+}

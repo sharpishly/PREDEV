@@ -1,10 +1,14 @@
+// ===============================================================
 // SharpishlyApp Game Engine
 // Version: Phase 1 — Browser-Only Responsive Engine
 // Author: sharpishly / ChatGPT (2025)
+// ===============================================================
 
 const app = {};
 
+// ---------------------------------------------------------------
 // Show loading animation
+// ---------------------------------------------------------------
 app.showLoading = function () {
   if (document.getElementById("loader")) return;
   const loader = document.createElement("div");
@@ -25,29 +29,49 @@ app.showLoading = function () {
   document.body.appendChild(loader);
 };
 
+// ---------------------------------------------------------------
 // Hide loading animation
+// ---------------------------------------------------------------
 app.hideLoading = function () {
   const loader = document.getElementById("loader");
   if (loader) loader.remove();
 };
 
-// Minimal GET wrapper with fallback
+// ---------------------------------------------------------------
+// Minimal GET wrapper with safe body parsing
+// ---------------------------------------------------------------
 app.get = async function (url) {
   try {
     app.showLoading();
+
     const response = await fetch(url, { method: "GET" });
     if (!response.ok) throw new Error(`HTTP error! ${response.status}`);
-    const data = await response.json().catch(() => response.text());
+
+    const text = await response.text();
+    let data;
+    try {
+      data = JSON.parse(text);
+    } catch {
+      data = text;
+    }
+
     console.log("✅ Response:", data);
+
+    // ✅ Display response in #test
+    app.msg(data);
+
     return data;
   } catch (err) {
     console.error("❌ Fetch failed:", err);
+    app.msg(`<span style="color:red;">${err.message}</span>`);
   } finally {
     app.hideLoading();
   }
 };
 
+// ---------------------------------------------------------------
 // Initialize a simple 2D “game” on canvas
+// ---------------------------------------------------------------
 app.initGame = function () {
   const canvas = document.getElementById("gameCanvas");
   if (!canvas) return console.error("Canvas not found");
@@ -60,17 +84,17 @@ app.initGame = function () {
   document.addEventListener("keyup", e => (keys[e.key] = false));
 
   function loop() {
-    // Update
+    // Update movement
     if (keys["ArrowLeft"]) player.x -= player.speed;
     if (keys["ArrowRight"]) player.x += player.speed;
     if (keys["ArrowUp"]) player.y -= player.speed;
     if (keys["ArrowDown"]) player.y += player.speed;
 
-    // Keep player in bounds
+    // Keep player within bounds
     player.x = Math.max(player.size, Math.min(canvas.width - player.size, player.x));
     player.y = Math.max(player.size, Math.min(canvas.height - player.size, player.y));
 
-    // Draw
+    // Draw player
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     ctx.fillStyle = "#3498db";
     ctx.beginPath();
@@ -83,6 +107,21 @@ app.initGame = function () {
   loop();
 };
 
+// ---------------------------------------------------------------
+// Output message into <div id="test">
+// ---------------------------------------------------------------
+app.msg = function (msg) {
+  const test = document.getElementById("test");
+  if (test) {
+    test.innerHTML = msg; // ✅ Correct DOM assignment
+  } else {
+    console.warn("⚠️ Element #test not found!");
+  }
+};
+
+// ---------------------------------------------------------------
+// Initialize Game Engine
+// ---------------------------------------------------------------
 document.addEventListener("DOMContentLoaded", () => {
   console.log("🎮 Sharpishly Game Engine initialized");
   app.initGame();

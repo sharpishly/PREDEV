@@ -48,9 +48,10 @@ void registerRoutes(Router& router) {
 
     for (auto& [path, handler] : routes) {
         router.addRoute(path, handler);
-    router.addRoute("/game/index", [](const std::vector<std::string>& params) { return GameController::index(); });
-    router.addRoute("/penetration/index", [](const std::vector<std::string>& params) { return PenetrationController::index(); });
-    router.addRoute("/game/index", [](const std::vector<std::string>& params) { return GameController::index(); });
+        router.addRoute("/game/index", [](const std::vector<std::string>& params) { return GameController::index(); });
+        router.addRoute("/penetration/index", [](const std::vector<std::string>& params) { return PenetrationController::index(); });
+        // Testing async call end point
+        router.addRoute("/game/test", [](const std::vector<std::string>& params) { return GameController::test(); });
     }
 }
 

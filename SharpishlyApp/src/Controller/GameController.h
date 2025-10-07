@@ -5,4 +5,6 @@
 class GameController {
 public:
     static std::string index();
+    static std::string test();
+
 };
