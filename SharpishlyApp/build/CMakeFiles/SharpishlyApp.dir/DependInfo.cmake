@@ -14,10 +14,12 @@ set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/HomeController.cpp" "CMakeFiles/SharpishlyApp.dir/src/Controller/HomeController.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Controller/HomeController.cpp.o.d"
   "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/PenetrationController.cpp" "CMakeFiles/SharpishlyApp.dir/src/Controller/PenetrationController.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Controller/PenetrationController.cpp.o.d"
   "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/ProvisionController.cpp" "CMakeFiles/SharpishlyApp.dir/src/Controller/ProvisionController.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Controller/ProvisionController.cpp.o.d"
+  "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/responsiveController.cpp" "CMakeFiles/SharpishlyApp.dir/src/Controller/responsiveController.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Controller/responsiveController.cpp.o.d"
   "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Core/HttpServer.cpp" "CMakeFiles/SharpishlyApp.dir/src/Core/HttpServer.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Core/HttpServer.cpp.o.d"
   "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Core/Router.cpp" "CMakeFiles/SharpishlyApp.dir/src/Core/Router.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Core/Router.cpp.o.d"
   "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Model/GameModel.cpp" "CMakeFiles/SharpishlyApp.dir/src/Model/GameModel.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Model/GameModel.cpp.o.d"
   "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Model/PenetrationModel.cpp" "CMakeFiles/SharpishlyApp.dir/src/Model/PenetrationModel.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Model/PenetrationModel.cpp.o.d"
+  "/home/tardis/Documents/PREDEV/SharpishlyApp/src/Model/responsiveModel.cpp" "CMakeFiles/SharpishlyApp.dir/src/Model/responsiveModel.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/Model/responsiveModel.cpp.o.d"
   "/home/tardis/Documents/PREDEV/SharpishlyApp/src/main.cpp" "CMakeFiles/SharpishlyApp.dir/src/main.cpp.o" "gcc" "CMakeFiles/SharpishlyApp.dir/src/main.cpp.o.d"
   )
 

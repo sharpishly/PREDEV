@@ -151,6 +151,8 @@ CMakeFiles/SharpishlyApp.dir/src/main.cpp.o: \
  /usr/include/c++/11/bits/stl_heap.h \
  /usr/include/c++/11/bits/stl_tempbuf.h \
  /usr/include/c++/11/bits/uniform_int_dist.h \
+ /home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/responsiveController.h \
+ /home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/../Model/responsiveModel.h \
  /home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/GameController.h \
  /home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/../Model/GameModel.h \
  /home/tardis/Documents/PREDEV/SharpishlyApp/src/Controller/PenetrationController.h \

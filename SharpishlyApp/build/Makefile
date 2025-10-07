@@ -273,6 +273,30 @@ src/Controller/ProvisionController.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/ProvisionController.cpp.s
 .PHONY : src/Controller/ProvisionController.cpp.s
 
+src/Controller/responsiveController.o: src/Controller/responsiveController.cpp.o
+.PHONY : src/Controller/responsiveController.o
+
+# target to build an object file
+src/Controller/responsiveController.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/responsiveController.cpp.o
+.PHONY : src/Controller/responsiveController.cpp.o
+
+src/Controller/responsiveController.i: src/Controller/responsiveController.cpp.i
+.PHONY : src/Controller/responsiveController.i
+
+# target to preprocess a source file
+src/Controller/responsiveController.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/responsiveController.cpp.i
+.PHONY : src/Controller/responsiveController.cpp.i
+
+src/Controller/responsiveController.s: src/Controller/responsiveController.cpp.s
+.PHONY : src/Controller/responsiveController.s
+
+# target to generate assembly for a file
+src/Controller/responsiveController.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Controller/responsiveController.cpp.s
+.PHONY : src/Controller/responsiveController.cpp.s
+
 src/Core/HttpServer.o: src/Core/HttpServer.cpp.o
 .PHONY : src/Core/HttpServer.o
 
@@ -369,6 +393,30 @@ src/Model/PenetrationModel.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/PenetrationModel.cpp.s
 .PHONY : src/Model/PenetrationModel.cpp.s
 
+src/Model/responsiveModel.o: src/Model/responsiveModel.cpp.o
+.PHONY : src/Model/responsiveModel.o
+
+# target to build an object file
+src/Model/responsiveModel.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/responsiveModel.cpp.o
+.PHONY : src/Model/responsiveModel.cpp.o
+
+src/Model/responsiveModel.i: src/Model/responsiveModel.cpp.i
+.PHONY : src/Model/responsiveModel.i
+
+# target to preprocess a source file
+src/Model/responsiveModel.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/responsiveModel.cpp.i
+.PHONY : src/Model/responsiveModel.cpp.i
+
+src/Model/responsiveModel.s: src/Model/responsiveModel.cpp.s
+.PHONY : src/Model/responsiveModel.s
+
+# target to generate assembly for a file
+src/Model/responsiveModel.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/SharpishlyApp.dir/build.make CMakeFiles/SharpishlyApp.dir/src/Model/responsiveModel.cpp.s
+.PHONY : src/Model/responsiveModel.cpp.s
+
 src/main.o: src/main.cpp.o
 .PHONY : src/main.o
 
@@ -420,6 +468,9 @@ help:
 	@echo "... src/Controller/ProvisionController.o"
 	@echo "... src/Controller/ProvisionController.i"
 	@echo "... src/Controller/ProvisionController.s"
+	@echo "... src/Controller/responsiveController.o"
+	@echo "... src/Controller/responsiveController.i"
+	@echo "... src/Controller/responsiveController.s"
 	@echo "... src/Core/HttpServer.o"
 	@echo "... src/Core/HttpServer.i"
 	@echo "... src/Core/HttpServer.s"
@@ -432,6 +483,9 @@ help:
 	@echo "... src/Model/PenetrationModel.o"
 	@echo "... src/Model/PenetrationModel.i"
 	@echo "... src/Model/PenetrationModel.s"
+	@echo "... src/Model/responsiveModel.o"
+	@echo "... src/Model/responsiveModel.i"
+	@echo "... src/Model/responsiveModel.s"
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"

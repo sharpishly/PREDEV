@@ -8,6 +8,8 @@ include_directories(include src/Model src/View src/Controller src/Core)
 
 # Include main.cpp and HttpServer.cpp
 add_executable(SharpishlyApp
+    src/Model/responsiveModel.cpp
+    src/Controller/responsiveController.cpp
     src/Model/GameModel.cpp
     src/Controller/GameController.cpp
     src/Model/PenetrationModel.cpp
