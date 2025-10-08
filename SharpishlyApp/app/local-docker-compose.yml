@@ -1,25 +1,47 @@
+version: "3.9"
+
 services:
-  # ------------------------------
-  # PHP-FPM service (shared for prod + dev)
-  # ------------------------------
+  # ============================================================
+  # SSL CERTIFICATE GENERATION (replaces build.sh SSL logic)
+  # ============================================================
+  certgen:
+    image: alpine:latest
+    container_name: certgen
+    volumes:
+      - ./certs:/certs
+    command: >
+      sh -c "
+      apk add --no-cache openssl &&
+      if [ ! -f /certs/sharpishly.dev.crt ]; then
+        echo '🔐 Generating self-signed certificate for sharpishly.dev' &&
+        openssl req -x509 -newkey rsa:4096 \
+          -keyout /certs/sharpishly.dev.key \
+          -out /certs/sharpishly.dev.crt \
+          -days 365 -nodes \
+          -subj '/C=US/ST=California/L=Manchester/O=Sharpishly/CN=sharpishly.dev';
+      else
+        echo '✅ Certificate already exists — skipping';
+      fi"
+    restart: "no"
+
+  # ============================================================
+  # PHP-FPM (Core for SharpishlyApp + PREDEV)
+  # ============================================================
   php:
     build:
-      context: . # Build from repo root (where Dockerfile actually is)
-      dockerfile: Dockerfile # Explicit Dockerfile path
+      context: .
+      dockerfile: Dockerfile
     container_name: php_fpm
+    restart: unless-stopped
     volumes:
-      # Mount production code
       - ./sharpishly.com:/var/www/app/sharpishly.com
-      # Mount PHP development code
       - ./dev.sharpishly.com:/var/www/app/dev.sharpishly.com
-      # Mount Python MVC development code
       - ./python_mvc:/var/www/app/python_mvc
-      # Mount Python Standalone development code
       - ./python_app:/var/www/app/python_app
     environment:
       - DB_HOST=db
       - DB_USER=sharpishly_user
-      - DB_PASSWORD="admin12345"
+      - DB_PASSWORD=admin12345
       - DB_NAME=sharpishly_db
       - PG_HOST=postgres
       - PG_USER=sharpishly_user
@@ -37,45 +59,44 @@ services:
       interval: 30s
       timeout: 10s
       retries: 3
-  # ------------------------------
-  # Nginx reverse proxy
-  # ------------------------------
+
+  # ============================================================
+  # NGINX REVERSE PROXY (serves SharpishlyApp)
+  # ============================================================
   nginx:
     image: nginx:latest
     container_name: nginx_proxy
     restart: unless-stopped
     ports:
-      - "80:80" # Removed 443 since SSL is disabled
+      - "80:80"
       - "443:443"
     volumes:
-      # Nginx vhost configs (merged sharpishly.conf for prod + dev)
       - ./nginx:/etc/nginx/conf.d
-      # Production public directory
       - ./sharpishly.com/website/public:/var/www/app/sharpishly.com/website/public
-      # Development public directory
       - ./dev.sharpishly.com/website/:/var/www/app/dev.sharpishly.com/website/
-      # Development public directory
       - ./debug/:/var/www/app/debug/
-      # Development SSL Certs
       - ./certs/sharpishly.dev.crt:/etc/nginx/ssl/sharpishly.dev.crt:ro
       - ./certs/sharpishly.dev.key:/etc/nginx/ssl/sharpishly.dev.key:ro
     networks:
       - app-network
     depends_on:
-      - php # Ensure PHP-FPM starts before Nginx
+      - php
+      - certgen
     healthcheck:
-      test: ["CMD", "nginx", "-t"] # Validate Nginx config
+      test: ["CMD", "nginx", "-t"]
       interval: 30s
       timeout: 10s
       retries: 3
-  # ------------------------------
-  # MySQL database
-  # ------------------------------
+
+  # ============================================================
+  # MYSQL DATABASE
+  # ============================================================
   db:
     image: mysql:8.0
     container_name: app-db-1
+    restart: unless-stopped
     ports:
-      - "3306:3306" # Map container port to host port
+      - "3306:3306"
     environment:
       - MYSQL_DATABASE=sharpishly_db
       - MYSQL_USER=sharpishly_user
@@ -84,25 +105,27 @@ services:
     volumes:
       - mysql_data:/var/lib/mysql
       - ./mysql/logs:/var/log/mysql
-    healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin12345"]
-      interval: 5s
-      timeout: 5s
-      retries: 3
     networks:
       - app-network
     command: >
       --default-authentication-plugin=mysql_native_password
       --port=3306
       --bind-address=0.0.0.0
-  # ------------------------------
-  # PostgreSQL database
-  # ------------------------------
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin12345"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ============================================================
+  # POSTGRES DATABASE
+  # ============================================================
   postgres:
     image: postgres:16
     container_name: app-postgres-1
+    restart: unless-stopped
     ports:
-      - "5432:5432" # Default PostgreSQL port
+      - "5432:5432"
     environment:
       - POSTGRES_DB=sharpishly_db
       - POSTGRES_USER=sharpishly_user
@@ -110,22 +133,74 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
       - ./postgres/logs:/var/log/postgresql
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U sharpishly_user"]
-      interval: 5s
-      timeout: 5s
-      retries: 3
     networks:
       - app-network
-# ------------------------------
-# Shared Docker network
-# ------------------------------
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sharpishly_user"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  # ============================================================
+  # ADMINER (Database Management)
+  # ============================================================
+  adminer:
+    image: adminer
+    container_name: adminer_gui
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+    depends_on:
+      - db
+      - postgres
+
+  # ============================================================
+  # PORTAINER (Container Management GUI)
+  # ============================================================
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    restart: unless-stopped
+    ports:
+      - "9000:9000"
+      - "9443:9443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    networks:
+      - app-network
+
+  # ============================================================
+  # GLANCES (System Monitoring)
+  # ============================================================
+  glances:
+    image: nicolargo/glances:latest
+    container_name: glances
+    restart: unless-stopped
+    ports:
+      - "61208:61208"
+    environment:
+      - GLANCES_OPT=-w
+    pid: "host"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /etc/os-release:/etc/os-release:ro
+    networks:
+      - app-network
+
+# ============================================================
+# NETWORKS
+# ============================================================
 networks:
   app-network:
     driver: bridge
-# ------------------------------
-# Volumes
-# ------------------------------
+
+# ============================================================
+# VOLUMES
+# ============================================================
 volumes:
   mysql_data:
   postgres_data:
+  portainer_data:
