@@ -91,6 +91,35 @@ services:
   # ============================================================
   # MYSQL DATABASE
   # ============================================================
+  # db:
+  #   image: mysql:8.0
+  #   container_name: app-db-1
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3306:3306"
+  #   environment:
+  #     - MYSQL_DATABASE=sharpishly_db
+  #     - MYSQL_USER=sharpishly_user
+  #     - MYSQL_PASSWORD=admin12345
+  #     - MYSQL_ROOT_PASSWORD=admin12345
+  #   volumes:
+  #     - mysql_data:/var/lib/mysql
+  #     - ./mysql/logs:/var/log/mysql
+  #   networks:
+  #     - app-network
+  #   command: >
+  #     --default-authentication-plugin=mysql_native_password
+  #     --port=3306
+  #     --bind-address=0.0.0.0
+  #   healthcheck:
+  #     test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin12345"]
+  #     interval: 10s
+  #     timeout: 5s
+  #     retries: 3
+
+  # ============================================================
+  # MYSQL DATABASE (Fixed healthcheck)
+  # ============================================================
   db:
     image: mysql:8.0
     container_name: app-db-1
@@ -112,10 +141,12 @@ services:
       --port=3306
       --bind-address=0.0.0.0
     healthcheck:
-      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-padmin12345"]
-      interval: 10s
-      timeout: 5s
-      retries: 3
+      test: ["CMD-SHELL", "mysqladmin ping -h localhost -uroot -padmin12345 | grep 'mysqld is alive' || exit 1"]
+      interval: 15s
+      timeout: 10s
+      retries: 10
+      start_period: 40s
+
 
   # ============================================================
   # POSTGRES DATABASE
