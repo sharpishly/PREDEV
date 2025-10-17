@@ -149,9 +149,177 @@ It includes all related technologies (Ansible, Docker, AI-assisted scaffolding, 
 - **Accessibility Focus**: All outputs designed for browser compatibility and developer self-hosting.
 ```
 
+Perfect — here’s the **updated `docs/ROADMAP.md`** that aligns with your current progress, repository structure, and the new Docker milestone.
+
+This file is formatted for direct commit under:
+📁 `docs/ROADMAP.md`
+🪶 Commit message suggestion:
+
+> `#16 Updated ROADMAP — Phase 1 Completed (Docker success, Game Engine live, Phase 2 prep)`
+
 ---
 
-Would you like me to also generate an **aligned update to your `README.md` “Roadmap” section** (so both stay consistent before the next push)?
-That would add a short summary and link:
+# **ROADMAP**
 
-> “See [docs/ROADMAP.md](docs/ROADMAP.md) for the full timeline and milestone details.”
+> **Project:** SharpishlyApp (PREDEV Framework)
+> **Last Updated:** October 2025
+> **Maintained by:** Sharpishly / Paul A. McIntosh
+> **AI Assistants:** ChatGPT (OpenAI) · Grok.ai
+
+---
+
+## 🧭 **Overview**
+
+**SharpishlyApp** is the testbed implementation of **PREDEV**, a next-generation developer automation and deployment framework.
+It combines **C++**, **JavaScript**, **Docker**, and **Ansible** to build self-contained, reproducible environments — from local prototypes to production.
+
+Each phase introduces a key layer of automation, AI-assisted DevOps, and modular architecture.
+
+---
+
+## ✅ **Phase 1 — Foundation Complete**
+
+### 🔹 Goal
+
+Establish a self-contained environment to compile, serve, and deploy SharpishlyApp using **C++ MVC**, **HTML/JS**, and **Docker**.
+
+### 🔹 Key Deliverables
+
+| Component                  | Status     | Description                                                 |
+| -------------------------- | ---------- | ----------------------------------------------------------- |
+| C++ MVC Framework          | 🟢 Done    | Core HTTP server with routes and response handling          |
+| Game Engine (JS)           | 🟢 Done    | Vanilla JS app rendering test element via `app.get()`       |
+| Static File Routing        | 🟡 Partial | Inline JS/CSS functional; hybrid mode operational           |
+| Docker Environment         | 🟢 Done    | LEMP stack (Nginx, PHP-FPM, MySQL, Postgres)                |
+| SSL Certificate Automation | 🟢 Done    | Auto-cert generation via `certgen` service                  |
+| Monitoring                 | 🟢 Done    | Portainer + Glances active                                  |
+| Database Interfaces        | 🟢 Done    | Adminer GUI working with both MySQL & Postgres              |
+| Documentation              | 🟢 Done    | Updated README + inline dev notes                           |
+| Version Control            | 🟢 Done    | Branching structure: `feature/provisioning-deployment` live |
+
+### 🔹 Outcome
+
+> All containers build and run successfully.
+> SSL certificates generate automatically.
+> The stack achieves full **local production parity** under Docker Compose v2.
+
+---
+
+## 🚧 **Phase 2 — Application Integration**
+
+### 🔹 Goal
+
+Connect the C++ backend, PHP frontend, and databases within Dockerized services.
+Add support for HTTPS and real-time status monitoring.
+
+### 🔹 Planned Tasks
+
+| Task                            | Outcome                                       | Deadline        |
+| ------------------------------- | --------------------------------------------- | --------------- |
+| Integrate Nginx ↔ PHP-FPM       | PHP scripts render via Nginx reverse proxy    | ⏳ October 2025  |
+| Configure DB access from PHP    | Confirm connections to MySQL/Postgres via PDO | ⏳ October 2025  |
+| Enable HTTPS for sharpishly.dev | Self-signed SSL working in browser            | ⏳ October 2025  |
+| Implement `/debug/` logging     | PHP + Nginx errors log to mounted volume      | ⏳ October 2025  |
+| Add Docker health dashboards    | Portainer graphs and Glances widgets tuned    | ⏳ October 2025  |
+| Prepare for Ansible playbook    | Docker stack provisioned automatically        | ⏳ November 2025 |
+
+---
+
+## 🧱 **Phase 3 — Automation and CI/CD**
+
+### 🔹 Goal
+
+Bridge **run.sh**, **Docker Compose**, and **GitHub Actions** to create a zero-click build pipeline.
+
+### 🔹 Planned Tasks
+
+* GitHub Actions workflow for:
+
+  * 🧪 Unit + Integration testing
+  * 🧼 Minification (CSS/JS)
+  * 🐳 Docker image build and push
+* Ansible playbooks for:
+
+  * Automated environment setup
+  * Remote deployment via SSH
+* Continuous deployment trigger from `main`
+
+### 🔹 Expected Outcome
+
+> Developers can spin up a production-ready Sharpishly environment with one command or Git push.
+
+---
+
+## 🧠 **Phase 4 — Intelligence & Tooling**
+
+### 🔹 Goal
+
+Introduce AI-driven optimization and dynamic system feedback.
+
+### 🔹 Future Integrations
+
+* Grok.ai or ChatGPT integration for:
+
+  * Inline code scaffolding
+  * Context-aware deployment help
+* Real-time log summarization via AI agent
+* Security audit suggestions (AI-based)
+* AI-driven test case generation
+
+---
+
+## 💼 **Business & Research Initiatives**
+
+| Initiative                             | Description                                                 | Status         |
+| -------------------------------------- | ----------------------------------------------------------- | -------------- |
+| **Apple Scheme (Black Entrepreneurs)** | Identify funding and mentorship programs for Sharpishly Ltd | 🚧 Research    |
+| **Funding CSV Generator**              | Automate scraping of available grants and output to CSV     | 🚧 Development |
+| **Pricing Structure for Sharpishly**   | Define pricing tiers for internal SaaS modules              | 🚧 Drafting    |
+| **Security Architecture**              | Document encryption, auth, and DevSecOps layers             | 🚧 In Progress |
+
+---
+
+## 🔐 **Security Architecture (Planned)**
+
+| Layer       | Component                      | Description                              |
+| ----------- | ------------------------------ | ---------------------------------------- |
+| SSL/TLS     | certgen + Nginx                | Self-signed or Let’s Encrypt integration |
+| Network     | UFW / Docker network isolation | Limits service exposure                  |
+| Application | Authentication                 | Planned for Sharpishly portal            |
+| Monitoring  | Glances + Portainer            | Continuous uptime and anomaly tracking   |
+
+---
+
+## 🎮 **Game Engine Roadmap**
+
+| Phase | Language              | Focus                                             | Status     |
+| ----- | --------------------- | ------------------------------------------------- | ---------- |
+| 1     | JavaScript            | Async `app.get()` response + `<canvas>` rendering | ✅ Done     |
+| 2     | C++ + WebAssembly     | 3D cube demo (textured, rotating)                 | 🚧 Planned |
+| 3     | AI-enhanced rendering | Integrate AI logic for in-game decisioning        | 🕒 Future  |
+| 4     | Physics & ECS System  | Sharpishly Game Framework v1                      | 🕒 Future  |
+
+---
+
+## 📆 **Timeline Summary**
+
+| Phase | Description                    | Status         | Target       |
+| ----- | ------------------------------ | -------------- | ------------ |
+| 1     | Base Framework + Dockerization | ✅ Complete     | Oct 2025     |
+| 2     | Service Integration + HTTPS    | 🚧 In Progress | Oct–Nov 2025 |
+| 3     | Automation (CI/CD + Ansible)   | ⏳ Upcoming     | Dec 2025     |
+| 4     | AI Tooling + Advanced Features | 🕒 Future      | 2026         |
+
+---
+
+## 🏁 **Next Milestone**
+
+> **Phase 2 – Nginx ↔ PHP-FPM Integration + HTTPS Validation**
+
+* [ ] Connect PHP container to Nginx proxy
+* [ ] Test local HTTPS via `https://sharpishly.dev`
+* [ ] Validate DB connection from PHP (MySQL + Postgres)
+* [ ] Create debug logs in `/debug/` volume
+* [ ] Verify container health via Portainer dashboard
+
+
