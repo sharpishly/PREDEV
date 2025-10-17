@@ -252,7 +252,4 @@ Attribution to **Sharpishly** and **ChatGPT scaffolding** appreciated.
 
 ---
 
-Would you like me to:
 
-1. Format this into Markdown and produce a **ready-to-commit file** (`README.md`),
-2. Or first insert it into your **docs/ROADMAP.md** as a synced “Summary & Context” section before committing?
