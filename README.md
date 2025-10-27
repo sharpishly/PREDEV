@@ -222,6 +222,31 @@ PREDEV/
 
 ---
 
+---
+
+## ✅ Current Deployment Status (Phase 2 Complete)
+
+| Service | Status | Notes |
+|----------|---------|-------|
+| **app-db-1 (MySQL)** | 🟢 Healthy | Running on port 3306 |
+| **app-postgres-1 (Postgres)** | 🟢 Healthy | Ready and reachable |
+| **php_fpm** | 🟢 Healthy | Validated configuration |
+| **nginx_proxy** | 🟢 Healthy | Serving `https://sharpishly.dev` (SSL optional local) |
+| **adminer_gui** | 🟢 Up | http://localhost:8080 |
+| **portainer** | 🟢 Up | http://localhost:9000 or https://localhost:9443 |
+| **glances** | 🟢 Up | System monitor running at http://localhost:61208 |
+| **certgen** | ✅ Complete | Self-signed cert generated successfully |
+| **Remmina Access** | 🟢 Operational | Remote desktop connection from `foozie → tardis` confirmed |
+
+---
+
+### 🧭 Phase 2 Outcome
+
+All infrastructure services are stable and accessible, both locally and remotely.  
+`https://sharpishly.dev` now responds correctly via Nginx reverse proxy, and DevOps monitoring tools (Portainer & Glances) are accessible.  
+The team can now manage, monitor, and deploy SharpishlyApp entirely from the remote environment.
+
+
 ## ⚡ **Contributing**
 
 Contributions are welcome!

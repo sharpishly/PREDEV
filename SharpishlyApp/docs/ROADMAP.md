@@ -322,4 +322,33 @@ Introduce AI-driven optimization and dynamic system feedback.
 * [ ] Create debug logs in `/debug/` volume
 * [ ] Verify container health via Portainer dashboard
 
+---
+
+## ✅ Phase 2 – DevOps + Remote Access Integration (Completed)
+
+**Goal:** Establish a fully Dockerized, monitored, and remotely accessible SharpishlyApp stack.
+
+### Key Objectives
+- [x] Implement Docker Compose stack (Nginx, PHP-FPM, MySQL, Postgres)
+- [x] Configure health checks and inter-service dependencies
+- [x] Integrate Portainer for container management
+- [x] Add Glances for system monitoring
+- [x] Generate local SSL certificate (via Certgen)
+- [x] Enable remote desktop access with Remmina
+- [x] Verify remote access from `foozie → tardis`
+- [x] Finalize README and status summary
+
+**Duration:** Approx. 3 weeks  
+**Completion Date:**  22 Oct 2025  
+**Milestone Result:** Full remote DevOps capability operational on `tardis@192.168.0.11`.
+
+---
+
+## Next Phase → Phase 3 – Game Engine Integration + Automation (Planned)
+
+**Focus Areas:**
+- Integrate HTML5/JS game engine with SharpishlyApp
+- Connect Dockerized backend to C++ MVC front-end assets
+- Introduce GitHub Actions for build/test/minify automation
+- Begin Ansible role for automated provisioning
 
