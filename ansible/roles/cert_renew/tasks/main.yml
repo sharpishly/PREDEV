@@ -1,0 +1,4 @@
+---
+- name: Placeholder certificate renewal role
+  debug:
+    msg: "Certificate renewal would occur here."

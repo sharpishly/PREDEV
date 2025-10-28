@@ -1,0 +1,5 @@
+---
+- hosts: sharpishly
+  become: yes
+  roles:
+    - cert_renew

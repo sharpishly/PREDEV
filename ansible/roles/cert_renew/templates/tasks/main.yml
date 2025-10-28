@@ -1,0 +1,33 @@
+---
+- name: Ensure certs directory exists
+  file:
+    path: /opt/sharpishly/certs
+    state: directory
+    mode: '0755'
+
+- name: Generate new key if missing
+  command: >
+    openssl genrsa -out /opt/sharpishly/certs/sharpishly.dev.key 2048
+  args:
+    creates: /opt/sharpishly/certs/sharpishly.dev.key
+
+- name: Create new CSR
+  command: >
+    openssl req -new -key /opt/sharpishly/certs/sharpishly.dev.key
+    -out /opt/sharpishly/certs/sharpishly.dev.csr
+    -subj "/C=GB/ST=GreaterManchester/L=Manchester/O=Sharpishly/CN=sharpishly.dev"
+
+- name: Sign new certificate with Root CA
+  command: >
+    openssl x509 -req -in /opt/sharpishly/certs/sharpishly.dev.csr
+    -CA /etc/ansible/templates/rootCA.pem
+    -CAkey /etc/ansible/templates/rootCA.key
+    -CAcreateserial
+    -out /opt/sharpishly/certs/sharpishly.dev.crt
+    -days 90 -sha256
+    -extfile <(printf "subjectAltName=DNS:sharpishly.dev,IP:192.168.0.11")
+
+- name: Restart Nginx container if cert changed
+  community.docker.docker_compose:
+    project_src: /opt/sharpishly/docker
+    restarted: true
