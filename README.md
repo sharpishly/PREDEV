@@ -193,7 +193,7 @@ Future versions will automatically serve files from:
 ## 🧩 **Project Structure**
 
 ```
-PREDEV/
+PREDEV/Sharpishly/
 ├── CMakeLists.txt
 ├── run.sh
 ├── src/

@@ -73,7 +73,7 @@ services:
     volumes:
       - ./nginx:/etc/nginx/conf.d
       - ./sharpishly.com/website/public:/var/www/app/sharpishly.com/website/public
-      - ./dev.sharpishly.com/website/:/var/www/app/dev.sharpishly.com/website/
+      - ./dev.sharpishly.com/website/:/var/www/app/dev.sharpishly.com/website/public
       - ./debug/:/var/www/app/debug/
       - ./certs/sharpishly.dev.crt:/etc/nginx/ssl/sharpishly.dev.crt:ro
       - ./certs/sharpishly.dev.key:/etc/nginx/ssl/sharpishly.dev.key:ro
