@@ -1,0 +1,62 @@
+---
+- name: Fix and regenerate SSL certificates for sharpishly.dev (local-only)
+  hosts: sharpishly
+  connection: local
+  gather_facts: false
+
+  vars:
+    cert_dir: "/opt/sharpishly/certs"
+    nginx_cert_dir: "{{ lookup('env', 'HOME') }}/Documents/PREDEV/docker/nginx_proxy/certs"
+
+  tasks:
+
+    - name: Ensure certificate directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: '0755'
+      loop:
+        - "{{ cert_dir }}"
+        - "{{ nginx_cert_dir }}"
+
+    - name: Generate private key
+      command: "openssl genrsa -out {{ cert_dir }}/sharpishly.dev.key 2048"
+      args:
+        creates: "{{ cert_dir }}/sharpishly.dev.key"
+
+    - name: Generate CSR
+      command: >
+        openssl req -new
+        -key {{ cert_dir }}/sharpishly.dev.key
+        -out {{ cert_dir }}/sharpishly.dev.csr
+        -subj "/C=GB/ST=GreaterManchester/L=Manchester/O=Sharpishly/OU=DevOps/CN=sharpishly.dev"
+
+    - name: Self-sign the certificate (valid 365 days)
+      command: >
+        openssl x509 -req
+        -in {{ cert_dir }}/sharpishly.dev.csr
+        -signkey {{ cert_dir }}/sharpishly.dev.key
+        -out {{ cert_dir }}/sharpishly.dev.crt
+        -days 365 -sha256
+        -addext "subjectAltName=DNS:sharpishly.dev,IP:192.168.0.11"
+
+    - name: Copy certs into Docker Nginx directory
+      copy:
+        src: "{{ cert_dir }}/{{ item }}"
+        dest: "{{ nginx_cert_dir }}/{{ item }}"
+        mode: '0644'
+      loop:
+        - sharpishly.dev.crt
+        - sharpishly.dev.key
+
+    - name: Restart nginx_proxy container (ignore if missing)
+      block:
+        - name: Restart nginx_proxy
+          community.docker.docker_compose_v2:
+            project_src: "{{ lookup('env', 'HOME') }}/Documents/PREDEV/docker"
+            services:
+              - nginx_proxy
+            restarted: true
+      rescue:
+        - debug:
+            msg: "⚠️ Do
