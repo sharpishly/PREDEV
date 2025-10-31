@@ -19,4 +19,7 @@ docker compose logs sharpishlyapp
 docker compose logs nginx
 docker compose logs db
 
+# Set permissions
+sudo chmod -R 755 ~/Documents/PREDEV/SharpishlyApp/app/dev.sharpishly.com/website
+sudo chown -R $USER:$USER ~/Documents/PREDEV/SharpishlyApp/app/dev.sharpishly.com/website
 
