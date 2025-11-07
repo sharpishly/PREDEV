@@ -1,0 +1,3 @@
+[submodule "SharpishlyApp/app/dev.sharpishly.com"]
+	path = SharpishlyApp/app/dev.sharpishly.com
+	url = git@bitbucket.org:don_dev/php-mini-framework.git
