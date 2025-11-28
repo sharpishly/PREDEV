@@ -8,24 +8,24 @@ app.menus = [
     { key: 'register', value: 'Register' }
 ];
 
-// Enhanced Registration Fields with proper attributes
+// Optimized registration fields array
 app.fields = [
     {
         key: 'title',
         value: 'Title',
         attr: {
-            type: 'text',
-            placeholder: 'This will be a drop down select',
-            minlength: '2',
+            type: 'select',
+            placeholder: 'Select a title',
             required: true
         }
-    },{
+    },
+    {
         key: 'full_name',
         value: 'Full Name',
         attr: {
             type: 'text',
             placeholder: 'John Doe',
-            minlength: '2',
+            minlength: 2,
             required: true
         }
     },
@@ -35,10 +35,10 @@ app.fields = [
         attr: {
             type: 'text',
             placeholder: 'coolcat123',
-            minlength: '4',
-            maxlength: '20',
+            minlength: 4,
+            maxlength: 20,
             pattern: '^[a-zA-Z0-9_]+$',
-            title: 'Only letters, numbers, and underscores',
+            title: 'Only letters, numbers, and underscores allowed',
             required: true
         }
     },
@@ -47,7 +47,7 @@ app.fields = [
         value: 'Email Address',
         attr: {
             type: 'email',
-            placeholder: 'cat@funder.me',
+            placeholder: 'user@york.ac.uk',
             required: true
         }
     },
@@ -56,9 +56,80 @@ app.fields = [
         value: 'Phone Number',
         attr: {
             type: 'tel',
-            placeholder: '+1 (555) 123-4567',
+            placeholder: '+44 (0) 1234 567890',
             pattern: '^[+]?[\\d\\s\\-\\(\\)]{10,20}$',
             title: 'Enter a valid phone number',
+            required: true
+        }
+    },
+    {
+        key: 'date_of_birth',
+        value: 'Date of Birth',
+        attr: {
+            type: 'date',
+            required: true
+        }
+    },
+    {
+        key: 'country_region_of_nationality',
+        value: 'Country/Region of Nationality',
+        attr: {
+            type: 'text',
+            placeholder: 'United Kingdom',
+            minlength: 2,
+            required: true
+        }
+    },
+    {
+        key: 'second_country_region_of_nationality',
+        value: 'Second Country/Region of Nationality',
+        attr: {
+            type: 'text',
+            placeholder: 'Leave blank if not applicable',
+            minlength: 2,
+            required: false
+        }
+    },
+    {
+        key: 'country_of_domicile',
+        value: 'Country of Domicile',
+        attr: {
+            type: 'text',
+            placeholder: 'United Kingdom',
+            minlength: 2,
+            required: true
+        }
+    },
+    {
+        key: 'research_title',
+        value: 'Research Title',
+        attr: {
+            type: 'text',
+            placeholder: 'Enter the title of your research project',
+            minlength: 10,
+            maxlength: 200,
+            required: true
+        }
+    },
+    {
+        key: 'research_proposal_summary',
+        value: 'Research Proposal Summary',
+        attr: {
+            type: 'textarea',
+            rows: 6,
+            placeholder: 'Provide a concise summary of your research proposal...',
+            maxlength: 1000,
+            required: true
+        }
+    },
+    {
+        key: 'research_proposal',
+        value: 'Detailed Research Proposal',
+        attr: {
+            type: 'textarea',
+            rows: 10,
+            placeholder: 'Provide a detailed description of your research proposal...',
+            maxlength: 4000,
             required: true
         }
     },
@@ -67,8 +138,7 @@ app.fields = [
         value: 'Password',
         attr: {
             type: 'password',
-            minlength: '8',
-            placeholder: 'At least 8 characters',
+            minlength: 8,
             required: true
         }
     },
@@ -77,53 +147,21 @@ app.fields = [
         value: 'Confirm Password',
         attr: {
             type: 'password',
-            minlength: '8',
+            minlength: 8,
             required: true
         }
     },
     {
-        key: 'bio',
-        value: 'Tell us about yourself',
+        key: 'personal_statement',
+        value: 'Personal Statement/Bio',
         attr: {
             type: 'textarea',
-            rows: '4',
-            placeholder: 'I dream of building a cat cafe on Mars...',
-            maxlength: '500',
+            rows: 4,
+            placeholder: 'Briefly describe your background, qualifications, and research interests...',
+            maxlength: 500,
             required: true
         }
-    },
-    {
-        key: 'proposal',
-        value: 'Your phd propsal',
-        attr: {
-            type: 'textarea',
-            rows: '4',
-            placeholder: 'I dream of building a cat cafe on Mars...',
-            maxlength: '500',
-            required: true
-        }
-    },
-    {
-        key: 'date_of_birth',
-        value: 'Date Of Birth',
-        attr: {
-            type: 'text',
-            placeholder: 'Format DD/MM/YYYY',
-            minlength: '2',
-            required: true
-        }
-    },
-// york.ac.uk
-    {
-        key: 'country_region_of_nationality ',
-        value: 'Country/Region of nationality ',
-        attr: {
-            type: 'text',
-            placeholder: 'British',
-            minlength: '2',
-            required: true
-        }
-    },
+    }
 ];
 
 // Add a single form input/textarea with proper labeling
